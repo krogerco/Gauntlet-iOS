@@ -1,0 +1,58 @@
+name: Build and Test
+
+on:
+  # Run any time code is pushed to main.
+  push:
+    branches:
+      - main
+
+  # Run on all pull requests
+  pull_request:
+
+  workflow_dispatch:
+
+env:
+  FILENAME: Gauntlet.xcworkspace
+  SCHEME: DemoApp
+  CONFIGURATION: Debug
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 13,OS=15.5'
+  XCODE: /Applications/Xcode_13.4.app
+    
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: macos-12
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Install tools
+        run: |
+          brew install xcbeautify
+
+      - name: Setup Xcode
+        run: |
+          sudo xcode-select -switch ${{ env.XCODE }} && /usr/bin/xcodebuild -version
+    
+      - name: Build and Test
+        run: |
+            ONLY_FILE_NAME=$(basename -- "${{ env.FILENAME }}")
+            EXTENSION="${ONLY_FILE_NAME##*.}"
+
+            set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -showdestinations
+
+            case $EXTENSION in
+
+              "xcworkspace")
+                set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -destination  "${{ env.DESTINATION }}" GITHUB_CI=true clean test | xcbeautify
+                ;;
+
+              "xcodeproj")
+                set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -destination  "${{ env.DESTINATION }}" GITHUB_CI=true clean test | xcbeautify
+                ;;
+            esac
+            
+      - name: Swiftlint
+        run: |
+          swiftlint lint --strict
