@@ -128,6 +128,36 @@ func failIfThrows(
     }
 }
 
+/// Evaluates an async throwing expression failing the test if an error is thrown. This is intended to be used with `then` closures in assert functions and the messaging
+/// is specific to that.
+///
+/// - Parameters:
+///   - expression: An expression that can throw asynchronously.
+///   - message:    A closure that returns a custom failure message passed from the user.
+///   - name:       The name of the assert calling. This will be added to the front of the failure message.
+///   - reporter:   The `FailureReporter` to report a failure to.
+///   - file:       The file in which the failure occurred.
+///   - line:       The line number on which the failure occurred.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+func failIfThrows(
+    _ expression: @autoclosure () async throws -> Void,
+    message: () -> String,
+    name: String,
+    reporter: FailureReporter,
+    file: StaticString,
+    line: UInt) async
+{
+    do {
+        try await expression()
+    } catch {
+        reporter.reportFailure(
+            description: "\(name) - then closure threw error \"\(error)\"\(suffix(from: message))",
+            file: file,
+            line: line
+        )
+    }
+}
+
 /// This function will take the message autoclosure from a assert function and turn it in to a suffix for your failure
 /// message.
 ///

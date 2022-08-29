@@ -36,7 +36,7 @@ import XCTest
 ///     XCTAssertThrowsError(try file.load(), ofType: FileError.self) { error in
 ///         ...
 ///     }
-/// 
+///
 /// - Parameters:
 ///   - expression: An expression expected to throw an error.
 ///   - errorType:  The type of error expected to be thrown.
@@ -106,6 +106,7 @@ public func XCTAssertThrowsError<T: Error>(
 ///   - then:       A closure to be called if the thrown `Error` is the expected type.
 ///                 This can be used to run additional tests with the error.
 @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+@available(*, deprecated, renamed: "XCTAwaitAssertThrowsError")
 public func XCTAssertThrowsError<T: Sendable, E: Error>(
     _ expression: @autoclosure () async throws -> T,
     ofType errorType: E.Type,
@@ -113,9 +114,54 @@ public func XCTAssertThrowsError<T: Sendable, E: Error>(
     reporter: FailureReporter = XCTestReporter.default,
     file: StaticString = #filePath,
     line: UInt = #line,
-    then: (E) throws -> Void = { _ in }
+    then: (E) async throws -> Void = { _ in }
 ) async {
-    let name = "XCTAssertThrowsError"
+    await XCTAwaitAssertThrowsError(
+        try await expression(),
+        ofType: errorType,
+        message(),
+        reporter: reporter,
+        file: file,
+        line: line,
+        then: then
+    )
+}
+
+/// Asserts that the asynchronous expression throws the expected `Error` type.
+///
+/// This function simplifies testing throwing code. When asserting that some code throws, you often care about the type of error that was thrown.
+/// This allows enforcing that type as part of the assert with the provided closure getting the error that has ben cast to the expected type.
+///
+///     // Given, When
+///     let file = File(named: "some file")
+///
+///     // Then
+///     await XCTAwaitAssertThrowsError(try await file.load(), ofType: FileError.self) { error in
+///         ...
+///     }
+///
+/// - Parameters:
+///   - expression: An asynchronous expression expected to throw an error.
+///   - errorType:  The type of error expected to be thrown.
+///   - message:    An optional description of the failure.
+///   - reporter:   The `FailureReporter` to report a failure to. The default reporter will report the failure with XCTest.
+///   - file:       The file in which failure occurred. Defaults to the file name of the test case in which this
+///                 function was called.
+///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was
+///                 called.
+///   - then:       A closure to be called if the thrown `Error` is the expected type.
+///                 This can be used to run additional tests with the error.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+public func XCTAwaitAssertThrowsError<T: Sendable, E: Error>(
+    _ expression: @autoclosure () async throws -> T,
+    ofType errorType: E.Type,
+    _ message: @autoclosure () -> String = "",
+    reporter: FailureReporter = XCTestReporter.default,
+    file: StaticString = #filePath,
+    line: UInt = #line,
+    then: (E) async throws -> Void = { _ in }
+) async {
+    let name = "XCTAwaitAssertThrowsError"
     do {
         _ = try await expression()
         reporter.reportFailure(
@@ -125,7 +171,7 @@ public func XCTAssertThrowsError<T: Sendable, E: Error>(
         )
 
     } catch let expectedError as E {
-        failIfThrows(try then(expectedError), message: message, name: name, reporter: reporter, file: file, line: line)
+        await failIfThrows(try await then(expectedError), message: message, name: name, reporter: reporter, file: file, line: line)
     } catch {
         let failureMessage = """
         \(name) - error of type \(String(describing: type(of: error))) is not expected type \
@@ -206,6 +252,7 @@ public func XCTAssertThrowsError<T: Error & Equatable>(
 ///   - then:           A closure to be called if the thrown `Error` is the expected type and equal to the provided error.
 ///                     This can be used to run additional tests with the error.
 @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+@available(*, deprecated, renamed: "XCTAwaitAssertThrowsError")
 public func XCTAssertThrowsError<T: Sendable, E: Error & Equatable>(
     _ expression: @autoclosure () async throws -> T,
     equalTo expectedError: E,
@@ -213,10 +260,60 @@ public func XCTAssertThrowsError<T: Sendable, E: Error & Equatable>(
     reporter: FailureReporter = XCTestReporter.default,
     file: StaticString = #filePath,
     line: UInt = #line,
-    then: () throws -> Void = { }
+    then: () async throws -> Void = {}
 ) async {
-    let name = "XCTAssertThrowsError"
-    await XCTAssertThrowsError(try await expression(), ofType: E.self, message(), reporter: reporter, file: file, line: line) { error in
+    await XCTAwaitAssertThrowsError(
+        try await expression(),
+        equalTo: expectedError,
+        message(),
+        reporter: reporter,
+        file: file,
+        line: line,
+        then: then
+    )
+}
+
+/// Asserts that the asynchronous expression throws the expected `Error`.
+///
+/// This function simplifies testing throwing code. When asserting that some code throws, you often care about the type of error that was thrown.
+/// When that type is equatable this provides an easy one line assert to ensure that the code throws exactly the error you expect.
+///
+///     // Given, When
+///     let file = File(named: "missing file")
+///
+///     // Then
+///     await XCTAwaitAssertThrowsError(try await file.load(), equalTo: FileError.notFound)
+///
+/// - Parameters:
+///   - expression:     An asynchronous expression expected to throw an error.
+///   - expectedError:  The specific error expected to be thrown.
+///   - message:        An optional description of the failure.
+///   - reporter:       The `FailureReporter` to report a failure to. The default reporter will report the failure with XCTest.
+///   - file:           The file in which failure occurred. Defaults to the file name of the test case in which this
+///                     function was called.
+///   - line:           The line number on which failure occurred. Defaults to the line number on which this function was
+///                     called.
+///   - then:           A closure to be called if the thrown `Error` is the expected type and equal to the provided error.
+///                     This can be used to run additional tests with the error.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+public func XCTAwaitAssertThrowsError<T: Sendable, E: Error & Equatable>(
+    _ expression: @autoclosure () async throws -> T,
+    equalTo expectedError: E,
+    _ message: @autoclosure () -> String = "",
+    reporter: FailureReporter = XCTestReporter.default,
+    file: StaticString = #filePath,
+    line: UInt = #line,
+    then: () async throws -> Void = {}
+) async {
+    let name = "XCTAwaitAssertThrowsError"
+    await XCTAwaitAssertThrowsError(
+        try await expression(),
+        ofType: E.self,
+        message(),
+        reporter: reporter,
+        file: file,
+        line: line
+    ) { error in
         guard error == expectedError else {
             reporter.reportFailure(
                 description: "\(name) - (\"\(error)\") is not equal to (\"\(expectedError)\")\(suffix(from: message))",
@@ -227,7 +324,7 @@ public func XCTAssertThrowsError<T: Sendable, E: Error & Equatable>(
             return
         }
 
-        try then()
+        try await then()
     }
 }
 
@@ -291,15 +388,53 @@ public func XCTAssertNoThrow<T>(
 ///   - then:       A closure to be called if the expression does not throw with the result of the expression.
 ///                 This can be used to run additional tests with the result.
 @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+@available(*, deprecated, renamed: "XCTAwaitAssertNoThrow")
 public func XCTAssertNoThrow<T: Sendable>(
     _ expression: @autoclosure () async throws -> T,
     _ message: @autoclosure () -> String = "",
     reporter: FailureReporter = XCTestReporter.default,
     file: StaticString = #filePath,
     line: UInt = #line,
-    then: (T) throws -> Void
+    then: (T) async throws -> Void = { _ in }
 ) async {
-    let name = "XCTAssertNoThrow"
+    await XCTAwaitAssertNoThrow(
+        try await expression(),
+        message(),
+        reporter: reporter,
+        file: file,
+        line: line,
+        then: then
+    )
+}
+
+/// Asserts that the asynchronous expression does not throw an error. The `then` closure is called with the result of the expression.
+///
+///     // Given, When
+///     let file = File(named: "configuration")
+///
+///     // Then
+///     await XCTAwaitAssertNoThrow(try await file.load()) { contents in
+///         XCTAssertFalse(contents.isEmpty)
+///     }
+///
+/// - Parameters:
+///   - expression: An asynchronous expression expected to not throw an error.
+///   - message:    An optional description of the failure.
+///   - reporter:   The `FailureReporter` to report a failure to. The default reporter will report the failure with XCTest.
+///   - file:       The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
+///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was called.
+///   - then:       A closure to be called if the expression does not throw with the result of the expression.
+///                 This can be used to run additional tests with the result.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+public func XCTAwaitAssertNoThrow<T: Sendable>(
+    _ expression: @autoclosure () async throws -> T,
+    _ message: @autoclosure () -> String = "",
+    reporter: FailureReporter = XCTestReporter.default,
+    file: StaticString = #filePath,
+    line: UInt = #line,
+    then: (T) async throws -> Void = { _ in }
+) async {
+    let name = "XCTAwaitAssertNoThrow"
     let result = await catchErrors(
         in: expression,
         message: message,
@@ -311,5 +446,5 @@ public func XCTAssertNoThrow<T: Sendable>(
 
     guard case let .success(value) = result else { return }
 
-    failIfThrows(try then(value), message: message, name: name, reporter: reporter, file: file, line: line)
+    await failIfThrows(try await then(value), message: message, name: name, reporter: reporter, file: file, line: line)
 }
