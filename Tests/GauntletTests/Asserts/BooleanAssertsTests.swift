@@ -25,7 +25,7 @@
 import Gauntlet
 import XCTest
 
-// swiftlint:disable discouraged_optional_boolean
+// swiftlint:disable discouraged_optional_boolean type_body_length
 
 class BooleanAssertsTests: XCTestCase {
 
@@ -38,6 +38,25 @@ class BooleanAssertsTests: XCTestCase {
 
         // When
         XCTAssertTrue(true, "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertNil(mock.message)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
+        XCTAssertTrue(completionCalled)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertTrueSuccess() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let bool: () async -> Bool = { true }
+
+        // When
+        await XCTAwaitAssertTrue(await bool(), "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
         }
 
@@ -62,6 +81,21 @@ class BooleanAssertsTests: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testOptionalAwaitAssertTrueNoClosure() async {
+        // Given
+        let mock = FailMock()
+        let optionalBool: () async -> Bool? = { true }
+
+        // When
+        await XCTAwaitAssertTrue(await optionalBool(), reporter: mock)
+
+        // Then
+        XCTAssertNil(mock.message)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
+    }
+
     func testAssertTrueFail() {
         // Given
         let mock = FailMock()
@@ -79,6 +113,25 @@ class BooleanAssertsTests: XCTestCase {
         XCTAssertFalse(completionCalled)
     }
 
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertTrueFail() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let boolAsFalse: () async -> Bool = { false }
+
+        // When
+        await XCTAwaitAssertTrue(await boolAsFalse(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - ("false") is not true - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+        XCTAssertFalse(completionCalled)
+    }
+
     func testAssertTrueOnNil() {
         // Given
         let mock = FailMock()
@@ -91,6 +144,25 @@ class BooleanAssertsTests: XCTestCase {
 
         // Then
         XCTAssertEqual(mock.message, #"XCTAssertTrue - ("nil") is not true - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+        XCTAssertFalse(completionCalled)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertTrueOnNil() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let optionalBoolAsNil: () async -> Bool? = { nil }
+
+        // When
+        await XCTAwaitAssertTrue(await optionalBoolAsNil(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - ("nil") is not true - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
         XCTAssertFalse(completionCalled)
@@ -114,6 +186,25 @@ class BooleanAssertsTests: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertTrueWithThrowingExpression() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let expression: () async throws -> Bool = { throw MockError() }
+
+        // When
+        await XCTAwaitAssertTrue(try await expression(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
     func testAssertTrueWithThrowingCallInAutoclosureInThen() {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
@@ -125,6 +216,26 @@ class BooleanAssertsTests: XCTestCase {
         // When
         XCTAssertTrue(true) {
             throwingAutoclosure(try functionThatCanThrow())
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertTrueWithThrowingCallInAutoclosureInThen() async {
+        // This is a compile time test that ensures that a throwing function can be called within an autoclosure
+        // in the then closure of this assert. This simulates calling throwing code inside another assert within
+        // the closure.
+
+        // Given
+        var completionCalled = false
+        let boolAsTrue: () async -> Bool = { true }
+
+        // When
+        await XCTAwaitAssertTrue(await boolAsTrue()) {
+            await asyncThrowingAutoclosure(try await asyncFunctionThatCanThrow())
             completionCalled = true
         }
 
@@ -150,6 +261,26 @@ class BooleanAssertsTests: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertTrueWithThrowingThen() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let boolAsTrue: () async -> Bool = { true }
+
+        // When
+        await XCTAwaitAssertTrue(await boolAsTrue(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+            throw MockError()
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
     // MARK: - XCTAssertFalse
 
     func testAssertFalseSuccess() {
@@ -159,6 +290,25 @@ class BooleanAssertsTests: XCTestCase {
 
         // When
         XCTAssertFalse(false, "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertNil(mock.message)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
+        XCTAssertTrue(completionCalled)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertFalseSuccess() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let boolAsFalse: () async -> Bool = { false }
+
+        // When
+        await XCTAwaitAssertFalse(await boolAsFalse(), "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
         }
 
@@ -183,6 +333,21 @@ class BooleanAssertsTests: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testOptionalAwaitAssertFalseNoClosure() async {
+        // Given
+        let mock = FailMock()
+        let optionalBoolAsFalse: () async -> Bool? = { false }
+
+        // When
+        await XCTAwaitAssertFalse(await optionalBoolAsFalse(), reporter: mock)
+
+        // Then
+        XCTAssertNil(mock.message)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
+    }
+
     func testAssertFalseFail() {
         // Given
         let mock = FailMock()
@@ -200,6 +365,25 @@ class BooleanAssertsTests: XCTestCase {
         XCTAssertFalse(completionCalled)
     }
 
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertFalseFail() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let boolAsTrue: () async -> Bool = { true }
+
+        // When
+        await XCTAwaitAssertFalse(await boolAsTrue(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - ("true") is not false - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+        XCTAssertFalse(completionCalled)
+    }
+
     func testAssertFalseOnNil() {
         // Given
         let mock = FailMock()
@@ -211,7 +395,26 @@ class BooleanAssertsTests: XCTestCase {
         }
 
         // Then
-        XCTAssertEqual(mock.message, #"XCTAssertFalse - ("nil") is not true - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertFalse - ("nil") is not false - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+        XCTAssertFalse(completionCalled)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertFalseOnNil() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let optionalBoolAsNil: () async -> Bool? = { nil }
+
+        // When
+        await XCTAwaitAssertFalse(await optionalBoolAsNil(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - ("nil") is not false - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
         XCTAssertFalse(completionCalled)
@@ -235,6 +438,25 @@ class BooleanAssertsTests: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertFalseWithThrowingExpression() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let expression: () async throws -> Bool = { throw MockError() }
+
+        // When
+        await XCTAwaitAssertFalse(try await expression(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
     func testAssertFalseWithThrowingCallInAutoclosureInThen() {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
@@ -246,6 +468,26 @@ class BooleanAssertsTests: XCTestCase {
         // When
         XCTAssertFalse(false) {
             throwingAutoclosure(try functionThatCanThrow())
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertFalseWithThrowingCallInAutoclosureInThen() async {
+        // This is a compile time test that ensures that a throwing function can be called within an autoclosure
+        // in the then closure of this assert. This simulates calling throwing code inside another assert within
+        // the closure.
+
+        // Given
+        var completionCalled = false
+        let boolAsFalse: () async -> Bool = { false }
+
+        // When
+        await XCTAwaitAssertFalse(await boolAsFalse()) {
+            await asyncThrowingAutoclosure(try await asyncFunctionThatCanThrow())
             completionCalled = true
         }
 
@@ -267,6 +509,26 @@ class BooleanAssertsTests: XCTestCase {
         // Then
         XCTAssertTrue(completionCalled)
         XCTAssertEqual(mock.message, #"XCTAssertFalse - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertFalseWithThrowingThen() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let boolAsFalse: () async -> Bool = { false }
+
+        // When
+        await XCTAwaitAssertFalse(await boolAsFalse(), "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+            throw MockError()
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - then closure threw error "Mock Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }

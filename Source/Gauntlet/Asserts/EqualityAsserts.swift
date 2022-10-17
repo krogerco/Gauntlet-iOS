@@ -103,6 +103,97 @@ public func XCTAssertEqual<T>(
     failIfThrows(try then(), message: message, name: name, reporter: reporter, file: file, line: line)
 }
 
+/// Asserts that two values are equal, then calls the provided optional closure if `true`.
+///
+///     await XCTAwaitAssertEqual(2, try await getActiveSessions().count) {
+///         // Perform additional conditional tests.
+///     }
+///
+/// - Parameters:
+///   - expression1: An expression that produces a value.
+///   - expression2: Another expression that produces another value of the same type than `expression1`.
+///   - message: A descriptive message for the failure - optional. The default value is an empty string (`""`).
+///   - reporter: The `FailureReporter` to report a failure to. The default reporter will report the failure with XCTest.
+///   - file: The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
+///   - line: The line number on which failure occurred. Defaults to the line number on which this function was called.
+///   - then: A closure to be called if the values are equal. This can be used to run additional tests on the values.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+public func XCTAwaitAssertEqual<T: Sendable>(
+    _ expression1: @autoclosure () async throws -> T,
+    _ expression2: @autoclosure () async throws -> T,
+    _ message: @autoclosure () -> String = "",
+    reporter: FailureReporter = XCTestReporter.default,
+    file: StaticString = #filePath,
+    line: UInt = #line,
+    then: () async throws -> Void = {}
+) async where T: Equatable {
+    let name = "XCTAwaitAssertEqual"
+    let lhsResult = await catchErrors(in: expression1, message: message, name: name, reporter: reporter, file: file, line: line)
+    let rhsResult = await catchErrors(in: expression2, message: message, name: name, reporter: reporter, file: file, line: line)
+
+    guard case let .success(lhs) = lhsResult, case let .success(rhs) = rhsResult else {
+        return
+    }
+
+    guard lhs == rhs else {
+        reporter.reportFailure(
+            description: "\(name) - (\"\(lhs)\") is not equal to (\"\(rhs)\")\(suffix(from: message))",
+            file: file,
+            line: line
+        )
+        return
+    }
+
+    await failIfThrows(try await then(), message: message, name: name, reporter: reporter, file: file, line: line)
+}
+
+/// Asserts that two values are equal, then calls the provided optional closure if `true`.
+///
+///     await XCTAwaitAssertEqual(userId, try await getCurrentSession()?.userId) {
+///         // Perform additional conditional tests.
+///     }
+///
+/// - Parameters:
+///   - expression1: An expression that may produce an `Optional<T>` type.
+///   - expression2: Another expression that may produce an `Optional<T>` type - same type than `expression1`.
+///   - message: A descriptive message for the failure - optional. The default value is an empty string (`""`).
+///   - reporter: The `FailureReporter` to report a failure to. The default reporter will report the failure with XCTest.
+///   - file: The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
+///   - line: The line number on which failure occurred. Defaults to the line number on which this function was called.
+///   - then: A closure to be called if the values are equal. This can be used to run additional tests on the values.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+public func XCTAwaitAssertEqual<T: Sendable>(
+    _ expression1: @autoclosure () async throws -> T?,
+    _ expression2: @autoclosure () async throws -> T?,
+    _ message: @autoclosure () -> String = "",
+    reporter: FailureReporter = XCTestReporter.default,
+    file: StaticString = #filePath,
+    line: UInt = #line,
+    then: () async throws -> Void = {}
+) async where T: Equatable {
+    let name = "XCTAwaitAssertEqual"
+    let lhsResult = await catchErrors(in: expression1, message: message, name: name, reporter: reporter, file: file, line: line)
+    let rhsResult = await catchErrors(in: expression2, message: message, name: name, reporter: reporter, file: file, line: line)
+
+    guard case let .success(lhsOptional) = lhsResult, case let .success(rhsOptional) = rhsResult else {
+        return
+    }
+
+    guard lhsOptional == rhsOptional else {
+        let lhs = lhsOptional.flatMap { String(describing: $0) } ?? "nil"
+        let rhs = rhsOptional.flatMap { String(describing: $0) } ?? "nil"
+
+        reporter.reportFailure(
+            description: "\(name) - (\"\(lhs)\") is not equal to (\"\(rhs)\")\(suffix(from: message))",
+            file: file,
+            line: line
+        )
+        return
+    }
+
+    await failIfThrows(try await then(), message: message, name: name, reporter: reporter, file: file, line: line)
+}
+
 /// Asserts that two object references are identical (`===`).
 ///
 ///     // Given

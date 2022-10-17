@@ -25,7 +25,7 @@
 import Gauntlet
 import XCTest
 
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length
 class EqualityAssertsTests: XCTestCase {
 
     // MARK: - XCTAssertEqual
@@ -529,5 +529,132 @@ class EqualityAssertsTests: XCTestCase {
 
         // Then
         XCTAssertTrue(closureCalled)
+    }
+
+    // MARK: - XCTAwaitAssertEqual
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertEqualWithEqualValues() async {
+        // Given
+        let mock = FailMock()
+        var completionCallCount = 0
+        let stringValue = "string value"
+        func expression() async throws -> String { stringValue }
+
+        // When
+        await XCTAwaitAssertEqual(stringValue, try await expression(), reporter: mock, file: "fake file", line: 123) {
+            completionCallCount += 1
+        }
+
+        await XCTAwaitAssertEqual(try await expression(), stringValue, reporter: mock, file: "fake file", line: 123) {
+            completionCallCount += 1
+        }
+
+        // Then
+        XCTAssertEqual(2, completionCallCount)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
+        XCTAssertNil(mock.message)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertEqualWithEqualOptionalValues() async {
+        // Given
+        let mock = FailMock()
+        var completionCallCount = 0
+        let stringValue = "string value"
+        func expression() async throws -> String? { stringValue }
+
+        // When
+        await XCTAwaitAssertEqual(stringValue, try await expression(), reporter: mock, file: "fake file", line: 123) {
+            completionCallCount += 1
+        }
+
+        await XCTAwaitAssertEqual(try await expression(), stringValue, reporter: mock, file: "fake file", line: 123) {
+            completionCallCount += 1
+        }
+
+        // Then
+        XCTAssertEqual(2, completionCallCount)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
+        XCTAssertNil(mock.message)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertEqualWithThrowingExpression() async {
+        // Given
+        let expression: () async throws -> Int = { throw MockError() }
+
+        // And
+        let mock1 = FailMock()
+        var firstCompletionCalled = false
+
+        // And
+        let mock2 = FailMock()
+        var secondCompletionCalled = false
+
+        // When
+        await XCTAwaitAssertEqual(try await expression(), 2, "custom message", reporter: mock1, file: "fake file", line: 123) {
+            firstCompletionCalled = true
+        }
+
+        // Then
+        XCTAssertEqual(mock1.message, #"XCTAwaitAssertEqual - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock1.file, "fake file")
+        XCTAssertEqual(mock1.line, 123)
+        XCTAssertFalse(firstCompletionCalled)
+
+        // When
+        await XCTAwaitAssertEqual(2, try await expression(), "custom message", reporter: mock2, file: "fake file", line: 123) {
+            secondCompletionCalled = true
+        }
+
+        // Then
+        XCTAssertEqual(mock2.message, #"XCTAwaitAssertEqual - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock2.file, "fake file")
+        XCTAssertEqual(mock2.line, 123)
+        XCTAssertFalse(secondCompletionCalled)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertEqualReportingNotEqual() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let someValue = "some value"
+        let anotherValue = "another value"
+        func expression() async throws -> String { anotherValue }
+
+        // When
+        await XCTAwaitAssertEqual(someValue, try await expression(), "fake message", reporter: mock, file: "fake file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.line, 123)
+        XCTAssertEqual(mock.file, "fake file")
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertEqual - ("some value") is not equal to ("another value") - fake message"#)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertEqualReportingNotEqualNil() async {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+        let someValue = "some value"
+        func expression() async throws -> String? { nil }
+
+        // When
+        await XCTAwaitAssertEqual(someValue, try await expression(), "fake message", reporter: mock, file: "fake file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.line, 123)
+        XCTAssertEqual(mock.file, "fake file")
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertEqual - ("some value") is not equal to ("nil") - fake message"#)
     }
 }

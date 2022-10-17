@@ -91,6 +91,70 @@ public func XCTAssertTrue(
     failIfThrows(try then(), message: message, name: name, reporter: reporter, file: file, line: line)
 }
 
+/// Asserts that the expression is not `nil` and is `true`.
+///
+///     // Given
+///     func values() async -> [String: Bool] { ... }
+///
+///     // When, Then
+///     await XCTAwaitAssertTrue(await values()["some-key"]) {
+///         // Optionally perform additional conditional tests.
+///     }
+///
+/// - Note:
+///     This assert will fail if the result of the expression is `nil`.
+///
+/// - Parameters:
+///   - expression: An expression of type `Bool`.
+///   - message:    An optional description of the failure.
+///   - reporter:   The `FailureReporter` to report a failure to. The default reporter will report the failure with XCTest.
+///   - file:       The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
+///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was called.
+///   - then:       A closure to be called if the value is `true`. This can be used to run additional tests on the values.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+public func XCTAwaitAssertTrue(
+    _ expression: @autoclosure () async throws -> Bool?,
+    _ message: @autoclosure () -> String = "",
+    reporter: FailureReporter = XCTestReporter.default,
+    file: StaticString = #filePath,
+    line: UInt = #line,
+    then: () async throws -> Void = { }) async
+{
+    let name = "XCTAwaitAssertTrue"
+    let result = await catchErrors(
+        in: expression,
+        message: message,
+        name: name,
+        reporter: reporter,
+        file: file,
+        line: line
+    )
+
+    guard case let .success(optionalValue) = result else { return }
+
+    guard let value = optionalValue else {
+        reporter.reportFailure(
+            description: "\(name) - (\"nil\") is not true\(suffix(from: message))",
+            file: file,
+            line: line
+        )
+
+        return
+    }
+
+    guard value == true else {
+        reporter.reportFailure(
+            description: "\(name) - (\"\(value)\") is not true\(suffix(from: message))",
+            file: file,
+            line: line
+        )
+
+        return
+    }
+
+    await failIfThrows(try await then(), message: message, name: name, reporter: reporter, file: file, line: line)
+}
+
 /// Asserts that the expression is not `nil` and is `false`.
 ///
 ///     // Given
@@ -133,7 +197,7 @@ public func XCTAssertFalse(
 
     guard let value = optionalValue else {
         reporter.reportFailure(
-            description: "\(name) - (\"nil\") is not true\(suffix(from: message))",
+            description: "\(name) - (\"nil\") is not false\(suffix(from: message))",
             file: file,
             line: line
         )
@@ -152,4 +216,68 @@ public func XCTAssertFalse(
     }
 
     failIfThrows(try then(), message: message, name: name, reporter: reporter, file: file, line: line)
+}
+
+/// Asserts that the expression is not `nil` and is `false`.
+///
+///     // Given
+///     func values() async -> [String: Bool] { ... }
+///
+///     // When, Then
+///     await XCTAwaitAssertFalse(await values()["some-key"]) {
+///         // Optionally perform additional conditional tests.
+///     }
+///
+/// - Note:
+///     This assert will fail if the result of the expression is `nil`.
+///
+/// - Parameters:
+///   - expression: An expression of type `Bool`.
+///   - message:    An optional description of the failure.
+///   - reporter:   The `FailureReporter` to report a failure to. The default reporter will report the failure with XCTest.
+///   - file:       The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
+///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was called.
+///   - then:       A closure to be called if the value is `false`. This can be used to run additional tests on the values.
+@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+public func XCTAwaitAssertFalse(
+    _ expression: @autoclosure () async throws -> Bool?,
+    _ message: @autoclosure () -> String = "",
+    reporter: FailureReporter = XCTestReporter.default,
+    file: StaticString = #filePath,
+    line: UInt = #line,
+    then: () async throws -> Void = { }) async
+{
+    let name = "XCTAwaitAssertFalse"
+    let result = await catchErrors(
+        in: expression,
+        message: message,
+        name: name,
+        reporter: reporter,
+        file: file,
+        line: line
+    )
+
+    guard case let .success(optionalValue) = result else { return }
+
+    guard let value = optionalValue else {
+        reporter.reportFailure(
+            description: "\(name) - (\"nil\") is not false\(suffix(from: message))",
+            file: file,
+            line: line
+        )
+
+        return
+    }
+
+    guard value == false else {
+        reporter.reportFailure(
+            description: "\(name) - (\"\(value)\") is not false\(suffix(from: message))",
+            file: file,
+            line: line
+        )
+
+        return
+    }
+
+    await failIfThrows(try await then(), message: message, name: name, reporter: reporter, file: file, line: line)
 }

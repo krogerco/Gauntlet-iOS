@@ -119,4 +119,101 @@ class OptionalAssertsTestCase: XCTestCase {
         // Then
         XCTAssertTrue(completionCalled)
     }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertNotNil() async {
+        // Given
+        let value: Int = 5
+        func expression() async -> Int? { value }
+        var completionCalled = false
+        var valuePassedToClosure: Int?
+
+        // When
+        await XCTAwaitAssertNotNil(await expression()) { nonNilValue in
+            completionCalled = true
+            valuePassedToClosure = nonNilValue
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+        XCTAssertEqual(valuePassedToClosure, value)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testFailingAwaitAssertNotNil() async {
+        // Given
+        func expression() async -> Int? { nil }
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        await XCTAwaitAssertNotNil(await expression(), "custom message", reporter: mock, file: "some file", line: 123) { _ in
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.message, "XCTAwaitAssertNotNil - custom message")
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testThrowingOptionalAwaitAssert() async {
+        // Given
+        let function: () async throws -> Int? = { throw MockError() }
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        await XCTAwaitAssertNotNil(try await function(), "custom message", reporter: mock, file: "some file", line: 123) { _ in
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.message, "XCTAwaitAssertNotNil - threw error \"Mock Error\" - custom message")
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertNotNilWithThrowingThen() async {
+        // Given
+        func expression() async -> Int? { 5 }
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        await XCTAwaitAssertNotNil(await expression(), "custom message", reporter: mock, file: "some file", line: 123) { _ in
+            completionCalled = true
+            throw MockError()
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+        XCTAssertEqual(mock.message, "XCTAwaitAssertNotNil - then closure threw error \"Mock Error\" - custom message")
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
+    func testAwaitAssertNotNilWithThrowingCallInAutoclosureInThen() async {
+        // This is a compile time test that ensures that an async throwing function can be called within an autoclosure
+        // in the then closure of this assert. This simulates calling async throwing code inside another assert within
+        // the closure.
+
+        // Given
+        let value: () async -> Int? = { 5 }
+        var completionCalled = false
+
+        // When
+        await XCTAwaitAssertNotNil(await value()) { _ in
+            await asyncThrowingAutoclosure(try await asyncFunctionThatCanThrow())
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+    }
 }
