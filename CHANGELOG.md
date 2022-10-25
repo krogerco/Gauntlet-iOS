@@ -15,6 +15,17 @@ Unreleased changes
 
 #### Fixed
 
+## 1.1.0
+
+#### Added
+- Add `XCTAwaitAssertEqual`
+- Add `XCTAwaitAssertNotNil`
+- Add `XCTAwaitAssertFalse` and `XCTAwaitAssertTrue`
+
+#### Deprecated
+- `XCTAssertNoThrow` in favor of `XCTAwaitAssertNoThrow`
+- `XCTAssertThrowsError` in favor of `XCTAwaitAssertThrowsError`
+
 ## 1.0.0
 
 First release as open source.
