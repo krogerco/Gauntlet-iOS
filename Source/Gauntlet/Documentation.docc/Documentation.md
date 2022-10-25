@@ -117,11 +117,18 @@ A static property `currentQueueLabel` has been added to `DispatchQueue`. This is
 
 ## Topics
 
-### Optionals
+### Async/Await
 
-These functions add additional asserts for `Optional` values and provide closures for the unwrapped value if available.
+These functions provide asserts for working with async code.
 
-- ``XCTAssertNotNil(_:_:reporter:file:line:then:)``
+- ``XCTAwaitAssertEqual(_:_:_:reporter:file:line:then:)-9l6yg``
+- ``XCTAwaitAssertEqual(_:_:_:reporter:file:line:then:)-5tofs``
+- ``XCTAwaitAssertFalse(_:_:reporter:file:line:then:)``
+- ``XCTAwaitAssertNoThrow(_:_:reporter:file:line:then:)``
+- ``XCTAwaitAssertNotNil(_:_:reporter:file:line:then:)``
+- ``XCTAwaitAssertThrowsError(_:equalTo:_:reporter:file:line:then:)``
+- ``XCTAwaitAssertThrowsError(_:ofType:_:reporter:file:line:then:)``
+- ``XCTAwaitAssertTrue(_:_:reporter:file:line:then:)``
 
 ### Booleans
 
@@ -135,6 +142,12 @@ These functions add additional asserts for `Collection` type.
 - ``XCTAssertIsEmpty(_:_:reporter:file:line:then:)``
 - ``XCTAssertIsNotEmpty(_:_:reporter:file:line:then:)``
 
+### Dispatch Queues
+
+A static property `currentQueueLabel` has been added to `DispatchQueue`. This is useful when testing code that takes a queue that it calls a completion on to verify that the completion was called on the queue that was passed to that code.
+
+- ``XCTAssertOnQueue(_:_:reporter:file:line:then:)``
+
 ### Equality
 
 These functions add additional asserts for `Equatable`, `AnyObject` and `BinaryInteger` types.
@@ -144,11 +157,11 @@ These functions add additional asserts for `Equatable`, `AnyObject` and `BinaryI
 - ``XCTAssertNotIdentical(_:_:_:reporter:file:line:then:)``
 - ``XCTAssertZero(_:_:reporter:file:line:then:)``
 
-### Dispatch Queues
+### Optionals
 
-A static property `currentQueueLabel` has been added to `DispatchQueue`. This is useful when testing code that takes a queue that it calls a completion on to verify that the completion was called on the queue that was passed to that code.
+These functions add additional asserts for `Optional` values and provide closures for the unwrapped value if available.
 
-- ``XCTAssertOnQueue(_:_:reporter:file:line:then:)``
+- ``XCTAssertNotNil(_:_:reporter:file:line:then:)``
 
 ### Result Failure
 
@@ -165,6 +178,7 @@ A static property `currentQueueLabel` has been added to `DispatchQueue`. This is
 - ``XCTAssertSuccess(_:is:equalTo:_:reporter:file:line:then:)``
 - ``XCTAssertSuccess(_:keyPath:isEqualTo:_:reporter:file:line:then:)``
 
+
 ### Substrings
 
 These functions add asserts for `String` types.
@@ -173,9 +187,23 @@ These functions add asserts for `String` types.
 
 ### Throws
 
-These functiona add asserts for validating errors thrown from functions.
+These functions add asserts for validating errors thrown from functions.
 
-- ``XCTAssertThrowsError(_:ofType:_:reporter:file:line:then:)-5u7s4``
-- ``XCTAssertThrowsError(_:equalTo:_:reporter:file:line:then:)-89fq4``
 - ``XCTAssertThrowsError(_:ofType:_:reporter:file:line:then:)-7llkj``
 - ``XCTAssertThrowsError(_:equalTo:_:reporter:file:line:then:)-mg3u``
+- ``XCTAssertNoThrow(_:_:reporter:file:line:then:)-70k1b``
+
+### Type Conformance
+
+These functions add asserts for validating type conformance.
+
+- ``XCTAssert(_:is:_:reporter:file:line:then:)``
+- ``XCTAssert(_:is:equalTo:_:reporter:file:line:then:)``
+
+### Deprecated
+
+These functions have been deprecated in favor of newer functions and will be removed in the future.
+
+- ``XCTAssertThrowsError(_:equalTo:_:reporter:file:line:then:)-4i0nn``
+- ``XCTAssertThrowsError(_:ofType:_:reporter:file:line:then:)-2y4mg``
+- ``XCTAssertNoThrow(_:_:reporter:file:line:then:)-7yx4v``
