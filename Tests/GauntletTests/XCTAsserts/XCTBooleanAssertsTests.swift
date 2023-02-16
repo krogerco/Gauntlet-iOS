@@ -1,4 +1,4 @@
-//  BooleanAssertsTests.swift
+//  XCTBooleanAssertsTests.swift
 //
 //  MIT License
 //
@@ -27,7 +27,7 @@ import XCTest
 
 // swiftlint:disable discouraged_optional_boolean type_body_length
 
-class BooleanAssertsTests: XCTestCase {
+class XCTBooleanAssertsTests: XCTestCase {
 
     // MARK: - XCTAssertTrue
 

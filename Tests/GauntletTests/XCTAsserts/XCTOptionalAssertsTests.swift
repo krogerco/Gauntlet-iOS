@@ -1,4 +1,4 @@
-//  OptionalAssertsTests.swift
+//  XCTOptionalAssertsTests.swift
 //
 //  MIT License
 //
@@ -26,7 +26,7 @@ import Gauntlet
 import Foundation
 import XCTest
 
-class OptionalAssertsTestCase: XCTestCase {
+class XCTOptionalAssertsTestCase: XCTestCase {
     func testAssertNotNil() {
         // Given
         let value: Int? = 5

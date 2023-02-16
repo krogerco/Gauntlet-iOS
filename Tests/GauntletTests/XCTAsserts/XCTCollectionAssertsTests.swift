@@ -1,4 +1,4 @@
-//  CollectionAssertsTests.swift
+//  XCTCollectionAssertsTests.swift
 //
 //  MIT License
 //
@@ -27,7 +27,7 @@ import XCTest
 
 // swiftlint:disable discouraged_optional_collection
 
-class CollectionAssertsTestCase: XCTestCase {
+class XCTCollectionAssertsTestCase: XCTestCase {
 
     // MARK: - XCTAssertIsEmpty
 

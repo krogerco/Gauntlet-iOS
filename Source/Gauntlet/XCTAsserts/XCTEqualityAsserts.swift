@@ -1,4 +1,4 @@
-//  EqualityAsserts.swift
+//  XCTEqualityAsserts.swift
 //
 //  MIT License
 //

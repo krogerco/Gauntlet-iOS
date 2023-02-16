@@ -1,4 +1,4 @@
-//  ResultFailureAssertsTests.swift
+//  XCTResultFailureAssertsTests.swift
 //
 //  MIT License
 //
@@ -28,7 +28,7 @@ import XCTest
 
 // swiftlint:disable type_body_length file_length
 
-class ResultFailureAssertsTestCase: XCTestCase {
+class XCTResultFailureAssertsTestCase: XCTestCase {
 
     // MARK: - AssertFailure
 

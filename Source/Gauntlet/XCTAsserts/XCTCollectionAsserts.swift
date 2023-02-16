@@ -1,4 +1,4 @@
-//  CollectionAsserts.swift
+//  XCTCollectionAsserts.swift
 //
 //  MIT License
 //

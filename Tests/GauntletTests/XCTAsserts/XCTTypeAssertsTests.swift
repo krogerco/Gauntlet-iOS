@@ -1,4 +1,4 @@
-//  TypeAssertsTests.swift
+//  XCTTypeAssertsTests.swift
 //
 //  MIT License
 //
@@ -26,7 +26,7 @@ import Gauntlet
 import Foundation
 import XCTest
 
-class TypeAssertsTestCase: XCTestCase {
+class XCTTypeAssertsTestCase: XCTestCase {
 
     // MARK: - Assert(_, is:)
 

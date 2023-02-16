@@ -1,4 +1,4 @@
-//  FailureReporter.swift
+//  XCTFailureReporter.swift
 //
 //  MIT License
 //

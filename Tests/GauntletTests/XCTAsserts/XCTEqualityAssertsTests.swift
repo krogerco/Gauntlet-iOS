@@ -1,4 +1,4 @@
-//  EqualityAssertsTests.swift
+//  XCTEqualityAssertsTests.swift
 //
 //  MIT License
 //
@@ -26,7 +26,7 @@ import Gauntlet
 import XCTest
 
 // swiftlint:disable type_body_length file_length
-class EqualityAssertsTests: XCTestCase {
+class XCTEqualityAssertsTests: XCTestCase {
 
     // MARK: - XCTAssertEqual
 

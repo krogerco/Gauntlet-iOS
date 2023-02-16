@@ -1,4 +1,4 @@
-//  SubstringAssertsTests.swift
+//  XCTSubstringAssertsTests.swift
 //
 //  MIT License
 //
@@ -26,7 +26,7 @@ import Gauntlet
 import Foundation
 import XCTest
 
-class SubstringAssertsTestCase: XCTestCase {
+class XCTSubstringAssertsTestCase: XCTestCase {
 
     // MARK: - Assert(_, contains:)
 

@@ -1,4 +1,4 @@
-//  ThrowsAssertTests.swift
+//  XCTThrowsAssertTests.swift
 //
 //  MIT License
 //
@@ -27,7 +27,7 @@ import XCTest
 
 // swiftlint:disable type_body_length file_length
 
-class ThrowAssertsTestCase: XCTestCase {
+class XCTThrowAssertsTestCase: XCTestCase {
 
     // MARK: - XCTAssertThrowsError(_, ofType:) | await XCTAssertThrowsError(_, ofType:)
 

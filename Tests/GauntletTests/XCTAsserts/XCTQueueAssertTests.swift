@@ -1,4 +1,4 @@
-//  QueueAssertTests.swift
+//  XCTQueueAssertTests.swift
 //
 //  MIT License
 //
@@ -25,7 +25,7 @@
 import Gauntlet
 import XCTest
 
-class QueueAssertTestCase: XCTestCase {
+class XCTQueueAssertTestCase: XCTestCase {
     func testAssertOnQueueSuccess() {
         // Given
         let mock = FailMock()
