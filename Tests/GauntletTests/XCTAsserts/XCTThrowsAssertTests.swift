@@ -273,13 +273,13 @@ class XCTThrowAssertsTestCase: XCTestCase {
             line: 123,
             then: { _ in
                 completionCalled = true
-                throw MockError()
+                throw MockError.someError
             }
         )
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertThrowsError - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertThrowsError - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -300,13 +300,13 @@ class XCTThrowAssertsTestCase: XCTestCase {
             line: 123,
             then: { _ in
                 completionCalled = true
-                throw MockError()
+                throw MockError.someError
             }
         )
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertThrowsError - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertThrowsError - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -314,7 +314,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
     func testAsyncAssertThrowsErrorOfTypeWithThrowingThenWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
-        XCTAwaitAssertThrowsError - then closure threw error "Mock Error" - \(message)
+        XCTAwaitAssertThrowsError - then closure threw error "Some Error" - \(message)
         """
         // Given
         let mock = FailMock()
@@ -331,7 +331,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
             line: 123,
             then: { _ in
                 completionCalled = true
-                throw MockError()
+                throw MockError.someError
             }
         )
 
@@ -349,7 +349,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
 
         // Given
         var completionCalled = false
-        let thrower = Thrower(error: MockError())
+        let thrower = Thrower(error: MockError.someError)
 
         // When
         XCTAssertThrowsError(try thrower.throw(), ofType: MockError.self) { _ in
@@ -368,7 +368,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
 
         // Given
         var completionCalled = false
-        let thrower = Thrower(error: MockError())
+        let thrower = Thrower(error: MockError.someError)
 
         // When
         await XCTAwaitAssertThrowsError(try await thrower.asyncThrow(), ofType: MockError.self) { _ in
@@ -721,13 +721,13 @@ class XCTThrowAssertsTestCase: XCTestCase {
             line: 123,
             then: {
                 completionCalled = true
-                throw MockError()
+                throw MockError.someError
             }
         )
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertThrowsError - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertThrowsError - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -748,13 +748,13 @@ class XCTThrowAssertsTestCase: XCTestCase {
             line: 123,
             then: {
                 completionCalled = true
-                throw MockError()
+                throw MockError.someError
             }
         )
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertThrowsError - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertThrowsError - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -762,7 +762,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
     func testAsyncAssertThrowsErrorEqualToWithThrowingThenWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
-        XCTAwaitAssertThrowsError - then closure threw error "Mock Error" - \(message)
+        XCTAwaitAssertThrowsError - then closure threw error "Some Error" - \(message)
         """
         // Given
         let mock = FailMock()
@@ -779,7 +779,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
             line: 123,
             then: {
                 completionCalled = true
-                throw MockError()
+                throw MockError.someError
             }
         )
 
@@ -879,7 +879,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
         let mock = FailMock()
         var completionCalled = false
 
-        func throwingFunction () throws -> Int { throw MockError() }
+        func throwingFunction () throws -> Int { throw MockError.someError }
 
         // When
         XCTAssertNoThrow(try throwingFunction(), "custom message", reporter: mock, file: "some file", line: 123) { _ in
@@ -888,7 +888,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertNoThrow - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertNoThrow - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -898,7 +898,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
         let mock = FailMock()
         var completionCalled = false
 
-        func throwingAsyncFunction () async throws -> Int { throw MockError() }
+        func throwingAsyncFunction () async throws -> Int { throw MockError.someError }
 
         // When
         await XCTAwaitAssertNoThrow(
@@ -913,7 +913,7 @@ class XCTThrowAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertNoThrow - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertNoThrow - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -928,12 +928,12 @@ class XCTThrowAssertsTestCase: XCTestCase {
         // When
         XCTAssertNoThrow(try nonThrowingFunction(), "custom message", reporter: mock, file: "some file", line: 123) { _ in
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertNoThrow - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertNoThrow - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -954,12 +954,12 @@ class XCTThrowAssertsTestCase: XCTestCase {
             line: 123
         ) { _ in
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertNoThrow - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertNoThrow - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }

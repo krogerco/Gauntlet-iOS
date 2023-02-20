@@ -104,7 +104,7 @@ class XCTSubstringAssertsTestCase: XCTestCase {
 
     func testThrowingSubstringAssert() {
         // Given
-        let expression: () throws -> String = { throw MockError() }
+        let expression: () throws -> String = { throw MockError.someError }
         let mock = FailMock()
         var completionCalled = false
 
@@ -115,7 +115,7 @@ class XCTSubstringAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssert(_, contains:) - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssert(_, contains:) - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -128,12 +128,12 @@ class XCTSubstringAssertsTestCase: XCTestCase {
         // When
         XCTAssert("some string", contains: "some", "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssert(_, contains:) - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssert(_, contains:) - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }

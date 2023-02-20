@@ -84,7 +84,7 @@ class XCTCollectionAssertsTestCase: XCTestCase {
     func testThrowingAssertIsEmpty() {
         // Given
         let mock = FailMock()
-        let expression: () throws -> [Int] = { throw MockError() }
+        let expression: () throws -> [Int] = { throw MockError.someError }
         var completionCalled = false
 
         // When
@@ -94,7 +94,7 @@ class XCTCollectionAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsEmpty - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertIsEmpty - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -102,7 +102,7 @@ class XCTCollectionAssertsTestCase: XCTestCase {
     func testAssertIsEmptyThrowingInThen() {
         // Given
         let mock = FailMock()
-        let expression: () throws -> [Int] = { throw MockError() }
+        let expression: () throws -> [Int] = { throw MockError.someError }
         var completionCalled = false
 
         // When
@@ -112,7 +112,7 @@ class XCTCollectionAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsEmpty - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertIsEmpty - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -210,7 +210,7 @@ class XCTCollectionAssertsTestCase: XCTestCase {
 
     func testThrowingAssertIsNotEmpty() {
         // Given
-        let expression: () throws -> [Int] = { throw MockError() }
+        let expression: () throws -> [Int] = { throw MockError.someError }
         let mock = FailMock()
         var completionCalled = false
 
@@ -221,7 +221,7 @@ class XCTCollectionAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsNotEmpty - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertIsNotEmpty - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -234,12 +234,12 @@ class XCTCollectionAssertsTestCase: XCTestCase {
         // When
         XCTAssertIsNotEmpty([1, 2, 3], "custom message", reporter: mock, file: "some file", line: 123) { _ in
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssert(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsNotEmpty - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertIsNotEmpty - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }

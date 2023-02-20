@@ -168,7 +168,7 @@ class XCTBooleanAssertsTests: XCTestCase {
         // Given
         let mock = FailMock()
         var completionCalled = false
-        let expression: () throws -> Bool = { throw MockError() }
+        let expression: () throws -> Bool = { throw MockError.someError }
 
         // When
         XCTAssertTrue(try expression(), "custom message", reporter: mock, file: "some file", line: 123) {
@@ -177,7 +177,7 @@ class XCTBooleanAssertsTests: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertTrue - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertTrue - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -186,7 +186,7 @@ class XCTBooleanAssertsTests: XCTestCase {
         // Given
         let mock = FailMock()
         var completionCalled = false
-        let expression: () async throws -> Bool = { throw MockError() }
+        let expression: () async throws -> Bool = { throw MockError.someError }
 
         // When
         await XCTAwaitAssertTrue(try await expression(), "custom message", reporter: mock, file: "some file", line: 123) {
@@ -195,7 +195,7 @@ class XCTBooleanAssertsTests: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -245,12 +245,12 @@ class XCTBooleanAssertsTests: XCTestCase {
         // When
         XCTAssertTrue(true, "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertTrue - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertTrue - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -264,12 +264,12 @@ class XCTBooleanAssertsTests: XCTestCase {
         // When
         await XCTAwaitAssertTrue(await boolAsTrue(), "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertTrue - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -413,7 +413,7 @@ class XCTBooleanAssertsTests: XCTestCase {
         // Given
         let mock = FailMock()
         var completionCalled = false
-        let expression: () throws -> Bool = { throw MockError() }
+        let expression: () throws -> Bool = { throw MockError.someError }
 
         // When
         XCTAssertFalse(try expression(), "custom message", reporter: mock, file: "some file", line: 123) {
@@ -422,7 +422,7 @@ class XCTBooleanAssertsTests: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertFalse - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertFalse - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -431,7 +431,7 @@ class XCTBooleanAssertsTests: XCTestCase {
         // Given
         let mock = FailMock()
         var completionCalled = false
-        let expression: () async throws -> Bool = { throw MockError() }
+        let expression: () async throws -> Bool = { throw MockError.someError }
 
         // When
         await XCTAwaitAssertFalse(try await expression(), "custom message", reporter: mock, file: "some file", line: 123) {
@@ -440,7 +440,7 @@ class XCTBooleanAssertsTests: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -490,12 +490,12 @@ class XCTBooleanAssertsTests: XCTestCase {
         // When
         XCTAssertFalse(false, "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertFalse - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertFalse - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -509,12 +509,12 @@ class XCTBooleanAssertsTests: XCTestCase {
         // When
         await XCTAwaitAssertFalse(await boolAsFalse(), "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAwaitAssertFalse - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }

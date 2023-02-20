@@ -66,7 +66,7 @@ class XCTOptionalAssertsTestCase: XCTestCase {
 
     func testThrowingOptionalAssert() {
         // Given
-        let function: () throws -> Int? = { throw MockError() }
+        let function: () throws -> Int? = { throw MockError.someError }
         let mock = FailMock()
         var completionCalled = false
 
@@ -77,7 +77,7 @@ class XCTOptionalAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, "XCTAssertNotNil - threw error \"Mock Error\" - custom message")
+        XCTAssertEqual(mock.message, "XCTAssertNotNil - threw error \"Some Error\" - custom message")
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -91,12 +91,12 @@ class XCTOptionalAssertsTestCase: XCTestCase {
         // When
         XCTAssertNotNil(value, "custom message", reporter: mock, file: "some file", line: 123) { _ in
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, "XCTAssertNotNil - then closure threw error \"Mock Error\" - custom message")
+        XCTAssertEqual(mock.message, "XCTAssertNotNil - then closure threw error \"Some Error\" - custom message")
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -158,7 +158,7 @@ class XCTOptionalAssertsTestCase: XCTestCase {
 
     func testThrowingOptionalAwaitAssert() async {
         // Given
-        let function: () async throws -> Int? = { throw MockError() }
+        let function: () async throws -> Int? = { throw MockError.someError }
         let mock = FailMock()
         var completionCalled = false
 
@@ -169,7 +169,7 @@ class XCTOptionalAssertsTestCase: XCTestCase {
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, "XCTAwaitAssertNotNil - threw error \"Mock Error\" - custom message")
+        XCTAssertEqual(mock.message, "XCTAwaitAssertNotNil - threw error \"Some Error\" - custom message")
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
@@ -183,12 +183,12 @@ class XCTOptionalAssertsTestCase: XCTestCase {
         // When
         await XCTAwaitAssertNotNil(await expression(), "custom message", reporter: mock, file: "some file", line: 123) { _ in
             completionCalled = true
-            throw MockError()
+            throw MockError.someError
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(mock.message, "XCTAwaitAssertNotNil - then closure threw error \"Mock Error\" - custom message")
+        XCTAssertEqual(mock.message, "XCTAwaitAssertNotNil - then closure threw error \"Some Error\" - custom message")
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }

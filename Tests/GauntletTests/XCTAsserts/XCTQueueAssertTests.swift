@@ -89,7 +89,7 @@ class XCTQueueAssertTestCase: XCTestCase {
     func testAssertOnQueueWithThrowingExpression() {
         // Given
         let mock = FailMock()
-        let expression: () throws -> DispatchQueue = { throw MockError() }
+        let expression: () throws -> DispatchQueue = { throw MockError.someError }
         var completionCalled = false
 
         // When
@@ -98,7 +98,7 @@ class XCTQueueAssertTestCase: XCTestCase {
         }
 
         // Then
-        XCTAssertEqual(mock.message, #"XCTAssertOnQueue - threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertOnQueue - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
         XCTAssertFalse(completionCalled)
@@ -114,12 +114,12 @@ class XCTQueueAssertTestCase: XCTestCase {
         queue.sync {
             XCTAssertOnQueue(queue, "custom message", reporter: mock, file: "some file", line: 123) {
                 completionCalled = true
-                throw MockError()
+                throw MockError.someError
             }
         }
 
         // Then
-        XCTAssertEqual(mock.message, #"XCTAssertOnQueue - then closure threw error "Mock Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssertOnQueue - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
         XCTAssertTrue(completionCalled)
