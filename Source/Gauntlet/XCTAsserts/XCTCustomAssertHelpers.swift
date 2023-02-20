@@ -74,7 +74,6 @@ func catchErrors<T>(
 ///   - line:       The line number on which the failure occurred.
 ///
 /// - Returns: A result of type `T` indicating whether the expression was successful.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 func catchErrors<T: Sendable>(
     in expression: () async throws -> T,
     message: () -> String,
@@ -138,7 +137,6 @@ func failIfThrows(
 ///   - reporter:   The `FailureReporter` to report a failure to.
 ///   - file:       The file in which the failure occurred.
 ///   - line:       The line number on which the failure occurred.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 func failIfThrows(
     _ expression: @autoclosure () async throws -> Void,
     message: () -> String,

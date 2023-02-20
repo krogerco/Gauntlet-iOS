@@ -105,7 +105,6 @@ public func XCTAssertThrowsError<T: Error>(
 ///                 called.
 ///   - then:       A closure to be called if the thrown `Error` is the expected type.
 ///                 This can be used to run additional tests with the error.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 @available(*, deprecated, renamed: "XCTAwaitAssertThrowsError")
 public func XCTAssertThrowsError<T: Sendable, E: Error>(
     _ expression: @autoclosure () async throws -> T,
@@ -151,7 +150,6 @@ public func XCTAssertThrowsError<T: Sendable, E: Error>(
 ///                 called.
 ///   - then:       A closure to be called if the thrown `Error` is the expected type.
 ///                 This can be used to run additional tests with the error.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 public func XCTAwaitAssertThrowsError<T: Sendable, E: Error>(
     _ expression: @autoclosure () async throws -> T,
     ofType errorType: E.Type,
@@ -251,7 +249,6 @@ public func XCTAssertThrowsError<T: Error & Equatable>(
 ///                     called.
 ///   - then:           A closure to be called if the thrown `Error` is the expected type and equal to the provided error.
 ///                     This can be used to run additional tests with the error.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 @available(*, deprecated, renamed: "XCTAwaitAssertThrowsError")
 public func XCTAssertThrowsError<T: Sendable, E: Error & Equatable>(
     _ expression: @autoclosure () async throws -> T,
@@ -295,7 +292,6 @@ public func XCTAssertThrowsError<T: Sendable, E: Error & Equatable>(
 ///                     called.
 ///   - then:           A closure to be called if the thrown `Error` is the expected type and equal to the provided error.
 ///                     This can be used to run additional tests with the error.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 public func XCTAwaitAssertThrowsError<T: Sendable, E: Error & Equatable>(
     _ expression: @autoclosure () async throws -> T,
     equalTo expectedError: E,
@@ -387,7 +383,6 @@ public func XCTAssertNoThrow<T>(
 ///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was called.
 ///   - then:       A closure to be called if the expression does not throw with the result of the expression.
 ///                 This can be used to run additional tests with the result.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 @available(*, deprecated, renamed: "XCTAwaitAssertNoThrow")
 public func XCTAssertNoThrow<T: Sendable>(
     _ expression: @autoclosure () async throws -> T,
@@ -425,7 +420,6 @@ public func XCTAssertNoThrow<T: Sendable>(
 ///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was called.
 ///   - then:       A closure to be called if the expression does not throw with the result of the expression.
 ///                 This can be used to run additional tests with the result.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 public func XCTAwaitAssertNoThrow<T: Sendable>(
     _ expression: @autoclosure () async throws -> T,
     _ message: @autoclosure () -> String = "",

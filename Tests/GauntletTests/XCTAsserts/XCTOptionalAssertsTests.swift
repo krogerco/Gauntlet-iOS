@@ -120,7 +120,6 @@ class XCTOptionalAssertsTestCase: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertNotNil() async {
         // Given
         let value: Int = 5
@@ -139,7 +138,6 @@ class XCTOptionalAssertsTestCase: XCTestCase {
         XCTAssertEqual(valuePassedToClosure, value)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testFailingAwaitAssertNotNil() async {
         // Given
         func expression() async -> Int? { nil }
@@ -158,7 +156,6 @@ class XCTOptionalAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testThrowingOptionalAwaitAssert() async {
         // Given
         let function: () async throws -> Int? = { throw MockError() }
@@ -177,7 +174,6 @@ class XCTOptionalAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertNotNilWithThrowingThen() async {
         // Given
         func expression() async -> Int? { 5 }
@@ -197,7 +193,6 @@ class XCTOptionalAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertNotNilWithThrowingCallInAutoclosureInThen() async {
         // This is a compile time test that ensures that an async throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling async throwing code inside another assert within

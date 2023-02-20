@@ -533,7 +533,6 @@ class XCTEqualityAssertsTests: XCTestCase {
 
     // MARK: - XCTAwaitAssertEqual
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertEqualWithEqualValues() async {
         // Given
         let mock = FailMock()
@@ -557,7 +556,6 @@ class XCTEqualityAssertsTests: XCTestCase {
         XCTAssertNil(mock.message)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertEqualWithEqualOptionalValues() async {
         // Given
         let mock = FailMock()
@@ -581,7 +579,6 @@ class XCTEqualityAssertsTests: XCTestCase {
         XCTAssertNil(mock.message)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertEqualWithThrowingExpression() async {
         // Given
         let expression: () async throws -> Int = { throw MockError() }
@@ -617,7 +614,6 @@ class XCTEqualityAssertsTests: XCTestCase {
         XCTAssertFalse(secondCompletionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertEqualReportingNotEqual() async {
         // Given
         let mock = FailMock()
@@ -638,7 +634,6 @@ class XCTEqualityAssertsTests: XCTestCase {
         XCTAssertEqual(mock.message, #"XCTAwaitAssertEqual - ("some value") is not equal to ("another value") - fake message"#)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertEqualReportingNotEqualNil() async {
         // Given
         let mock = FailMock()

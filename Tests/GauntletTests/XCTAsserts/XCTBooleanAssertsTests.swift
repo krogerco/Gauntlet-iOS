@@ -48,7 +48,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertTrueSuccess() async {
         // Given
         let mock = FailMock()
@@ -81,7 +80,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testOptionalAwaitAssertTrueNoClosure() async {
         // Given
         let mock = FailMock()
@@ -113,7 +111,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertFalse(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertTrueFail() async {
         // Given
         let mock = FailMock()
@@ -149,7 +146,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertFalse(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertTrueOnNil() async {
         // Given
         let mock = FailMock()
@@ -186,7 +182,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertTrueWithThrowingExpression() async {
         // Given
         let mock = FailMock()
@@ -223,7 +218,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertTrueWithThrowingCallInAutoclosureInThen() async {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
@@ -261,7 +255,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertTrueWithThrowingThen() async {
         // Given
         let mock = FailMock()
@@ -300,7 +293,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertFalseSuccess() async {
         // Given
         let mock = FailMock()
@@ -333,7 +325,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testOptionalAwaitAssertFalseNoClosure() async {
         // Given
         let mock = FailMock()
@@ -365,7 +356,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertFalse(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertFalseFail() async {
         // Given
         let mock = FailMock()
@@ -401,7 +391,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertFalse(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertFalseOnNil() async {
         // Given
         let mock = FailMock()
@@ -438,7 +427,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertFalseWithThrowingExpression() async {
         // Given
         let mock = FailMock()
@@ -475,7 +463,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertFalseWithThrowingCallInAutoclosureInThen() async {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
@@ -513,7 +500,6 @@ class XCTBooleanAssertsTests: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAwaitAssertFalseWithThrowingThen() async {
         // Given
         let mock = FailMock()

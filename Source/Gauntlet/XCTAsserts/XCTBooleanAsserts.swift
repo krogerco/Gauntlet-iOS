@@ -111,7 +111,6 @@ public func XCTAssertTrue(
 ///   - file:       The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
 ///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was called.
 ///   - then:       A closure to be called if the value is `true`. This can be used to run additional tests on the values.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 public func XCTAwaitAssertTrue(
     _ expression: @autoclosure () async throws -> Bool?,
     _ message: @autoclosure () -> String = "",
@@ -238,7 +237,6 @@ public func XCTAssertFalse(
 ///   - file:       The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
 ///   - line:       The line number on which failure occurred. Defaults to the line number on which this function was called.
 ///   - then:       A closure to be called if the value is `false`. This can be used to run additional tests on the values.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 public func XCTAwaitAssertFalse(
     _ expression: @autoclosure () async throws -> Bool?,
     _ message: @autoclosure () -> String = "",

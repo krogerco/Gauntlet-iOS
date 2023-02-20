@@ -117,7 +117,6 @@ public func XCTAssertEqual<T>(
 ///   - file: The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
 ///   - line: The line number on which failure occurred. Defaults to the line number on which this function was called.
 ///   - then: A closure to be called if the values are equal. This can be used to run additional tests on the values.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 public func XCTAwaitAssertEqual<T: Sendable>(
     _ expression1: @autoclosure () async throws -> T,
     _ expression2: @autoclosure () async throws -> T,
@@ -161,7 +160,6 @@ public func XCTAwaitAssertEqual<T: Sendable>(
 ///   - file: The file in which failure occurred. Defaults to the file name of the test case in which this function was called.
 ///   - line: The line number on which failure occurred. Defaults to the line number on which this function was called.
 ///   - then: A closure to be called if the values are equal. This can be used to run additional tests on the values.
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 public func XCTAwaitAssertEqual<T: Sendable>(
     _ expression1: @autoclosure () async throws -> T?,
     _ expression2: @autoclosure () async throws -> T?,

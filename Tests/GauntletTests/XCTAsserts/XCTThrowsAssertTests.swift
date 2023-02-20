@@ -53,7 +53,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfType() async {
         // Given
         let mock = FailMock()
@@ -91,7 +90,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeNoClosure() async {
         // Given
         let mock = FailMock()
@@ -127,7 +125,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeWithNonThrowingExpression() async {
         // Given
         let mock = FailMock()
@@ -148,7 +145,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeWithNonThrowingExpressionWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
@@ -202,7 +198,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeWithIncorrectType() async {
         // Given
         let mock = FailMock()
@@ -232,7 +227,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeWithIncorrectTypeWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
@@ -290,7 +284,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeWithThrowingThen() async {
         // Given
         let mock = FailMock()
@@ -318,7 +311,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeWithThrowingThenWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
@@ -369,7 +361,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorOfTypeWithThrowingCallInAutoclosureInThen() async {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
@@ -410,7 +401,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualTo() async {
         // Given
         let mock = FailMock()
@@ -445,7 +435,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToNoClosure() async {
         // Given
         let mock = FailMock()
@@ -486,7 +475,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithNonThrowingExpression() async {
         // Given
         let mock = FailMock()
@@ -512,7 +500,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithNonThrowingExpressionWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAssertThrowsError"
         let expectedMessage = """
@@ -571,7 +558,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithIncorrectType() async {
         // Given
         let mock = FailMock()
@@ -601,7 +587,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithIncorrectTypeWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
@@ -661,7 +646,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithUnequalError() async {
         // Given
         let mock = FailMock()
@@ -691,7 +675,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithUnequalErrorWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
@@ -749,7 +732,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithThrowingThen() async {
         // Given
         let mock = FailMock()
@@ -777,7 +759,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithThrowingThenWhenCallingTheDeprecatedFunction() async {
         let message = "XCTAssertThrowsError calls XCTAwaitAssertThrowsError"
         let expectedMessage = """
@@ -828,7 +809,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertThrowsErrorEqualToWithThrowingCallInAutoclosureInThen() async {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
@@ -872,7 +852,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertNoThrow() async {
         // Given
         let mock = FailMock()
@@ -914,7 +893,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncThrowingAssertNoThrow() async {
         // Given
         let mock = FailMock()
@@ -960,7 +938,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertEqual(mock.line, 123)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertNoThrowWithThrowingThen() async {
         // Given
         let mock = FailMock()
@@ -1006,7 +983,6 @@ class XCTThrowAssertsTestCase: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func testAsyncAssertNoThrowWithThrowingCallInAutoclosureInThen() async {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
@@ -1036,7 +1012,6 @@ struct Thrower {
         throw error
     }
 
-    @available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
     func asyncThrow() async throws {
         throw error
     }
