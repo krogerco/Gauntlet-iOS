@@ -151,8 +151,16 @@ public final class Assertion<Value> {
         }
     }
 
-    // I would like this to not be necessary
-    func asyncEvaluate<NewValue>(
+    /// Creates a new `Assertion` by evaluating the provided async closure.
+    ///
+    /// The closure is only evaluated if the receiver's result is a `success`. In the case of a `failure` the returned assertion will contain
+    /// the same data as the receiver.
+    ///
+    /// - Parameters:
+    ///   - name: The name of the assertion being evaluated.
+    ///   - lineNumber: The line number of the assertion being evaluated. This can be captured from the callsite with the `#line` default parameter.
+    ///   - evaluator: A function that is provided a `Value` insance and yields an ``AssertionResult``.
+    public func asyncEvaluate<NewValue>(
         name newName: String,
         lineNumber newLineNumber: Int,
         evaluator: (Value) async throws -> AssertionResult<NewValue>)
