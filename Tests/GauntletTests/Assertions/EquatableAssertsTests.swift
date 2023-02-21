@@ -57,7 +57,7 @@ class EquatableAssertsTestCase: XCTestCase {
 
         // Then
         if case let .failure(error) = assertion.result, case let .message(message) = error {
-            XCTAssertEqual(message, #""57" is not equal to "95""#)
+            XCTAssertEqual(message, #""57" is not equal to the expected value "95""#)
 
         } else {
             XCTFail("isEqualTo result isn't a failure with a message")

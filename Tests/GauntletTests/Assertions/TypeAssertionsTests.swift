@@ -58,6 +58,11 @@ class TypeAssertionsTestCase: XCTestCase {
             .isFailure(expectedName: "isType", expectedLine: line)
             .isEqualTo(.message(expectedMessage))
     }
+
+    func testLiveIsType() {
+        XCTExpectFailure("The assertion should fail when the value is not the expected type.")
+        Assert(that: 5).isType(String.self)
+    }
 }
 
 // MARK: - Helper Types

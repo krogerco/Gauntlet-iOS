@@ -52,6 +52,11 @@ class BoolAssertionsTestCase: XCTestCase {
             .isEqualTo(.message("value is false"))
     }
 
+    func testLiveIsTrue() {
+        XCTExpectFailure("The assertion should fail when the value is false")
+        Assert(that: false).isTrue()
+    }
+
     func testIsFalseSuccess() {
         // Given
         let expectedLine = 456
@@ -74,5 +79,10 @@ class BoolAssertionsTestCase: XCTestCase {
         Assert(that: assertion)
             .isFailure(expectedName: "isFalse", expectedLine: expectedLine)
             .isEqualTo(.message("value is true"))
+    }
+
+    func testLiveIsFalse() {
+        XCTExpectFailure("The assertion should fail when the value is false")
+        Assert(that: false).isTrue()
     }
 }
