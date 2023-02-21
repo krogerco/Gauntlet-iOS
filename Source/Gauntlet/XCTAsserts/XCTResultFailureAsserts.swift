@@ -1,4 +1,4 @@
-//  ResultFailureAsserts.swift
+//  XCTResultFailureAsserts.swift
 //
 //  MIT License
 //

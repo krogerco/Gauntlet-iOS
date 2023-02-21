@@ -1,4 +1,4 @@
-//  SubstringAsserts.swift
+//  XCTSubstringAsserts.swift
 //
 //  MIT License
 //

@@ -1,4 +1,4 @@
-//  TypeAsserts.swift
+//  XCTTypeAsserts.swift
 //
 //  MIT License
 //

@@ -1,4 +1,4 @@
-//  ThrowsAsserts.swift
+//  XCTThrowsAsserts.swift
 //
 //  MIT License
 //
