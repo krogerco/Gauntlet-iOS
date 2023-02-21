@@ -32,7 +32,7 @@ extension Assertion {
     @discardableResult
     func succeed(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "succeed", lineNumber: line) { _ in
-            return .success
+            .success
         }
     }
 
@@ -40,7 +40,7 @@ extension Assertion {
     @discardableResult
     func fail(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "fail", lineNumber: line) { _ in
-            return .message("Assert Failed")
+            .message("Assert Failed")
         }
     }
 }

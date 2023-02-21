@@ -37,7 +37,19 @@ extension Assertion where Value: Collection {
 
             // Format the message appropriately based on the count
             let messageSuffix = collection.count == 1 ? "item" : "items"
-            return .message("collection has \(collection.count) \(messageSuffix)")
+            return .message("The collection has \(collection.count) \(messageSuffix)")
+        }
+    }
+
+    /// Asserts that the collection has items in it.
+    ///
+    /// - Returns: An ``Assertion`` with the collection.
+    @discardableResult
+    public func isNotEmpty(line: Int = #line) -> Assertion<Value> {
+        evaluate(name: "isNotEmpty", lineNumber: line) { collection in
+            guard collection.isEmpty else { return .success(collection) }
+
+            return .message("The collection is empty")
         }
     }
 

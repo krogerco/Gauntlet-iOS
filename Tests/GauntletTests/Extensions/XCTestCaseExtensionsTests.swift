@@ -242,10 +242,6 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         /// Validate that this test case is the recorder.
         XCTAssert(assertion.recorder as? Self === self)
     }
-
-    // MARK: - Live Asserts
-
-    
 }
 
 // MARK: - IssueRecorder

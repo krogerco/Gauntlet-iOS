@@ -33,7 +33,10 @@ class DemoAppTests: XCTestCase {
         // Given, When
         let result: Result<String, Error> = .success("Hello")
 
-        // Then
+        // Functional API
+        Assert(that: result).isSuccess().isNotEmpty()
+
+        // Legacy API
         XCTAssertSuccess(result, is: String.self) { value in
             XCTAssertFalse(value.isEmpty)
         }

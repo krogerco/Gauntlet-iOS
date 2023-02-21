@@ -28,6 +28,8 @@ import Gauntlet
 import XCTest
 
 class CollectionAssertionsTestCase: XCTestCase {
+
+    // MARK: - isEmpty
     func testIsEmptySuccess() {
         // Given
         let emptyArray = [Int]()
@@ -52,7 +54,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .isFailure(expectedName: "isEmpty", expectedLine: expectedLine)
-            .isEqualTo(.message("collection has 1 item"))
+            .isEqualTo(.message("The collection has 1 item"))
     }
 
     func testIsEmptyFailureMultipleItems() {
@@ -66,8 +68,40 @@ class CollectionAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .isFailure(expectedName: "isEmpty", expectedLine: expectedLine)
-            .isEqualTo(.message("collection has 3 items"))
+            .isEqualTo(.message("The collection has 3 items"))
     }
+
+    // MARK: - isNotEmpty
+
+    func testIsNotEmptySuccess() {
+        // Given
+        let array = [1, 2]
+        let expectedLine = 321
+
+        // When
+        let assertion = TestAssertion(on: array).isNotEmpty(line: expectedLine)
+
+        // Then
+        Assert(that: assertion)
+            .isSuccess(expectedName: "isNotEmpty", expectedLine: expectedLine)
+            .isEqualTo(array)
+    }
+
+    func testIsNotEmptyFailure() {
+        // Given
+        let emptyArray = [Int]()
+        let expectedLine = 975
+
+        // When
+        let assertion = TestAssertion(on: emptyArray).isNotEmpty(line: expectedLine)
+
+        // Then
+        Assert(that: assertion)
+            .isFailure(expectedName: "isNotEmpty", expectedLine: expectedLine)
+            .isEqualTo(.message("The collection is empty"))
+    }
+
+    // MARK: - hasCount
 
     func testHasCountSuccess() {
         // Given
