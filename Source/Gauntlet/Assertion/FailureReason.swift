@@ -50,5 +50,3 @@ extension FailureReason: Equatable {
         }
     }
 }
-
-#warning("Need to add Assertions to FailureReason to allow easily testing thrown error cases")

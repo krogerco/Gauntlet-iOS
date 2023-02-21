@@ -53,8 +53,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .isFailure(expectedName: "doesNotThrow", expectedLine: expectedLine)
-
-        #warning("Needs error validation")
+            .isEqualTo(.thrownError(MockError.someError))
     }
 
     func testLiveDoesNotThrow() {
@@ -137,8 +136,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .isFailure(expectedName: "doesNotThrow", expectedLine: expectedLine)
-
-        #warning("Needs error validation")
+            .isEqualTo(.thrownError(MockError.someError))
     }
 
     func testLiveAsyncDoesNotThrow() async {
