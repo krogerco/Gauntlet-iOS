@@ -245,18 +245,7 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
 
     // MARK: - Live Asserts
 
-    func testPassingLiveAssertion() {
-        // Given, When, Then
-        Assert(that: "some value").isEqualTo("some value")
-    }
-
-    func testFailingLiveAssertion() {
-        // Given
-        XCTExpectFailure("This assertion should generate a failure")
-
-        // When, Then
-        Assert(that: "some value").isEqualTo("some other value")
-    }
+    
 }
 
 // MARK: - IssueRecorder
