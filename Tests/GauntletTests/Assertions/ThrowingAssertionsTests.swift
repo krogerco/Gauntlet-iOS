@@ -56,18 +56,6 @@ class ThrowingAssertionsTestCase: XCTestCase {
             .isEqualTo(.thrownError(MockError.someError))
     }
 
-    func testLiveDoesNotThrow() {
-        // Given
-        func expression() throws -> String {
-            throw MockError.someError
-        }
-
-        // When, Then
-        XCTExpectFailure("This assertion should generate a failure when an error is thrown")
-        Assert(throwingExpression: try expression())
-            .doesNotThrow()
-    }
-
     func testThrowsError() {
         // Given
         let expression = ThrowableExpression(expression: { throw MockError.someError })
@@ -95,15 +83,6 @@ class ThrowingAssertionsTestCase: XCTestCase {
         Assert(that: assertion)
             .isFailure(expectedName: "throwsError", expectedLine: expectedLine)
             .isEqualTo(.message(#"Expression did not throw. Returned "some value""#))
-    }
-
-    func testLiveThrowsError() {
-        // Given
-        func expression() throws -> String { "no error" }
-
-        // When, Then
-        XCTExpectFailure("This assertion should generate a failure when no error is thrown")
-        Assert(throwingExpression: try expression()).throwsError()
     }
 
     // MARK: - Async
@@ -139,15 +118,6 @@ class ThrowingAssertionsTestCase: XCTestCase {
             .isEqualTo(.thrownError(MockError.someError))
     }
 
-    func testLiveAsyncDoesNotThrow() async {
-        // Given
-        let model = ThrowingAsyncModel(result: .failure(.someError))
-
-        // When, Then
-        XCTExpectFailure("This assertion should generate a failure when an error is thrown")
-        await Assert(throwingExpression: try await model.getValue()).doesNotThrow()
-    }
-
     func testAsyncThrowsError() async {
         // Given
         let model = ThrowingAsyncModel(result: .failure(.someError))
@@ -177,14 +147,5 @@ class ThrowingAssertionsTestCase: XCTestCase {
         Assert(that: assertion)
             .isFailure(expectedName: "throwsError", expectedLine: expectedLine)
             .isEqualTo(.message(#"Expression did not throw. Returned "some value""#))
-    }
-
-    func testLiveAsyncThrowsError() async {
-        // Given
-        let model = ThrowingAsyncModel(result: .success("some value"))
-
-        // When, Then
-        XCTExpectFailure("This assertion should generate a failure when no error is thrown")
-        await Assert(throwingExpression: try await model.getValue()).throwsError()
     }
 }

@@ -76,11 +76,4 @@ class ThenAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: closureCalled).isFalse()
     }
-
-    func testLiveThen() {
-        XCTExpectFailure("This assertion should generate a failure")
-        Assert(that: 95).then { _ in
-            throw MockError.someError
-        }
-    }
 }

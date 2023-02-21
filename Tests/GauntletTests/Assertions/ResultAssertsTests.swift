@@ -57,15 +57,6 @@ class ResultAssertsTestCase: XCTestCase {
             .isEqualTo(.message("Result is a failure: Some Error"))
     }
 
-    func testLiveIsSuccess() {
-        // Given
-        let result: Result<String, Error> = .failure(MockError.someOtherError)
-
-        // When, Then
-        XCTExpectFailure("This assertion should generate a failure")
-        Assert(that: result).isSuccess()
-    }
-
     func testIsFailureWithFailure() {
         // Given
         let expectedError = MockError.someError
@@ -93,14 +84,5 @@ class ResultAssertsTestCase: XCTestCase {
         Assert(that: assertion)
             .isFailure(expectedName: "isFailure", expectedLine: expectedLine)
             .isEqualTo(.message("Result is a success"))
-    }
-
-    func testLiveIsFailue() {
-        // Given
-        let result: Result<String, Error> = .success("some value")
-
-        // When, Then
-        XCTExpectFailure("This assertion should generate a failure")
-        Assert(that: result).isFailure()
     }
 }

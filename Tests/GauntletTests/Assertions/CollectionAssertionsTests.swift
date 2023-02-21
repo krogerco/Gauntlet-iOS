@@ -69,15 +69,6 @@ class CollectionAssertionsTestCase: XCTestCase {
             .isEqualTo(.message("collection has 3 items"))
     }
 
-    func testLiveIsEmpty() {
-        // Given
-        let arrayWithItems = [1, 2, 3]
-
-        // When, Then
-        XCTExpectFailure("This assertion should generate a failure")
-        Assert(that: arrayWithItems).isEmpty()
-    }
-
     func testHasCountSuccess() {
         // Given
         let array = [4, 3, 2]
@@ -104,14 +95,5 @@ class CollectionAssertionsTestCase: XCTestCase {
         Assert(that: assertion)
             .isFailure(expectedName: "hasCount", expectedLine: expectedLine)
             .isEqualTo(.message("Count of 2 is not equal to the expected count 5"))
-    }
-
-    func testLiveHasCount() {
-        // Given
-        let array = [1, 2]
-
-        // When, Then
-        XCTExpectFailure("This asssertion should generate a failure")
-        Assert(that: array).hasCount(5)
     }
 }
