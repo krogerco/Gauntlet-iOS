@@ -40,7 +40,7 @@ jobs:
             ONLY_FILE_NAME=$(basename -- "${{ env.FILENAME }}")
             EXTENSION="${ONLY_FILE_NAME##*.}"
 
-            set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -showdestinations
+            set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -destination  "${{ env.DESTINATION }}" GITHUB_CI=true
 
             case $EXTENSION in
 
