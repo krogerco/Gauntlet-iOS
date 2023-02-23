@@ -35,7 +35,7 @@ extension XCTestCase {
     /// Creates an ``Assertion`` on the specified value.
     ///
     /// - Parameters:
-    ///   - expression: The value to assert on.
+    ///   - value: The value to assert on.
     ///   - filePath: The path to the source file in which the assertion exists. This should not be provided manually.
     ///   - lineNumber: The line number of the asertion. This should not be provided manually.
     public func Assert<T>(
