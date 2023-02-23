@@ -119,7 +119,7 @@ public final class Assertion<Value> {
     /// the same data as the receiver.
     ///
     /// - Parameters:
-    ///   - name: The name of the assertion being evaluated.
+    ///   - name: The name of the assertion being evaluated. This will be used when displaying failure messages in Xcode or in logs. Example: `isEqual`
     ///   - lineNumber: The line number of the assertion being evaluated. This can be captured from the callsite with the `#line` default parameter.
     ///   - evaluator: A function that is provided a `Value` insance and yields an ``AssertionResult``.
     public func evaluate<NewValue>(
@@ -157,7 +157,7 @@ public final class Assertion<Value> {
     /// the same data as the receiver.
     ///
     /// - Parameters:
-    ///   - name: The name of the assertion being evaluated.
+    ///   - name: The name of the assertion being evaluated. This will be used when displaying failure messages in Xcode or in logs. Example: `isEqual`
     ///   - lineNumber: The line number of the assertion being evaluated. This can be captured from the callsite with the `#line` default parameter.
     ///   - evaluator: A function that is provided a `Value` insance and yields an ``AssertionResult``.
     public func asyncEvaluate<NewValue>(
