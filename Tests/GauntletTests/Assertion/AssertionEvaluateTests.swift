@@ -29,10 +29,10 @@ import XCTest
 
 class AssertionEvlauateTestCase: XCTestCase {
     /// Evaluating an expression on an `Assertion` should result in a new `Assertion` containing a success with the new value.
-    /// The name and line number should be the values provided to `evaluate()`. No issues should be recorded. The new `Assertion` should not be root.
+    /// The name and line number should be the values provided to `evaluate()`. No failures should be recorded. The new `Assertion` should not be root.
     func testEvaluate() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let assertion = Assertion(
             result: .success("initial value"),
             name: "Initial Name",
@@ -61,17 +61,17 @@ class AssertionEvlauateTestCase: XCTestCase {
         XCTAssertEqual(evalutedAssertion.name, newName)
         XCTAssertEqual(evalutedAssertion.filePath, assertion.filePath)
         XCTAssertEqual(evalutedAssertion.lineNumber, newLine)
-        XCTAssert(evalutedAssertion.recorder is MockIssueRecorder)
+        XCTAssert(evalutedAssertion.recorder is MockFailureRecorder)
         XCTAssertFalse(evalutedAssertion.isRoot)
         XCTAssert(recorder.recordedFailures.isEmpty)
     }
 
     /// Evaluating an expression that throws an error should result in a new `Assertion` containing a failure with the thrown error.
-    /// The name and line number should be the values provided to `evaluate()`. An issue should be recorded with these values and the thrown error.
+    /// The name and line number should be the values provided to `evaluate()`. An failures should be recorded with these values and the thrown error.
     /// The new `Assertion` should not be root.
     func testEvaluateThatThrows() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let assertion = Assertion(
             result: .success("initial value"),
             name: "Initial Name",
@@ -99,7 +99,7 @@ class AssertionEvlauateTestCase: XCTestCase {
         XCTAssertEqual(evalutedAssertion.name, newName)
         XCTAssertEqual(evalutedAssertion.filePath, assertion.filePath)
         XCTAssertEqual(evalutedAssertion.lineNumber, newLine)
-        XCTAssert(evalutedAssertion.recorder is MockIssueRecorder)
+        XCTAssert(evalutedAssertion.recorder is MockFailureRecorder)
         XCTAssertFalse(evalutedAssertion.isRoot)
 
         let expectedFailure = RecordedFailure(
@@ -113,11 +113,11 @@ class AssertionEvlauateTestCase: XCTestCase {
     }
 
     /// Evaluating an expression that returns aa failure should result in a new `Assertion` containing that failure.
-    /// The name and line number should be the values provided to `evaluate()`. An issue should be recorded with these values and the specified failure.
+    /// The name and line number should be the values provided to `evaluate()`. A failure should be recorded with these values and the specified failure.
     /// The new `Assertion` should not be root.
     func testEvaluateThatReturnsFailure() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let assertion = Assertion(
             result: .success("initial value"),
             name: "Initial Name",
@@ -146,7 +146,7 @@ class AssertionEvlauateTestCase: XCTestCase {
         XCTAssertEqual(evalutedAssertion.name, newName)
         XCTAssertEqual(evalutedAssertion.filePath, assertion.filePath)
         XCTAssertEqual(evalutedAssertion.lineNumber, newLine)
-        XCTAssert(evalutedAssertion.recorder is MockIssueRecorder)
+        XCTAssert(evalutedAssertion.recorder is MockFailureRecorder)
         XCTAssertFalse(evalutedAssertion.isRoot)
 
         let expectedFailure = RecordedFailure(
@@ -163,7 +163,7 @@ class AssertionEvlauateTestCase: XCTestCase {
     /// The new `Assertion` should not be root. The expression should not be evaluated.
     func testEvaluateOnFailure() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let initialMessage = "Initial Failure"
         let initialAssertion = Assertion<String>(
             result: .message(initialMessage),
@@ -192,7 +192,7 @@ class AssertionEvlauateTestCase: XCTestCase {
         XCTAssertEqual(evalutedAssertion.name, initialAssertion.name)
         XCTAssertEqual(evalutedAssertion.filePath, initialAssertion.filePath)
         XCTAssertEqual(evalutedAssertion.lineNumber, initialAssertion.lineNumber)
-        XCTAssert(evalutedAssertion.recorder is MockIssueRecorder)
+        XCTAssert(evalutedAssertion.recorder is MockFailureRecorder)
         XCTAssertFalse(evalutedAssertion.isRoot)
         XCTAssert(recorder.recordedFailures.isEmpty)
         XCTAssertFalse(expressionWasEvaluated)

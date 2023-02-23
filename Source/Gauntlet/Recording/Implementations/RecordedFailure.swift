@@ -25,9 +25,9 @@
 
 import Foundation
 
-/// Represents the data recorded to an `IssueRecorder`.
+/// Represents the data recorded to an `FailureRecorder`.
 ///
-/// This is intended to be used when testing complex assertions that require testing via issue recording instead of on the returned assertion itself.
+/// This is intended to be used when testing complex assertions that require testing via failure recording instead of on the returned assertion itself.
 public struct RecordedFailure {
     /// The name of the ``Assertion`` that failed.
     public let name: String

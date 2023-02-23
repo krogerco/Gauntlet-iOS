@@ -1,5 +1,5 @@
 //
-//  MockIssueRecorder.swift
+//  MockFailureRecorderTests.swift
 //
 //  MIT License
 //
@@ -29,10 +29,10 @@ import XCTest
 
 // MARK: - Tests
 
-class MockIssueRecorderTestCase: XCTestCase {
+class MockFailureRecorderTestCase: XCTestCase {
     func testInitializer() {
         // Given, When
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
 
         // Then
         XCTAssert(recorder.recordedFailures.isEmpty)
@@ -53,7 +53,7 @@ class MockIssueRecorderTestCase: XCTestCase {
             filePath: "/first/path",
             lineNumber: 123
         )
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
 
         // When
         recorder.record(
@@ -76,7 +76,7 @@ class MockIssueRecorderTestCase: XCTestCase {
 
     func testClear() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         recorder.record(name: "some name", reason: .message(""), filePath: "/some/path", lineNumber: 123)
 
         // When

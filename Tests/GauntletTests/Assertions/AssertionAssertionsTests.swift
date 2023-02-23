@@ -32,7 +32,7 @@ class AssertionAssertionsTestCase: XCTestCase {
 
     func testIsSuccessSuccess() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let expectedName = "someAssert"
         let expectedLine = 123
         let expectedValue = "assertion value"
@@ -60,7 +60,7 @@ class AssertionAssertionsTestCase: XCTestCase {
 
     func testIsSuccessMixedSuccess() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let actualName = "actualName"
         let expectedName = "expectedName"
         let actualLine = 789
@@ -109,7 +109,7 @@ class AssertionAssertionsTestCase: XCTestCase {
 
     func testIsSuccessFullFailure() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let actualName = "actualName"
         let expectedName = "expectedName"
         let actualLine = 789
@@ -178,7 +178,7 @@ class AssertionAssertionsTestCase: XCTestCase {
 
     func testIsFailureSuccess() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let expectedName = "someAssert"
         let expectedLine = 123
         let expectedReason = FailureReason.message("some failure reason")
@@ -206,7 +206,7 @@ class AssertionAssertionsTestCase: XCTestCase {
 
     func testIsFailureMixedSuccess() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let actualName = "actualName"
         let expectedName = "expectedName"
         let actualLine = 789
@@ -255,7 +255,7 @@ class AssertionAssertionsTestCase: XCTestCase {
 
     func testIsFailureFullFailure() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let actualName = "actualName"
         let expectedName = "expectedName"
         let actualLine = 789

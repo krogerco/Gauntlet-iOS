@@ -63,8 +63,8 @@ public final class Assertion<Value> {
     /// The line number of the assertion. This can be captured at the call site with the `#line` default parameter.
     public let lineNumber: Int
 
-    /// The `IssueRecorder` instance that failures should be recorded to.
-    let recorder: IssueRecorder
+    /// The `FailureRecorder` instance that failures should be recorded to.
+    let recorder: FailureRecorder
 
     /// Indicates whether this assertion is the root assertion or if it spawned off of the root.
     let isRoot: Bool
@@ -82,14 +82,14 @@ public final class Assertion<Value> {
     ///   - name: The name of the assertion. This should describe what the assertion is validating.
     ///   - filePath: The path to the source file in which the assertion exists.
     ///   - lineNumber: The line number of the assertion. This can be captured at the call site with the `#line` default parameter.
-    ///   - recorder: The `IssueRecorder` instance that failures should be recorded to.
+    ///   - recorder: The `FailureRecorder` instance that failures should be recorded to.
     ///   - isRoot: Indicates whether this assertion is the root assertion or if it spawned off of the root.
     init(
         result: AssertionResult<Value>,
         name: String,
         filePath: String,
         lineNumber: Int,
-        recorder: IssueRecorder,
+        recorder: FailureRecorder,
         isRoot: Bool)
     {
         self.result = result
@@ -231,7 +231,7 @@ extension Assertion {
         name: String,
         filePath: String,
         lineNumber: Int,
-        recorder: IssueRecorder,
+        recorder: FailureRecorder,
         isRoot: Bool)
     {
         self.init(result: .success(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
@@ -242,7 +242,7 @@ extension Assertion {
         name: String,
         filePath: String,
         lineNumber: Int,
-        recorder: IssueRecorder,
+        recorder: FailureRecorder,
         isRoot: Bool) async
     {
         let value = await expression()

@@ -30,7 +30,7 @@ import XCTest
 class ThenAssertionsTestCase: XCTestCase {
     func testThenOnSuccessfulAssertion() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let expectedValue = 57
         var valuePassedToClosure: Int?
 
@@ -46,7 +46,7 @@ class ThenAssertionsTestCase: XCTestCase {
 
     func testThenOnSuccessfulAssertionWithThrowingClosure() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let thrownError = MockError.someOtherError
         let line = 432
         // When

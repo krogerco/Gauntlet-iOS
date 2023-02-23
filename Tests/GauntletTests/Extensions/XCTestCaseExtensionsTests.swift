@@ -50,10 +50,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         XCTAssertTrue(assertion.isRoot)
     }
 
-    /// A TestAssertion should be created using the specified recorder. This triggers a failure to cause an issue to be recorded to validate this.
+    /// A TestAssertion should be created using the specified recorder. This triggers a failure to cause an failure to be recorded to validate this.
     func testCreatingTestAssertionWithMockRecorder() {
         // Given, When
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let assertion: Assertion<String> = TestAssertion(on: "", recorder: recorder)
 
         // When
@@ -244,9 +244,9 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
     }
 }
 
-// MARK: - IssueRecorder
+// MARK: - FailureRecorder
 
-class XCTestCaseIssueRecorderTestCase: XCTestCase {
+class XCTestCaseFailureRecorderTestCase: XCTestCase {
     class MockTestCase: XCTestCase {
         private(set) var recordedIssues: [XCTIssue] = []
 

@@ -1,5 +1,5 @@
 //
-//  MockIssueRecorder.swift
+//  FailureRecorder.swift
 //
 //  MIT License
 //
@@ -26,26 +26,15 @@
 import Foundation
 import XCTest
 
-/// A mock implementation of `IssueRecorder` that can be used to test assertions.
-public class MockIssueRecorder: IssueRecorder {
-    /// A list of all issues that have been recorded.
-    public private(set) var recordedFailures: [RecordedFailure]
+/// A type that can record failures that occur during testing. In practice this will typically be an `XCTestCase` instance.
+public protocol FailureRecorder {
 
-    /// Creates a `MockIssueRecorder` instance.
-    public init() {
-        recordedFailures = []
-    }
-
-    /// Clears the list of recorded issues.
-    public func clear() {
-        recordedFailures = []
-    }
-
-    /// Records the provided issue. All recorded issues are stored in the `recordedIssues` array.
+    /// Records an assertion failure.
     ///
-    /// - Parameter issue: The issue to record.
-    public func record(name: String, reason: FailureReason, filePath: String, lineNumber: Int) {
-        let failure = RecordedFailure(name: name, reason: reason, filePath: filePath, lineNumber: lineNumber)
-        recordedFailures.append(failure)
-    }
+    /// - Parameters:
+    ///   - name: The name of the ``Assertion`` that failed.
+    ///   - reason: The reason the ``Assertion`` failed.
+    ///   - filePath: The file path captured from the call site.
+    ///   - lineNumber: The line number captured from the call site.
+    func record(name: String, reason: FailureReason, filePath: String, lineNumber: Int)
 }

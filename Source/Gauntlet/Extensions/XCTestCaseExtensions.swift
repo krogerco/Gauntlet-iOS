@@ -174,16 +174,16 @@ extension XCTestCase {
     ///
     /// - Parameters:
     ///   - value: The initial value
-    ///   - recorder: The `IssueRecorder` to use. defaults to a recorder that does nothing and will not cause failures.
+    ///   - recorder: The `FailureRecorder` to use. defaults to a recorder that does nothing and will not cause failures.
     ///
     /// - Returns: An ``Assertion`` configured for testing with the specified value.
-    public func TestAssertion<T>(on value: T, recorder: IssueRecorder? = nil) -> Assertion<T> {
+    public func TestAssertion<T>(on value: T, recorder: FailureRecorder? = nil) -> Assertion<T> {
         Assertion(
             result: .success(value),
             name: "TestAssertion",
             filePath: "/test/assertion/file/path",
             lineNumber: 0,
-            recorder: recorder ?? SilentIssueRecorder(),
+            recorder: recorder ?? SilentFailureRecorder(),
             isRoot: true
         )
     }
@@ -203,15 +203,15 @@ extension XCTestCase {
             name: "TestFailedAssertion",
             filePath: "/test/failed/assertion/file/path",
             lineNumber: 0,
-            recorder: SilentIssueRecorder(),
+            recorder: SilentFailureRecorder(),
             isRoot: true
         )
     }
 }
 
-// MARK: - IssueRecorder
+// MARK: - FailureRecorder
 
-extension XCTestCase: IssueRecorder {
+extension XCTestCase: FailureRecorder {
     public func record(name: String, reason: FailureReason, filePath: String, lineNumber: Int) {
         let detail: String
         let error: Error?

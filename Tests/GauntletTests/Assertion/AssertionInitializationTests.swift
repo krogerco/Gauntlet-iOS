@@ -31,10 +31,10 @@ class AssertionTestCase: XCTestCase {
 
     // MARK: - Initializers
 
-    /// The `Result` initializer should store the provided values and should not record any issues when provided with a `success`.
+    /// The `Result` initializer should store the provided values and should not record any failures when provided with a `success`.
     func testResultInitSuccess() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let value = "some value"
         let name = "Some Assertion Name"
         let filePath = "/some/file/path"
@@ -61,16 +61,16 @@ class AssertionTestCase: XCTestCase {
         XCTAssertEqual(assertion.name, name)
         XCTAssertEqual(assertion.filePath, filePath)
         XCTAssertEqual(assertion.lineNumber, lineNumber)
-        XCTAssert(assertion.recorder is MockIssueRecorder)
+        XCTAssert(assertion.recorder is MockFailureRecorder)
         XCTAssertEqual(assertion.isRoot, isRoot)
         XCTAssert(recorder.recordedFailures.isEmpty)
 
     }
 
-    /// The `Result` initializer should store the provided values and should not record any issues when provided with a `failure`.
+    /// The `Result` initializer should store the provided values and should not record any failures when provided with a `failure`.
     func testResultInitFailure() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let failureMessage = "some failure message"
         let name = "Some Failed Assertion Name"
         let filePath = "/some/failed/file/path"
@@ -97,15 +97,15 @@ class AssertionTestCase: XCTestCase {
         XCTAssertEqual(assertion.name, name)
         XCTAssertEqual(assertion.filePath, filePath)
         XCTAssertEqual(assertion.lineNumber, lineNumber)
-        XCTAssert(assertion.recorder is MockIssueRecorder)
+        XCTAssert(assertion.recorder is MockFailureRecorder)
         XCTAssertEqual(assertion.isRoot, isRoot)
         XCTAssert(recorder.recordedFailures.isEmpty)
     }
 
-    /// The value initializer should have a `success` result, store the provided values, and not record any issues to the recorder.
+    /// The value initializer should have a `success` result, store the provided values, and not record any failures to the recorder.
     func testValueInit() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let value = 57
         let name = "Some Assertion Name"
         let filePath = "/some/file/path"
@@ -132,15 +132,15 @@ class AssertionTestCase: XCTestCase {
         XCTAssertEqual(assertion.name, name)
         XCTAssertEqual(assertion.filePath, filePath)
         XCTAssertEqual(assertion.lineNumber, lineNumber)
-        XCTAssert(assertion.recorder is MockIssueRecorder)
+        XCTAssert(assertion.recorder is MockFailureRecorder)
         XCTAssertEqual(assertion.isRoot, isRoot)
         XCTAssert(recorder.recordedFailures.isEmpty)
     }
 
-    /// The async value initializer should have a `success` result, store the provided values, and not record any issues to the recorder.
+    /// The async value initializer should have a `success` result, store the provided values, and not record any failures to the recorder.
     func testAsyncValueInit() async {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let name = "Some Assertion Name"
         let filePath = "/some/file/path"
         let lineNumber = 3412
@@ -167,7 +167,7 @@ class AssertionTestCase: XCTestCase {
         XCTAssertEqual(assertion.name, name)
         XCTAssertEqual(assertion.filePath, filePath)
         XCTAssertEqual(assertion.lineNumber, lineNumber)
-        XCTAssert(assertion.recorder is MockIssueRecorder)
+        XCTAssert(assertion.recorder is MockFailureRecorder)
         XCTAssertEqual(assertion.isRoot, isRoot)
         XCTAssert(recorder.recordedFailures.isEmpty)
     }
@@ -178,7 +178,7 @@ class AssertionTestCase: XCTestCase {
     /// indicating that no assertions were evaluated.
     func testUnevaluatedRootRecordsIssueOnDeinit() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let name = "SomeAssertion"
         let filePath = "/some/file/path"
         let lineNumber = 1234
@@ -210,10 +210,10 @@ class AssertionTestCase: XCTestCase {
     }
 
     /// If an `Assertion` is a failure and unevaluated, but not the root, it should not record any failures on deinit. This will occur when additional assertions
-    /// are chained off of an early assertion that failed. That original failure recorded the issue so there's no need to re-record it.
-    func testFailureNonRootDoesntRecordIssueOnDeinit() {
+    /// are chained off of an early assertion that failed. That original failure recorded the failure so there's no need to re-record it.
+    func testFailureNonRootDoesntRecordFailureOnDeinit() {
         // Given
-        let recorder = MockIssueRecorder()
+        let recorder = MockFailureRecorder()
         let name = "SomeAssertion"
         let filePath = "/some/file/path"
         let lineNumber = 1234

@@ -1,5 +1,5 @@
 //
-//  SilentIssueRecorder.swift
+//  SilentFailureRecorder.swift
 //
 //  MIT License
 //
@@ -26,6 +26,6 @@
 import Foundation
 import XCTest
 
-struct SilentIssueRecorder: IssueRecorder {
+struct SilentFailureRecorder: FailureRecorder {
     func record(name: String, reason: FailureReason, filePath: String, lineNumber: Int) {}
 }
