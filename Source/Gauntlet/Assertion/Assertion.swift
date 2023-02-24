@@ -249,3 +249,22 @@ extension Assertion {
         self.init(result: .success(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
     }
 }
+
+// MARK: - Utils
+
+extension Assertion {
+
+    public func map<NewValue>(transform: (Value) -> NewValue, line: Int = #line) -> Assertion<NewValue> {
+        evaluate(name: #function, lineNumber: line) { value in
+            let newValue = transform(value)
+            return .success(newValue)
+        }
+    }
+
+    public func tryMap<NewValue>(transform: (Value) throws -> NewValue, line: Int = #line) -> Assertion<NewValue> {
+        evaluate(name: #function, lineNumber: line) { value in
+            let newValue = try transform(value)
+            return .success(newValue)
+        }
+    }
+}
