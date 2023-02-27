@@ -102,7 +102,7 @@ extension Assertion where Value: AssertionConvertible {
     }
 }
 
-// MARK: - Machienry
+// MARK: - Machinery
 
 /// A type that can be converted to an ``Assertion``.
 ///
