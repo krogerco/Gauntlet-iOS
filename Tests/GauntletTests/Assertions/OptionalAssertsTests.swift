@@ -37,7 +37,7 @@ class OptionalAssertsTestCase: XCTestCase {
         let value: String? = "some value"
 
         // When
-        let assertion = TestAssertion(on: value).isNotNil(line: line)
+        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
 
         // Then
         Assert(that: assertion)
@@ -51,7 +51,7 @@ class OptionalAssertsTestCase: XCTestCase {
         let value: String? = nil
 
         // When
-        let assertion = TestAssertion(on: value).isNotNil(line: line)
+        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
 
         // Then
         Assert(that: assertion)
@@ -67,7 +67,7 @@ class OptionalAssertsTestCase: XCTestCase {
         let value: String? = nil
 
         // When
-        let assertion = TestAssertion(on: value).isNil(line: line)
+        let assertion = TestAnAssertion(on: value).isNil(line: line)
 
         // Then
         Assert(that: assertion)
@@ -80,7 +80,7 @@ class OptionalAssertsTestCase: XCTestCase {
         let value: String? = "some value"
 
         // When
-        let assertion = TestAssertion(on: value).isNil(line: line)
+        let assertion = TestAnAssertion(on: value).isNil(line: line)
 
         // Then
         Assert(that: assertion)

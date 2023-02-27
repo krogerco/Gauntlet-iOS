@@ -37,7 +37,7 @@ class EquatableAssertsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: value).isEqualTo(value, line: expectedLine)
+        let assertion = TestAnAssertion(on: value).isEqualTo(value, line: expectedLine)
 
         // Then
         if case let .failure(error) = assertion.result {
@@ -53,7 +53,7 @@ class EquatableAssertsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: 57).isEqualTo(95, line: expectedLine)
+        let assertion = TestAnAssertion(on: 57).isEqualTo(95, line: expectedLine)
 
         // Then
         if case let .failure(error) = assertion.result, case let .message(message) = error {
@@ -79,7 +79,7 @@ class EquatableAssertsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: 57).isNotEqualTo(95, line: expectedLine)
+        let assertion = TestAnAssertion(on: 57).isNotEqualTo(95, line: expectedLine)
 
         // Then
         Assert(that: assertion).isSuccess(expectedName: "isNotEqualTo", expectedLine: expectedLine)
@@ -90,7 +90,7 @@ class EquatableAssertsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: 57).isNotEqualTo(57, line: expectedLine)
+        let assertion = TestAnAssertion(on: 57).isNotEqualTo(57, line: expectedLine)
 
         // Then
         Assert(that: assertion)

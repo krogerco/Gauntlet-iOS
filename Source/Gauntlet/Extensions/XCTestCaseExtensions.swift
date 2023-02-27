@@ -177,7 +177,7 @@ extension XCTestCase {
     ///   - recorder: The `FailureRecorder` to use. defaults to a recorder that does nothing and will not cause failures.
     ///
     /// - Returns: An ``Assertion`` configured for testing with the specified value.
-    public func TestAssertion<T>(on value: T, recorder: FailureRecorder? = nil) -> Assertion<T> {
+    public func TestAnAssertion<T>(on value: T, recorder: FailureRecorder? = nil) -> Assertion<T> {
         Assertion(
             result: .success(value),
             name: "TestAssertion",

@@ -34,7 +34,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: expression).doesNotThrow(line: expectedLine)
+        let assertion = TestAnAssertion(on: expression).doesNotThrow(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -48,7 +48,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: expression).doesNotThrow(line: expectedLine)
+        let assertion = TestAnAssertion(on: expression).doesNotThrow(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -62,7 +62,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: expression).throwsError(line: expectedLine)
+        let assertion = TestAnAssertion(on: expression).throwsError(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -77,7 +77,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: expression).throwsError(line: expectedLine)
+        let assertion = TestAnAssertion(on: expression).throwsError(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -94,7 +94,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expression = AsyncThrowableExpression(expression: { try await model.getValue() })
 
         // When
-        let assertion = await TestAssertion(on: expression).doesNotThrow(line: expectedLine)
+        let assertion = await TestAnAssertion(on: expression).doesNotThrow(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -110,7 +110,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expression = AsyncThrowableExpression(expression: { try await model.getValue() })
 
         // When
-        let assertion = await TestAssertion(on: expression).doesNotThrow(line: expectedLine)
+        let assertion = await TestAnAssertion(on: expression).doesNotThrow(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -125,7 +125,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expression = AsyncThrowableExpression(expression: { try await model.getValue() })
 
         // When
-        let assertion = await TestAssertion(on: expression).throwsError(line: expectedLine)
+        let assertion = await TestAnAssertion(on: expression).throwsError(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -141,7 +141,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         let expression = AsyncThrowableExpression(expression: { try await model.getValue() })
 
         // When
-        let assertion = await TestAssertion(on: expression).throwsError(line: expectedLine)
+        let assertion = await TestAnAssertion(on: expression).throwsError(line: expectedLine)
 
         // Then
         Assert(that: assertion)

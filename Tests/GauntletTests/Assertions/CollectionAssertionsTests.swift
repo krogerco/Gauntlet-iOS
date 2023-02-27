@@ -36,7 +36,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: emptyArray).isEmpty(line: expectedLine)
+        let assertion = TestAnAssertion(on: emptyArray).isEmpty(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -49,7 +49,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         let expectedLine = 975
 
         // When
-        let assertion = TestAssertion(on: arrayWithItems).isEmpty(line: expectedLine)
+        let assertion = TestAnAssertion(on: arrayWithItems).isEmpty(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -63,7 +63,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         let expectedLine = 975
 
         // When
-        let assertion = TestAssertion(on: arrayWithItems).isEmpty(line: expectedLine)
+        let assertion = TestAnAssertion(on: arrayWithItems).isEmpty(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -79,7 +79,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: array).isNotEmpty(line: expectedLine)
+        let assertion = TestAnAssertion(on: array).isNotEmpty(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -93,7 +93,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         let expectedLine = 975
 
         // When
-        let assertion = TestAssertion(on: emptyArray).isNotEmpty(line: expectedLine)
+        let assertion = TestAnAssertion(on: emptyArray).isNotEmpty(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -109,7 +109,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         let expectedLine = 435
 
         // When
-        let assertion = TestAssertion(on: array).hasCount(3, line: expectedLine)
+        let assertion = TestAnAssertion(on: array).hasCount(3, line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -123,7 +123,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         let expectedLine = 378
 
         // When
-        let assertion = TestAssertion(on: array).hasCount(5, line: expectedLine)
+        let assertion = TestAnAssertion(on: array).hasCount(5, line: expectedLine)
 
         // Then
         Assert(that: assertion)

@@ -35,7 +35,7 @@ class TypeAssertionsTestCase: XCTestCase {
         let line = 345
 
         // When
-        let assertion = TestAssertion(on: protocolValue).isType(SomeConformingType.self, line: line)
+        let assertion = TestAnAssertion(on: protocolValue).isType(SomeConformingType.self, line: line)
 
         // Then
         Assert(that: assertion)
@@ -49,7 +49,7 @@ class TypeAssertionsTestCase: XCTestCase {
         let line = 543
 
         // When
-        let assertion = TestAssertion(on: value).isType(SomeProtocol.self, line: line)
+        let assertion = TestAnAssertion(on: value).isType(SomeProtocol.self, line: line)
 
         // Then
         let expectedMessage = #"Value of type SomeNonConformingType does not conform to expected type SomeProtocol"#

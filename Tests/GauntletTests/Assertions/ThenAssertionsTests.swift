@@ -35,7 +35,7 @@ class ThenAssertionsTestCase: XCTestCase {
         var valuePassedToClosure: Int?
 
         // When
-        TestAssertion(on: expectedValue, recorder: recorder).then { inValue in
+        TestAnAssertion(on: expectedValue, recorder: recorder).then { inValue in
             valuePassedToClosure = inValue
         }
 
@@ -50,7 +50,7 @@ class ThenAssertionsTestCase: XCTestCase {
         let thrownError = MockError.someOtherError
         let line = 432
         // When
-        TestAssertion(on: 57, recorder: recorder).then(line: line) { _ in
+        TestAnAssertion(on: 57, recorder: recorder).then(line: line) { _ in
             throw thrownError
         }
 

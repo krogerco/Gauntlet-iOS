@@ -53,7 +53,7 @@ class HelperAssertionsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: "").succeed(line: expectedLine)
+        let assertion = TestAnAssertion(on: "").succeed(line: expectedLine)
 
         // Then
         XCTAssertEqual(assertion.lineNumber, expectedLine)
@@ -68,7 +68,7 @@ class HelperAssertionsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: "").fail(line: expectedLine)
+        let assertion = TestAnAssertion(on: "").fail(line: expectedLine)
 
         // Then
         XCTAssertEqual(assertion.lineNumber, expectedLine)

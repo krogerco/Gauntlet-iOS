@@ -33,7 +33,7 @@ class BoolAssertionsTestCase: XCTestCase {
         let expectedLine = 456
 
         // When
-        let assertion = TestAssertion(on: true).isTrue(line: expectedLine)
+        let assertion = TestAnAssertion(on: true).isTrue(line: expectedLine)
 
         // Then
         Assert(that: assertion).isSuccess(expectedName: "isTrue", expectedLine: expectedLine)
@@ -44,7 +44,7 @@ class BoolAssertionsTestCase: XCTestCase {
         let expectedLine = 654
 
         // When
-        let assertion = TestAssertion(on: false).isTrue(line: expectedLine)
+        let assertion = TestAnAssertion(on: false).isTrue(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -57,7 +57,7 @@ class BoolAssertionsTestCase: XCTestCase {
         let expectedLine = 456
 
         // When
-        let assertion = TestAssertion(on: false).isFalse(line: expectedLine)
+        let assertion = TestAnAssertion(on: false).isFalse(line: expectedLine)
 
         // Then
         Assert(that: assertion).isSuccess(expectedName: "isFalse", expectedLine: expectedLine)
@@ -68,7 +68,7 @@ class BoolAssertionsTestCase: XCTestCase {
         let expectedLine = 654
 
         // When
-        let assertion = TestAssertion(on: true).isFalse(line: expectedLine)
+        let assertion = TestAnAssertion(on: true).isFalse(line: expectedLine)
 
         // Then
         Assert(that: assertion)

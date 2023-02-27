@@ -35,7 +35,7 @@ class ResultAssertsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: result).isSuccess(line: expectedLine)
+        let assertion = TestAnAssertion(on: result).isSuccess(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -49,7 +49,7 @@ class ResultAssertsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: result).isSuccess(line: expectedLine)
+        let assertion = TestAnAssertion(on: result).isSuccess(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -64,7 +64,7 @@ class ResultAssertsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: result).isFailure(line: expectedLine)
+        let assertion = TestAnAssertion(on: result).isFailure(line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -78,7 +78,7 @@ class ResultAssertsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: result).isFailure(line: expectedLine)
+        let assertion = TestAnAssertion(on: result).isFailure(line: expectedLine)
 
         // Then
         Assert(that: assertion)

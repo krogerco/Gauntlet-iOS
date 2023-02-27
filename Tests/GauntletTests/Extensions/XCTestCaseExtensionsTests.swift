@@ -35,7 +35,7 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
     func testCreatingTestAssertion() {
         // Given, When
         let value = "some value"
-        let assertion = TestAssertion(on: value)
+        let assertion = TestAnAssertion(on: value)
 
         // Then
         if case let .success(resultValue) = assertion.result {
@@ -54,7 +54,7 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
     func testCreatingTestAssertionWithMockRecorder() {
         // Given, When
         let recorder = MockFailureRecorder()
-        let assertion: Assertion<String> = TestAssertion(on: "", recorder: recorder)
+        let assertion: Assertion<String> = TestAnAssertion(on: "", recorder: recorder)
 
         // When
         let _: Assertion<Void> = assertion.evaluate(name: "name", lineNumber: 123) { _ in
@@ -68,7 +68,7 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
     /// A TestAssertion should not fail a test when it evaluates a failure. It should fail silently.
     func testEvaluatingFailureOnTestAssertion() {
         // Given
-        let assertion = TestAssertion(on: "some value")
+        let assertion = TestAnAssertion(on: "some value")
 
         // When, Then
         let newAssert: Assertion<String> = assertion.evaluate(

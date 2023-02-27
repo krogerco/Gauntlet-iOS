@@ -37,8 +37,8 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let equalAssertion = TestAssertion(on: 5).isEqualTo(5, accuracy: 1, line: expectedLine)
-        let withAccuracyAssertion = TestAssertion(on: 5).isEqualTo(6, accuracy: 1, line: expectedLine)
+        let equalAssertion = TestAnAssertion(on: 5).isEqualTo(5, accuracy: 1, line: expectedLine)
+        let withAccuracyAssertion = TestAnAssertion(on: 5).isEqualTo(6, accuracy: 1, line: expectedLine)
 
         // Then
         Assert(that: equalAssertion).isSuccess(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
@@ -51,7 +51,7 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: 4).isEqualTo(1, accuracy: 2, line: expectedLine)
+        let assertion = TestAnAssertion(on: 4).isEqualTo(1, accuracy: 2, line: expectedLine)
 
         // Then
         Assert(that: assertion)
@@ -116,7 +116,7 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         let expectedLine = 321
 
         // When
-        let assertion = TestAssertion(on: 5).isNotEqualTo(7, accuracy: 1, line: expectedLine)
+        let assertion = TestAnAssertion(on: 5).isNotEqualTo(7, accuracy: 1, line: expectedLine)
 
         // Then
         Assert(that: assertion).isSuccess(expectedName: "isNotEqualTo(, accuracy)", expectedLine: expectedLine)
@@ -128,7 +128,7 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAssertion(on: 4).isNotEqualTo(3, accuracy: 2, line: expectedLine)
+        let assertion = TestAnAssertion(on: 4).isNotEqualTo(3, accuracy: 2, line: expectedLine)
 
         // Then
         Assert(that: assertion)
