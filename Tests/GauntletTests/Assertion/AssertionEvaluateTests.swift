@@ -133,7 +133,7 @@ class AssertionEvlauateTestCase: XCTestCase {
 
         // When a successful assertion is evaluated.
         let evalutedAssertion: Assertion<String> = assertion.evaluate(name: newName, lineNumber: newLine) { _ in
-            .message(failureMessage)
+            .failure(message: failureMessage)
         }
 
         // Then
@@ -166,7 +166,7 @@ class AssertionEvlauateTestCase: XCTestCase {
         let recorder = MockFailureRecorder()
         let initialMessage = "Initial Failure"
         let initialAssertion = Assertion<String>(
-            result: .message(initialMessage),
+            result: .failure(message: initialMessage),
             name: "Initial Name",
             filePath: "/some/file/path",
             lineNumber: 57,
@@ -179,7 +179,7 @@ class AssertionEvlauateTestCase: XCTestCase {
         // When a successful assertion is evaluated.
         let evalutedAssertion: Assertion<String> = initialAssertion.evaluate(name: "New Name", lineNumber: 96) { _ in
             expressionWasEvaluated = true
-            return .message("New Failure Message")
+            return .failure(message: "New Failure Message")
         }
 
         // Then

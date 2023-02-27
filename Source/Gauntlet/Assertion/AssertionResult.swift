@@ -40,7 +40,7 @@ extension AssertionResult {
     ///
     /// - Parameter message: The message describing the failure reason..
     /// - Returns: An ``AssertionResult`` that is a failure with the specified message.
-    public static func message<T>(_ message: String) -> AssertionResult<T> {
+    public static func failure<T>(message: String) -> AssertionResult<T> {
         .failure(.message(message))
     }
 
@@ -48,7 +48,7 @@ extension AssertionResult {
     ///
     /// - Parameter error: The `Error` that was thrown.
     /// - Returns: An ``AssertionResult`` that is a failure with the specified error.
-    public static func thrownError<T>(_ error: Error) -> AssertionResult<T> {
+    public static func failure<T>(thrownError error: Error) -> AssertionResult<T> {
         .failure(.thrownError(error))
     }
 }

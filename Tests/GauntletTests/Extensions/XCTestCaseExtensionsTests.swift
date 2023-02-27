@@ -58,7 +58,7 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
 
         // When
         let _: Assertion<Void> = assertion.evaluate(name: "name", lineNumber: 123) { _ in
-            .message("some failure")
+            .failure(message: "some failure")
         }
 
         // Then

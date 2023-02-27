@@ -149,7 +149,7 @@ extension XCTestCase {
         -> Assertion<Void>
     {
         let assertion = Assertion<Void>(
-            result: .message(message),
+            result: .failure(message: message),
             name: "Assert(failure: )",
             filePath: filePath,
             lineNumber: lineNumber,
@@ -199,7 +199,7 @@ extension XCTestCase {
     /// - Returns: An ``Assertion`` configured for testing with the specified value.
     public func TestFailedAssertion() -> Assertion<Void> {
         Assertion(
-            result: .message("expected failure"),
+            result: .failure(message: "expected failure"),
             name: "TestFailedAssertion",
             filePath: "/test/failed/assertion/file/path",
             lineNumber: 0,

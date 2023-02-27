@@ -33,7 +33,7 @@ class AssertionResultTestCase: XCTestCase {
         let message = "some message"
 
         // When
-        let result: AssertionResult<Void> = .message(message)
+        let result: AssertionResult<Void> = .failure(message: message)
 
         // Then
         if case let .failure(reason) = result {
@@ -48,7 +48,7 @@ class AssertionResultTestCase: XCTestCase {
         let thrownError = MockError.someError
 
         // When
-        let result: AssertionResult<Void> = .thrownError(thrownError)
+        let result: AssertionResult<Void> = .failure(thrownError: thrownError)
 
         // Then
         if case let .failure(reason) = result {

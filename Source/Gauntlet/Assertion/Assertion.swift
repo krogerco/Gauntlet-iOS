@@ -107,7 +107,7 @@ public final class Assertion<Value> {
         guard isRoot, !hasEvaluatedOrRecordedFailure else { return }
 
         // Create a new assertion with an appropriate failure description and report it.
-        let assertion: Assertion<Value> = with(newResult: .message("This assertion was never evaluated."))
+        let assertion: Assertion<Value> = with(newResult: .failure(message: "This assertion was never evaluated."))
         assertion.recordFailure()
     }
 
@@ -137,7 +137,7 @@ public final class Assertion<Value> {
             do {
                 newResult = try evaluator(value)
             } catch {
-                newResult = .thrownError(error)
+                newResult = .failure(thrownError: error)
             }
 
             let newAssertion = with(newResult: newResult, newName: newName, newLineNumber: newLineNumber)
@@ -175,7 +175,7 @@ public final class Assertion<Value> {
             do {
                 newResult = try await evaluator(value)
             } catch {
-                newResult = .thrownError(error)
+                newResult = .failure(thrownError: error)
             }
 
             let newAssertion = with(newResult: newResult, newName: newName, newLineNumber: newLineNumber)

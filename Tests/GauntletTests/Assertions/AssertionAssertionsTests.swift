@@ -166,7 +166,7 @@ class AssertionAssertionsTestCase: XCTestCase {
     func testLiveIsSuccess() {
         // Given
         let assertion: Assertion<String> = TestAnAssertion(on: 57).evaluate(name: "some name", lineNumber: 123) { _ in
-            .message("some failure")
+            .failure(message: "some failure")
         }
 
         // When, Then

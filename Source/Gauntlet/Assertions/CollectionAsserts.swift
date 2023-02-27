@@ -37,7 +37,7 @@ extension Assertion where Value: Collection {
 
             // Format the message appropriately based on the count
             let messageSuffix = collection.count == 1 ? "item" : "items"
-            return .message("The collection has \(collection.count) \(messageSuffix)")
+            return .failure(message: "The collection has \(collection.count) \(messageSuffix)")
         }
     }
 
@@ -49,7 +49,7 @@ extension Assertion where Value: Collection {
         evaluate(name: "isNotEmpty", lineNumber: line) { collection in
             guard collection.isEmpty else { return .success(collection) }
 
-            return .message("The collection is empty")
+            return .failure(message: "The collection is empty")
         }
     }
 
@@ -64,7 +64,7 @@ extension Assertion where Value: Collection {
         evaluate(name: "hasCount", lineNumber: line) { collection in
             if collection.count == expectedCount { return .success(collection) }
 
-            return .message("Count of \(collection.count) is not equal to the expected count \(expectedCount)")
+            return .failure(message: "Count of \(collection.count) is not equal to the expected count \(expectedCount)")
         }
     }
 }

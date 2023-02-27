@@ -48,7 +48,7 @@ extension Assertion where Value: ThrowableExpressionProtocol {
             do {
                 // If we get a value that's bad
                 let output = try expression.evaluate()
-                return .message("Expression did not throw. Returned \"\(output)\"")
+                return .failure(message: "Expression did not throw. Returned \"\(output)\"")
             } catch {
                 return .success(error)
             }
@@ -80,7 +80,7 @@ extension Assertion where Value: AsyncThrowableExpressionProtocol {
             do {
                 // If we get a value that's bad
                 let output = try await expression.evaluate()
-                return .message("Expression did not throw. Returned \"\(output)\"")
+                return .failure(message: "Expression did not throw. Returned \"\(output)\"")
             } catch {
                 return .success(error)
             }

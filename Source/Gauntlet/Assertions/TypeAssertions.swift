@@ -44,7 +44,7 @@ extension Assertion {
             let expectedTypeDescription = String(describing: expectedType)
             let message = "Value of type \(typeDescription) does not conform to expected type \(expectedTypeDescription)"
 
-            return .message(message)
+            return .failure(message: message)
         }
     }
 }

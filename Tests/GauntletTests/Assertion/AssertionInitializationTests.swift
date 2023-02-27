@@ -79,7 +79,7 @@ class AssertionTestCase: XCTestCase {
 
         // When
         let assertion = Assertion<String>(
-            result: .message(failureMessage),
+            result: .failure(message: failureMessage),
             name: name,
             filePath: filePath,
             lineNumber: lineNumber,
@@ -219,7 +219,7 @@ class AssertionTestCase: XCTestCase {
         let lineNumber = 1234
 
         var assertion: Assertion? = Assertion<String>(
-            result: .message("some failure"),
+            result: .failure(message: "some failure"),
             name: name,
             filePath: filePath,
             lineNumber: lineNumber,

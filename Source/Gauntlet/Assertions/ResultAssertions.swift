@@ -46,7 +46,7 @@ extension Assertion where Value: ResultConvertible {
         evaluate(name: "isFailure", lineNumber: line) { value in
             switch value.asResult {
             case .success:
-                return .message("Result is a success")
+                return .failure(message: "Result is a success")
 
             case .failure(let error):
                 return .success(error)

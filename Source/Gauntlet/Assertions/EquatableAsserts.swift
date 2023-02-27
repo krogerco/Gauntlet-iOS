@@ -40,7 +40,7 @@ extension Assertion where Value: Equatable {
                 return .success
             }
 
-            return .message(#""\#(value)" is not equal to the expected value "\#(expectedValue)""#)
+            return .failure(message: #""\#(value)" is not equal to the expected value "\#(expectedValue)""#)
         }
     }
 
@@ -57,7 +57,7 @@ extension Assertion where Value: Equatable {
                 return .success
             }
 
-            return .message(#""\#(value)" is equal to the specified value"#)
+            return .failure(message: #""\#(value)" is equal to the specified value"#)
         }
     }
 }

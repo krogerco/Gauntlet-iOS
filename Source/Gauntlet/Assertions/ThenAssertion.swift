@@ -38,7 +38,7 @@ extension Assertion {
                 try closure(value)
                 return .success
             } catch {
-                return .thrownError(error)
+                return .failure(thrownError: error)
             }
         }
     }

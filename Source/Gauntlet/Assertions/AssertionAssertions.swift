@@ -64,7 +64,7 @@ extension Assertion where Value: AssertionConvertible {
             let assertion = convertible.asAssertion
 
             guard case let .failure(failureReason) = assertion.result else {
-                return .message("Result was a success")
+                return .failure(message: "Result was a success")
             }
 
             return .success(failureReason)
@@ -87,7 +87,7 @@ extension Assertion where Value: AssertionConvertible {
 
             let message = #"Name "\#(assertion.name)" is not equal to expected name "\#(expectedName)""#
 
-            return .message(message)
+            return .failure(message: message)
         }
 
         let _: Assertion<Void> = evaluate(name: name, lineNumber: line) { convertible in
@@ -97,7 +97,7 @@ extension Assertion where Value: AssertionConvertible {
 
             let message = #"Line "\#(assertion.lineNumber)" is not equal to expected line "\#(expectedLine)""#
 
-            return .message(message)
+            return .failure(message: message)
         }
     }
 }

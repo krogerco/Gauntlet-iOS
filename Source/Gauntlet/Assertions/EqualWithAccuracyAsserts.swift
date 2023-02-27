@@ -41,7 +41,7 @@ extension Assertion where Value: Numeric {
                 return .success
             } else {
                 let message = #"\#(value) is not equal to the expected value \#(expectedValue). Accuracy: \#(accuracy)"#
-                return .message(message)
+                return .failure(message: message)
             }
         }
     }
@@ -58,7 +58,7 @@ extension Assertion where Value: Numeric {
         evaluate(name: "isNotEqualTo(, accuracy)", lineNumber: line) { value in
             if valuesAreEqual(value, expectedValue, accuracy: accuracy) {
                 let message = #"\#(value) is equal to the expected value \#(expectedValue). Accuracy: \#(accuracy)"#
-                return .message(message)
+                return .failure(message: message)
             } else {
                 return .success
 
