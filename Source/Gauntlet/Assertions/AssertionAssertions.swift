@@ -63,11 +63,11 @@ extension Assertion where Value: AssertionConvertible {
         return evaluate(name: name, lineNumber: line) { convertible in
             let assertion = convertible.asAssertion
 
-            guard case let .failure(failureReason) = assertion.result else {
-                return .failure(message: "Result was a success")
+            guard case let .fail(failureReason) = assertion.result else {
+                return .fail(message: "Result was a success")
             }
 
-            return .success(failureReason)
+            return .pass(failureReason)
         }
     }
 
@@ -83,21 +83,21 @@ extension Assertion where Value: AssertionConvertible {
         let _: Assertion<Void> = evaluate(name: name, lineNumber: line) { convertible in
             let assertion = convertible.asAssertion
 
-            guard assertion.name != expectedName else { return .success }
+            guard assertion.name != expectedName else { return .pass }
 
             let message = #"Name "\#(assertion.name)" is not equal to expected name "\#(expectedName)""#
 
-            return .failure(message: message)
+            return .fail(message: message)
         }
 
         let _: Assertion<Void> = evaluate(name: name, lineNumber: line) { convertible in
             let assertion = convertible.asAssertion
 
-            guard assertion.lineNumber != expectedLine else { return .success }
+            guard assertion.lineNumber != expectedLine else { return .pass }
 
             let message = #"Line "\#(assertion.lineNumber)" is not equal to expected line "\#(expectedLine)""#
 
-            return .failure(message: message)
+            return .fail(message: message)
         }
     }
 }

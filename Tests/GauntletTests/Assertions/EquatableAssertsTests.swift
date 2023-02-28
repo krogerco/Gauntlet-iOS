@@ -24,7 +24,7 @@
 //  SOFTWARE.
 
 import Foundation
-import Gauntlet
+@testable import Gauntlet
 import XCTest
 
 class EquatableAssertsTestCase: XCTestCase {
@@ -40,8 +40,8 @@ class EquatableAssertsTestCase: XCTestCase {
         let assertion = TestAnAssertion(on: value).isEqualTo(value, line: expectedLine)
 
         // Then
-        if case let .failure(error) = assertion.result {
-            XCTFail("isEqualTo result is a failure: \(error)")
+        if case let .fail(reason) = assertion.result {
+            XCTFail("isEqualTo result is a fail: \(reason)")
         }
 
         XCTAssertEqual(assertion.name, "isEqualTo")
@@ -56,11 +56,11 @@ class EquatableAssertsTestCase: XCTestCase {
         let assertion = TestAnAssertion(on: 57).isEqualTo(95, line: expectedLine)
 
         // Then
-        if case let .failure(error) = assertion.result, case let .message(message) = error {
+        if case let .fail(reason) = assertion.result, case let .message(message) = reason {
             XCTAssertEqual(message, #""57" is not equal to the expected value "95""#)
 
         } else {
-            XCTFail("isEqualTo result isn't a failure with a message")
+            XCTFail("isEqualTo result isn't a fail with a message")
         }
 
         XCTAssertEqual(assertion.name, "isEqualTo")

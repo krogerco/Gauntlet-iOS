@@ -38,10 +38,10 @@ extension Assertion where Value: Numeric {
     public func isEqualTo(_ expectedValue: Value, accuracy: Value, line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isEqualTo(, accuracy)", lineNumber: line) { value in
             if valuesAreEqual(value, expectedValue, accuracy: accuracy) {
-                return .success
+                return .pass
             } else {
                 let message = #"\#(value) is not equal to the expected value \#(expectedValue). Accuracy: \#(accuracy)"#
-                return .failure(message: message)
+                return .fail(message: message)
             }
         }
     }
@@ -58,9 +58,9 @@ extension Assertion where Value: Numeric {
         evaluate(name: "isNotEqualTo(, accuracy)", lineNumber: line) { value in
             if valuesAreEqual(value, expectedValue, accuracy: accuracy) {
                 let message = #"\#(value) is equal to the expected value \#(expectedValue). Accuracy: \#(accuracy)"#
-                return .failure(message: message)
+                return .fail(message: message)
             } else {
-                return .success
+                return .pass
 
             }
         }

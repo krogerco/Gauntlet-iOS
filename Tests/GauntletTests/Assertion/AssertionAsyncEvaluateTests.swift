@@ -34,7 +34,7 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
         // Given
         let recorder = MockFailureRecorder()
         let assertion = Assertion(
-            result: .success("initial value"),
+            result: .pass("initial value"),
             name: "Initial Name",
             filePath: "/some/file/path",
             lineNumber: 0,
@@ -49,14 +49,14 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
         // When a successful assertion is evaluated.
         let evalutedAssertion = await assertion.asyncEvaluate(name: newName, lineNumber: newLine) { _ in
             let value = await model.getValue()
-            return .success(value)
+            return .pass(value)
         }
 
         // Then
-        if case let .success(resultValue) = evalutedAssertion.result {
+        if case let .pass(resultValue) = evalutedAssertion.result {
             XCTAssertEqual(resultValue, "async-value")
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(evalutedAssertion.name, newName)
@@ -74,7 +74,7 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
         // Given
         let recorder = MockFailureRecorder()
         let assertion = Assertion(
-            result: .success("initial value"),
+            result: .pass("initial value"),
             name: "Initial Name",
             filePath: "/some/file/path",
             lineNumber: 0,
@@ -91,10 +91,10 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
         }
 
         // Then
-        if case let .failure(resultError) = evalutedAssertion.result, case let .thrownError(error) = resultError {
+        if case let .fail(reason) = evalutedAssertion.result, case let .thrownError(error) = reason {
             XCTAssert(error is MockError)
         } else {
-            XCTFail("Result is not a failure with a thrown error.")
+            XCTFail("Result is not a fail with a thrown error.")
         }
 
         XCTAssertEqual(evalutedAssertion.name, newName)
@@ -120,7 +120,7 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
         // Given
         let recorder = MockFailureRecorder()
         let assertion = Assertion(
-            result: .success("initial value"),
+            result: .pass("initial value"),
             name: "Initial Name",
             filePath: "/some/file/path",
             lineNumber: 0,
@@ -134,14 +134,14 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
 
         // When a successful assertion is evaluated.
         let evalutedAssertion: Assertion<String> = await assertion.asyncEvaluate(name: newName, lineNumber: newLine) { _ in
-            .failure(message: failureMessage)
+            .fail(message: failureMessage)
         }
 
         // Then
-        if case let .failure(resultError) = evalutedAssertion.result, case let .message(message) = resultError {
+        if case let .fail(reason) = evalutedAssertion.result, case let .message(message) = reason {
             XCTAssertEqual(message, failureMessage)
         } else {
-            XCTFail("Result is not a failure with a message.")
+            XCTFail("Result is not a fail with a message.")
         }
 
         XCTAssertEqual(evalutedAssertion.name, newName)
@@ -167,7 +167,7 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
         let recorder = MockFailureRecorder()
         let initialMessage = "Initial Failure"
         let initialAssertion = Assertion<String>(
-            result: .failure(message: initialMessage),
+            result: .fail(message: initialMessage),
             name: "Initial Name",
             filePath: "/some/file/path",
             lineNumber: 57,
@@ -180,14 +180,14 @@ class AssertionAsyncEvaluateTestCase: XCTestCase {
         // When a successful assertion is evaluated.
         let evalutedAssertion: Assertion<String> = await initialAssertion.asyncEvaluate(name: "New Name", lineNumber: 96) { _ in
             expressionWasEvaluated = true
-            return .failure(message: "New Failure Message")
+            return .fail(message: "New Failure Message")
         }
 
         // Then
-        if case let .failure(resultError) = evalutedAssertion.result, case let .message(message) = resultError {
+        if case let .fail(reason) = evalutedAssertion.result, case let .message(message) = reason {
             XCTAssertEqual(message, initialMessage)
         } else {
-            XCTFail("Result is not a failure with a message.")
+            XCTFail("Result is not a fail with a message.")
         }
 
         XCTAssertEqual(evalutedAssertion.name, initialAssertion.name)

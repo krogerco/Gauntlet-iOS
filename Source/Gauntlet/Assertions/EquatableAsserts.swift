@@ -37,10 +37,10 @@ extension Assertion where Value: Equatable {
     public func isEqualTo(_ expectedValue: Value, line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isEqualTo", lineNumber: line) { value in
             if value == expectedValue {
-                return .success
+                return .pass
             }
 
-            return .failure(message: #""\#(value)" is not equal to the expected value "\#(expectedValue)""#)
+            return .fail(message: #""\#(value)" is not equal to the expected value "\#(expectedValue)""#)
         }
     }
 
@@ -54,10 +54,10 @@ extension Assertion where Value: Equatable {
     public func isNotEqualTo(_ unexpectedValue: Value, line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isNotEqualTo", lineNumber: line) { value in
             if value != unexpectedValue {
-                return .success
+                return .pass
             }
 
-            return .failure(message: #""\#(value)" is equal to the specified value"#)
+            return .fail(message: #""\#(value)" is equal to the specified value"#)
         }
     }
 }

@@ -35,7 +35,7 @@ extension Assertion where Value: ThrowableExpressionProtocol {
     public func doesNotThrow(line: Int = #line) -> Assertion<Value.Output> {
         evaluate(name: "doesNotThrow", lineNumber: line) { expression in
             let output = try expression.evaluate()
-            return .success(output)
+            return .pass(output)
         }
     }
 
@@ -48,9 +48,9 @@ extension Assertion where Value: ThrowableExpressionProtocol {
             do {
                 // If we get a value that's bad
                 let output = try expression.evaluate()
-                return .failure(message: "Expression did not throw. Returned \"\(output)\"")
+                return .fail(message: "Expression did not throw. Returned \"\(output)\"")
             } catch {
-                return .success(error)
+                return .pass(error)
             }
         }
     }
@@ -67,7 +67,7 @@ extension Assertion where Value: AsyncThrowableExpressionProtocol {
     public func doesNotThrow(line: Int = #line) async -> Assertion<Value.Output> {
         await asyncEvaluate(name: "doesNotThrow", lineNumber: line) { expression in
             let output = try await expression.evaluate()
-            return .success(output)
+            return .pass(output)
         }
     }
 
@@ -80,9 +80,9 @@ extension Assertion where Value: AsyncThrowableExpressionProtocol {
             do {
                 // If we get a value that's bad
                 let output = try await expression.evaluate()
-                return .failure(message: "Expression did not throw. Returned \"\(output)\"")
+                return .fail(message: "Expression did not throw. Returned \"\(output)\"")
             } catch {
-                return .success(error)
+                return .pass(error)
             }
         }
     }

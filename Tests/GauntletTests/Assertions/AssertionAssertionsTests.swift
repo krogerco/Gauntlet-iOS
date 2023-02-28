@@ -24,7 +24,7 @@
 //  SOFTWARE.
 
 import Foundation
-import Gauntlet
+@testable import Gauntlet
 import XCTest
 
 class AssertionAssertionsTestCase: XCTestCase {
@@ -36,14 +36,14 @@ class AssertionAssertionsTestCase: XCTestCase {
         let expectedName = "someAssert"
         let expectedLine = 123
         let expectedValue = "assertion value"
-        let successfulAssertion = TestAnAssertion(on: "initial value")
+        let passingAssertion = TestAnAssertion(on: "initial value")
             .evaluate(name: expectedName, lineNumber: expectedLine) { _ in
-                .success(expectedValue)
+                .pass(expectedValue)
             }
 
         // When
         let assertionLine = #line + 2
-        let assertion = TestAnAssertion(on: successfulAssertion, recorder: recorder)
+        let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
             .isSuccess(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
@@ -51,10 +51,10 @@ class AssertionAssertionsTestCase: XCTestCase {
         XCTAssertEqual(assertion.name, "isSuccess")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
-        if case let .success(value) = assertion.result {
+        if case let .pass(value) = assertion.result {
             XCTAssertEqual(value, expectedValue)
         } else {
-            XCTFail("isSuccess result is not success")
+            XCTFail("isSuccess result is not pass")
         }
     }
 
@@ -66,24 +66,24 @@ class AssertionAssertionsTestCase: XCTestCase {
         let actualLine = 789
         let expectedLine = 123
         let expectedValue = "assertion value"
-        let successfulAssertion = TestAnAssertion(on: "initial value")
+        let passingAssertion = TestAnAssertion(on: "initial value")
             .evaluate(name: actualName, lineNumber: actualLine) { _ in
-                .success(expectedValue)
+                .pass(expectedValue)
             }
 
         // When
         let assertionLine = #line + 2
-        let assertion = TestAnAssertion(on: successfulAssertion, recorder: recorder)
+        let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
             .isSuccess(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
         XCTAssertEqual(assertion.name, "isSuccess")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
-        if case let .success(value) = assertion.result {
+        if case let .pass(value) = assertion.result {
             XCTAssertEqual(value, expectedValue)
         } else {
-            XCTFail("isSuccess result is not success")
+            XCTFail("isSuccess result is not pass")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 2)
@@ -115,24 +115,24 @@ class AssertionAssertionsTestCase: XCTestCase {
         let actualLine = 789
         let expectedLine = 123
         let expectedReason = FailureReason.message("some failure")
-        let successfulAssertion: Assertion<String> = TestAnAssertion(on: "initial value")
+        let passingAssertion: Assertion<String> = TestAnAssertion(on: "initial value")
             .evaluate(name: actualName, lineNumber: actualLine) { _ in
-                .failure(expectedReason)
+                .fail(expectedReason)
             }
 
         // When
         let assertionLine = #line + 2
-        let assertion = TestAnAssertion(on: successfulAssertion, recorder: recorder)
+        let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
             .isSuccess(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
         XCTAssertEqual(assertion.name, "isSuccess")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
-        if case let .failure(reason) = assertion.result {
+        if case let .fail(reason) = assertion.result {
             XCTAssertEqual(reason, expectedReason)
         } else {
-            XCTFail("isSuccess result is not failure")
+            XCTFail("isSuccess result is not fail")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 3)
@@ -166,7 +166,7 @@ class AssertionAssertionsTestCase: XCTestCase {
     func testLiveIsSuccess() {
         // Given
         let assertion: Assertion<String> = TestAnAssertion(on: 57).evaluate(name: "some name", lineNumber: 123) { _ in
-            .failure(message: "some failure")
+            .fail(message: "some failure")
         }
 
         // When, Then
@@ -182,14 +182,14 @@ class AssertionAssertionsTestCase: XCTestCase {
         let expectedName = "someAssert"
         let expectedLine = 123
         let expectedReason = FailureReason.message("some failure reason")
-        let successfulAssertion: Assertion<String> = TestAnAssertion(on: "initial value")
+        let passingAssertion: Assertion<String> = TestAnAssertion(on: "initial value")
             .evaluate(name: expectedName, lineNumber: expectedLine) { _ in
-                .failure(expectedReason)
+                .fail(expectedReason)
             }
 
         // When
         let assertionLine = #line + 2
-        let assertion = TestAnAssertion(on: successfulAssertion, recorder: recorder)
+        let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
             .isFailure(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
@@ -197,10 +197,10 @@ class AssertionAssertionsTestCase: XCTestCase {
         XCTAssertEqual(assertion.name, "isFailure")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
-        if case let .success(value) = assertion.result {
+        if case let .pass(value) = assertion.result {
             XCTAssertEqual(value, expectedReason)
         } else {
-            XCTFail("isSuccess result is not success")
+            XCTFail("isSuccess result is not pass")
         }
     }
 
@@ -212,24 +212,24 @@ class AssertionAssertionsTestCase: XCTestCase {
         let actualLine = 789
         let expectedLine = 123
         let expectedReason = FailureReason.message("some failure reason")
-        let successfulAssertion: Assertion<String> = TestAnAssertion(on: "initial value")
+        let passingAssertion: Assertion<String> = TestAnAssertion(on: "initial value")
             .evaluate(name: actualName, lineNumber: actualLine) { _ in
-                    .failure(expectedReason)
+                    .fail(expectedReason)
             }
 
         // When
         let assertionLine = #line + 2
-        let assertion = TestAnAssertion(on: successfulAssertion, recorder: recorder)
+        let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
             .isFailure(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
         XCTAssertEqual(assertion.name, "isFailure")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
-        if case let .success(value) = assertion.result {
+        if case let .pass(value) = assertion.result {
             XCTAssertEqual(value, expectedReason)
         } else {
-            XCTFail("isSuccess result is not success")
+            XCTFail("isSuccess result is not pass")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 2)
@@ -261,24 +261,24 @@ class AssertionAssertionsTestCase: XCTestCase {
         let actualLine = 789
         let expectedLine = 123
         let expectedReason = FailureReason.message("Result was a success")
-        let successfulAssertion = TestAnAssertion(on: "initial value")
+        let passingAssertion = TestAnAssertion(on: "initial value")
             .evaluate(name: actualName, lineNumber: actualLine) { _ in
-                .success("some value")
+                .pass("some value")
             }
 
         // When
         let assertionLine = #line + 2
-        let assertion = TestAnAssertion(on: successfulAssertion, recorder: recorder)
+        let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
             .isFailure(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
         XCTAssertEqual(assertion.name, "isFailure")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
-        if case let .failure(reason) = assertion.result {
+        if case let .fail(reason) = assertion.result {
             XCTAssertEqual(reason, expectedReason)
         } else {
-            XCTFail("isSuccess result is not failure")
+            XCTFail("isSuccess result is not fail")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 3)

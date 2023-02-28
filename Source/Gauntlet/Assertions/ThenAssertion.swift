@@ -36,9 +36,9 @@ extension Assertion {
         let _: Assertion<Void> = evaluate(name: "then", lineNumber: line) { value in
             do {
                 try closure(value)
-                return .success
+                return .pass
             } catch {
-                return .failure(thrownError: error)
+                return .fail(thrownError: error)
             }
         }
     }

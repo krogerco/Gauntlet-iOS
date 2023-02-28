@@ -30,7 +30,7 @@ extension Assertion where Value == Bool {
     @discardableResult
     public func isTrue(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isTrue", lineNumber: line) { boolValue in
-            boolValue ? .success : .failure(message: "value is false")
+            boolValue ? .pass : .fail(message: "value is false")
         }
     }
 
@@ -38,7 +38,7 @@ extension Assertion where Value == Bool {
     @discardableResult
     public func isFalse(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isFalse", lineNumber: line) { boolValue in
-            boolValue ? .failure(message: "value is true") : .success
+            boolValue ? .fail(message: "value is true") : .pass
         }
     }
 }

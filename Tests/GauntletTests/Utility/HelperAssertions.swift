@@ -24,15 +24,15 @@
 //  SOFTWARE.
 
 import Foundation
-import Gauntlet
+@testable import Gauntlet
 import XCTest
 
 extension Assertion {
     /// An assertion that will always succeed. This is used for testing live calls to the XCTestCase.Assert API without relying on other Gauntlet assertions.
     @discardableResult
-    func succeed(line: Int = #line) -> Assertion<Void> {
+    func pass(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "succeed", lineNumber: line) { _ in
-            .success
+            .pass
         }
     }
 
@@ -40,7 +40,7 @@ extension Assertion {
     @discardableResult
     func fail(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "fail", lineNumber: line) { _ in
-            .failure(message: "Assert Failed")
+            .fail(message: "Assert Failed")
         }
     }
 }
@@ -53,12 +53,12 @@ class HelperAssertionsTestCase: XCTestCase {
         let expectedLine = 123
 
         // When
-        let assertion = TestAnAssertion(on: "").succeed(line: expectedLine)
+        let assertion = TestAnAssertion(on: "").pass(line: expectedLine)
 
         // Then
         XCTAssertEqual(assertion.lineNumber, expectedLine)
 
-        if case .failure = assertion.result {
+        if case .fail = assertion.result {
             XCTFail("Encountered a failure result. Should be success with a Void value.")
         }
     }
@@ -73,7 +73,7 @@ class HelperAssertionsTestCase: XCTestCase {
         // Then
         XCTAssertEqual(assertion.lineNumber, expectedLine)
 
-        if case .success = assertion.result {
+        if case .pass = assertion.result {
             XCTFail("Encountered a success result. Should be a failure.")
         }
     }

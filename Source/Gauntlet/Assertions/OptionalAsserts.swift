@@ -33,9 +33,9 @@ extension Assertion where Value: OptionalConvertible {
     @discardableResult
     public func isNotNil(line: Int = #line) -> Assertion<Value.Wrapped> {
         evaluate(name: "isNotNil", lineNumber: line) { value in
-            guard let unwrappedValue = value.asOptional else { return .failure(message: "value is nil") }
+            guard let unwrappedValue = value.asOptional else { return .fail(message: "value is nil") }
 
-            return .success(unwrappedValue)
+            return .pass(unwrappedValue)
         }
     }
 
@@ -45,9 +45,9 @@ extension Assertion where Value: OptionalConvertible {
     @discardableResult
     public func isNil(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isNil", lineNumber: line) { value in
-            guard value.asOptional == nil else { return .failure(message: "value is not nil") }
+            guard value.asOptional == nil else { return .fail(message: "value is not nil") }
 
-            return .success
+            return .pass
         }
     }
 }

@@ -43,7 +43,7 @@ class AssertionTestCase: XCTestCase {
 
         // When
         let assertion = Assertion(
-            result: .success(value),
+            result: .pass(value),
             name: name,
             filePath: filePath,
             lineNumber: lineNumber,
@@ -52,10 +52,10 @@ class AssertionTestCase: XCTestCase {
         )
 
         // Then
-        if case let .success(resultValue) = assertion.result {
+        if case let .pass(resultValue) = assertion.result {
             XCTAssertEqual(resultValue, value)
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, name)
@@ -79,7 +79,7 @@ class AssertionTestCase: XCTestCase {
 
         // When
         let assertion = Assertion<String>(
-            result: .failure(message: failureMessage),
+            result: .fail(message: failureMessage),
             name: name,
             filePath: filePath,
             lineNumber: lineNumber,
@@ -88,10 +88,10 @@ class AssertionTestCase: XCTestCase {
         )
 
         // Then
-        if case let .failure(error) = assertion.result, case let .message(message) = error {
+        if case let .fail(reason) = assertion.result, case let .message(message) = reason {
             XCTAssertEqual(message, failureMessage)
         } else {
-            XCTFail("Result is not a failure with a message.")
+            XCTFail("Result is not a fail with a message.")
         }
 
         XCTAssertEqual(assertion.name, name)
@@ -123,10 +123,10 @@ class AssertionTestCase: XCTestCase {
         )
 
         // Then
-        if case let .success(resultValue) = assertion.result {
+        if case let .pass(resultValue) = assertion.result {
             XCTAssertEqual(resultValue, value)
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, name)
@@ -158,10 +158,10 @@ class AssertionTestCase: XCTestCase {
         )
 
         // Then
-        if case let .success(resultValue) = assertion.result {
+        if case let .pass(resultValue) = assertion.result {
             XCTAssertEqual(resultValue, "async-value")
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, name)
@@ -184,7 +184,7 @@ class AssertionTestCase: XCTestCase {
         let lineNumber = 1234
 
         var assertion: Assertion? = Assertion(
-            result: .success("some value"),
+            result: .pass("some value"),
             name: name,
             filePath: filePath,
             lineNumber: lineNumber,
@@ -219,7 +219,7 @@ class AssertionTestCase: XCTestCase {
         let lineNumber = 1234
 
         var assertion: Assertion? = Assertion<String>(
-            result: .failure(message: "some failure"),
+            result: .fail(message: "some failure"),
             name: name,
             filePath: filePath,
             lineNumber: lineNumber,

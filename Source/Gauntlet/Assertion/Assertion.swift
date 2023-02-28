@@ -52,16 +52,16 @@ import Foundation
 public final class Assertion<Value> {
 
     /// The result of the assertion.
-    public let result: AssertionResult<Value>
+    let result: AssertionResult<Value>
 
     /// The name of the assertion. This should describe what the assertion is validating.
-    public let name: String
+    let name: String
 
     /// The path to the source file in which the assertion exists.
-    public let filePath: String
+    let filePath: String
 
     /// The line number of the assertion. This can be captured at the call site with the `#line` default parameter.
-    public let lineNumber: Int
+    let lineNumber: Int
 
     /// The `FailureRecorder` instance that failures should be recorded to.
     let recorder: FailureRecorder
@@ -107,7 +107,7 @@ public final class Assertion<Value> {
         guard isRoot, !hasEvaluatedOrRecordedFailure else { return }
 
         // Create a new assertion with an appropriate failure description and report it.
-        let assertion: Assertion<Value> = with(newResult: .failure(message: "This assertion was never evaluated."))
+        let assertion: Assertion<Value> = with(newResult: .fail(message: "This assertion was never evaluated."))
         assertion.recordFailure()
     }
 
@@ -131,13 +131,13 @@ public final class Assertion<Value> {
         hasEvaluatedOrRecordedFailure = true
 
         switch result {
-        case let .success(value):
+        case let .pass(value):
             let newResult: AssertionResult<NewValue>
 
             do {
                 newResult = try evaluator(value)
             } catch {
-                newResult = .failure(thrownError: error)
+                newResult = .fail(thrownError: error)
             }
 
             let newAssertion = with(newResult: newResult, newName: newName, newLineNumber: newLineNumber)
@@ -145,9 +145,9 @@ public final class Assertion<Value> {
 
             return newAssertion
 
-        case let .failure(reason):
+        case let .fail(reason):
             // If the assertion was already a failure just return a copy with the new type and no other changes.
-            return with(newResult: .failure(reason))
+            return with(newResult: .fail(reason))
         }
     }
 
@@ -169,13 +169,13 @@ public final class Assertion<Value> {
         hasEvaluatedOrRecordedFailure = true
 
         switch result {
-        case let .success(value):
+        case let .pass(value):
             let newResult: AssertionResult<NewValue>
 
             do {
                 newResult = try await evaluator(value)
             } catch {
-                newResult = .failure(thrownError: error)
+                newResult = .fail(thrownError: error)
             }
 
             let newAssertion = with(newResult: newResult, newName: newName, newLineNumber: newLineNumber)
@@ -183,16 +183,16 @@ public final class Assertion<Value> {
 
             return newAssertion
 
-        case let .failure(reason):
+        case let .fail(reason):
             // If the assertion was already a failure just return a copy with the new type and no other changes.
-            return with(newResult: .failure(reason))
+            return with(newResult: .fail(reason))
         }
     }
 
     /// If the result is a `failure` this will record the failure to the recorder.
     func recordFailure() {
         // Only report failures
-        guard case let .failure(reason) = result else { return }
+        guard case let .fail(reason) = result else { return }
 
         hasEvaluatedOrRecordedFailure = true
         recorder.record(name: name, reason: reason, filePath: filePath, lineNumber: lineNumber)
@@ -234,7 +234,7 @@ extension Assertion {
         recorder: FailureRecorder,
         isRoot: Bool)
     {
-        self.init(result: .success(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
+        self.init(result: .pass(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
     }
 
     convenience init(
@@ -246,6 +246,6 @@ extension Assertion {
         isRoot: Bool) async
     {
         let value = await expression()
-        self.init(result: .success(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
+        self.init(result: .pass(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
     }
 }

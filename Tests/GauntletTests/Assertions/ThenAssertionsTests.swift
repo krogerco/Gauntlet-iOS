@@ -28,7 +28,7 @@ import Gauntlet
 import XCTest
 
 class ThenAssertionsTestCase: XCTestCase {
-    func testThenOnSuccessfulAssertion() {
+    func testThenOnPassingAssertion() {
         // Given
         let recorder = MockFailureRecorder()
         let expectedValue = 57
@@ -44,7 +44,7 @@ class ThenAssertionsTestCase: XCTestCase {
         Assert(that: recorder.recordedFailures.count).isEqualTo(0)
     }
 
-    func testThenOnSuccessfulAssertionWithThrowingClosure() {
+    func testThenOnPassingAssertionWithThrowingClosure() {
         // Given
         let recorder = MockFailureRecorder()
         let thrownError = MockError.someOtherError
@@ -64,7 +64,7 @@ class ThenAssertionsTestCase: XCTestCase {
         Assert(that: failure.reason).isEqualTo(.thrownError(thrownError))
     }
 
-    func testThenOnUnsuccessfulAssertion() {
+    func testThenOnFailingAssertion() {
         // Given
         var closureCalled = false
 

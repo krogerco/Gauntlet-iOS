@@ -33,11 +33,11 @@ extension Assertion where Value: Collection {
     @discardableResult
     public func isEmpty(line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isEmpty", lineNumber: line) { collection in
-            guard !collection.isEmpty else { return .success }
+            guard !collection.isEmpty else { return .pass }
 
             // Format the message appropriately based on the count
             let messageSuffix = collection.count == 1 ? "item" : "items"
-            return .failure(message: "The collection has \(collection.count) \(messageSuffix)")
+            return .fail(message: "The collection has \(collection.count) \(messageSuffix)")
         }
     }
 
@@ -47,9 +47,9 @@ extension Assertion where Value: Collection {
     @discardableResult
     public func isNotEmpty(line: Int = #line) -> Assertion<Value> {
         evaluate(name: "isNotEmpty", lineNumber: line) { collection in
-            guard collection.isEmpty else { return .success(collection) }
+            guard collection.isEmpty else { return .pass(collection) }
 
-            return .failure(message: "The collection is empty")
+            return .fail(message: "The collection is empty")
         }
     }
 
@@ -62,9 +62,9 @@ extension Assertion where Value: Collection {
     @discardableResult
     public func hasCount(_ expectedCount: Int, line: Int = #line) -> Assertion<Value> {
         evaluate(name: "hasCount", lineNumber: line) { collection in
-            if collection.count == expectedCount { return .success(collection) }
+            if collection.count == expectedCount { return .pass(collection) }
 
-            return .failure(message: "Count of \(collection.count) is not equal to the expected count \(expectedCount)")
+            return .fail(message: "Count of \(collection.count) is not equal to the expected count \(expectedCount)")
         }
     }
 }

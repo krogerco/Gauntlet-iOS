@@ -38,10 +38,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         let assertion = TestAnAssertion(on: value)
 
         // Then
-        if case let .success(resultValue) = assertion.result {
+        if case let .pass(resultValue) = assertion.result {
             XCTAssertEqual(resultValue, value)
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, "TestAssertion")
@@ -58,7 +58,7 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
 
         // When
         let _: Assertion<Void> = assertion.evaluate(name: "name", lineNumber: 123) { _ in
-            .failure(message: "some failure")
+            .fail(message: "some failure")
         }
 
         // Then
@@ -87,10 +87,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         let assertion = TestFailedAssertion()
 
         // Then
-        if case let .failure(reason) = assertion.result {
+        if case let .fail(reason) = assertion.result {
             XCTAssertEqual(reason, .message("expected failure"))
         } else {
-            XCTFail("Result is not a failure")
+            XCTFail("Result is not a fail")
         }
 
         XCTAssertEqual(assertion.name, "TestFailedAssertion")
@@ -124,10 +124,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         }
 
         // Then
-        if case let .failure(error) = assertion.result, case let .message(message) = error {
+        if case let .fail(reason) = assertion.result, case let .message(message) = reason {
             XCTAssertEqual(message, expectedMessage)
         } else {
-            XCTFail("Result is not a failure with a message.")
+            XCTFail("Result is not a fail with a message.")
         }
 
         XCTAssertEqual(assertion.name, "Assert(failure: )")
@@ -150,10 +150,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         defer { assertion.evaluate() }
 
         // Then
-        if case let .success(resultValue) = assertion.result {
+        if case let .pass(resultValue) = assertion.result {
             XCTAssertEqual(resultValue, value)
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, "Assert(that: String)")
@@ -174,10 +174,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         defer { assertion.evaluate() }
 
         // Then
-        if case let .success(resultValue) = assertion.result {
+        if case let .pass(resultValue) = assertion.result {
             XCTAssertEqual(resultValue, "async-value")
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, "Assert(that: String)")
@@ -201,10 +201,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         defer { assertion.evaluate() }
 
         // Then
-        if case .success = assertion.result {
+        if case .pass = assertion.result {
             // Nothing really to validate. The value is the expected type, ThrowableExpression<String>, and it would be pointless to check.
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, "Assert(throwingExpression: String)")
@@ -228,10 +228,10 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         defer { assertion.evaluate() }
 
         // Then
-        if case .success = assertion.result {
+        if case .pass = assertion.result {
             // Nothing really to validate. The value is the expected type, ThrowableExpression<String>, and it would be pointless to check.
         } else {
-            XCTFail("Result is not a success")
+            XCTFail("Result is not a pass")
         }
 
         XCTAssertEqual(assertion.name, "Assert(throwingExpression: String)")
@@ -314,9 +314,9 @@ extension Assertion {
     // This evaluates the expression and returns the original value. This can be used at the end of test to ensure
     // an assertion doesn't fail because it was never evaluated.
     @discardableResult
-    func evaluate() -> Assertion<Value> {
+    fileprivate func evaluate() -> Assertion<Value> {
         evaluate(name: name, lineNumber: lineNumber, evaluator: { value in
-            .success(value)
+            .pass(value)
         })
     }
 }

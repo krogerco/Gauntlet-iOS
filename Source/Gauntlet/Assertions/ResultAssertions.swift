@@ -32,8 +32,13 @@ extension Assertion where Value: ResultConvertible {
     @discardableResult
     public func isSuccess(line: Int = #line) -> Assertion<Value.Success> {
         evaluate(name: "isSuccess", lineNumber: line) { value in
-            value.asResult.mapError { error in
-                .message("Result is a failure: \(error)")
+
+            switch value.asResult {
+            case .success(let value):
+                return .pass(value)
+
+            case .failure(let error):
+                return .fail(message: "Result is a failure: \(error)")
             }
         }
     }
@@ -46,10 +51,10 @@ extension Assertion where Value: ResultConvertible {
         evaluate(name: "isFailure", lineNumber: line) { value in
             switch value.asResult {
             case .success:
-                return .failure(message: "Result is a success")
+                return .fail(message: "Result is a success")
 
             case .failure(let error):
-                return .success(error)
+                return .pass(error)
             }
         }
     }

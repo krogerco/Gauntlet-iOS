@@ -37,14 +37,14 @@ extension Assertion {
     public func isType<T>(_ expectedType: T.Type, line: Int = #line) -> Assertion<T> {
         evaluate(name: "isType", lineNumber: line) { value in
             if let castValue = value as? T {
-                return .success(castValue)
+                return .pass(castValue)
             }
 
             let typeDescription = String(describing: type(of: value))
             let expectedTypeDescription = String(describing: expectedType)
             let message = "Value of type \(typeDescription) does not conform to expected type \(expectedTypeDescription)"
 
-            return .failure(message: message)
+            return .fail(message: message)
         }
     }
 }

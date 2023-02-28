@@ -34,7 +34,7 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
 
     func testPassingLiveValueAssert() {
         // Given, When, Then
-        Assert(that: "some value").succeed()
+        Assert(that: "some value").pass()
     }
 
     func testFailingLiveValueAssert() {
@@ -52,7 +52,7 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         let model = AsyncModel()
 
         // When, Then
-        await Assert(that: await model.getValue()).succeed()
+        await Assert(that: await model.getValue()).pass()
     }
 
     func testFailingLiveAsyncValueAssert() async {
@@ -71,7 +71,7 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         func throwable() throws -> String { "" }
 
         // When, Then
-        Assert(throwingExpression: try throwable()).succeed()
+        Assert(throwingExpression: try throwable()).pass()
     }
 
     func testFailingLiveThrowableAssert() {
@@ -90,7 +90,7 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         let model = ThrowingAsyncModel(result: .success(""))
 
         // When, Then
-        await Assert(throwingExpression: try await model.getValue()).succeed()
+        await Assert(throwingExpression: try await model.getValue()).pass()
     }
 
     func testFailingLiveAsyncThrowableAssert() async {

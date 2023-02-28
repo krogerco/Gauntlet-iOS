@@ -33,13 +33,13 @@ class AssertionResultTestCase: XCTestCase {
         let message = "some message"
 
         // When
-        let result: AssertionResult<Void> = .failure(message: message)
+        let result: AssertionResult<Void> = .fail(message: message)
 
         // Then
-        if case let .failure(reason) = result {
+        if case let .fail(reason) = result {
             XCTAssertEqual(reason, .message(message))
         } else {
-            XCTFail("Result is a success")
+            XCTFail("Result is a pass")
         }
     }
 
@@ -48,13 +48,13 @@ class AssertionResultTestCase: XCTestCase {
         let thrownError = MockError.someError
 
         // When
-        let result: AssertionResult<Void> = .failure(thrownError: thrownError)
+        let result: AssertionResult<Void> = .fail(thrownError: thrownError)
 
         // Then
-        if case let .failure(reason) = result {
+        if case let .fail(reason) = result {
             XCTAssertEqual(reason, .thrownError(thrownError))
         } else {
-            XCTFail("Result is a success")
+            XCTFail("Result is a pass")
         }
     }
 }

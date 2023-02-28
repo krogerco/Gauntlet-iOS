@@ -25,30 +25,34 @@
 
 import Foundation
 
-/// The result of an evaluated ``Assertion``.
-public typealias AssertionResult<Value> = Result<Value, FailureReason>
+/// Represents the result of an Assertion.
+public enum AssertionResult<Value> {
+    /// The assertion passed, supplying a value for future assertions.
+    case pass(Value)
 
-// MARK: - Convenience Constructors
+    /// The assertion failed, including a reason describing the type of failure.
+    case fail(FailureReason)
+}
 
-extension AssertionResult where Success == Void {
+extension AssertionResult where Value == Void {
     /// A successful result with no value.
-    public static var success: AssertionResult<Void> { .success(()) }
+    public static var pass: AssertionResult<Void> { .pass(()) }
 }
 
 extension AssertionResult {
-    /// Creates an ``AssertionResult`` that is a `failure` with a `message` reason.
+    /// Creates an ``AssertionResult`` that is a `fail` case with a `message` reason.
     ///
     /// - Parameter message: The message describing the failure reason..
     /// - Returns: An ``AssertionResult`` that is a failure with the specified message.
-    public static func failure<T>(message: String) -> AssertionResult<T> {
-        .failure(.message(message))
+    public static func fail<T>(message: String) -> AssertionResult<T> {
+        .fail(.message(message))
     }
 
-    /// Creates an ``AssertionResult`` that is a `failure` with a `thrownError` reason.
+    /// Creates an ``AssertionResult`` that is a `fail` case with a `thrownError` reason.
     ///
     /// - Parameter error: The `Error` that was thrown.
     /// - Returns: An ``AssertionResult`` that is a failure with the specified error.
-    public static func failure<T>(thrownError error: Error) -> AssertionResult<T> {
-        .failure(.thrownError(error))
+    public static func fail<T>(thrownError error: Error) -> AssertionResult<T> {
+        .fail(.thrownError(error))
     }
 }
