@@ -26,7 +26,7 @@
 import Foundation
 
 /// The reason an  ``Assertion`` failed.
-public enum FailureReason: Error {
+public enum FailureReason {
     /// A message describing why the assertion failed.
     case message(String)
 
