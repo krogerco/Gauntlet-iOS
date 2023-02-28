@@ -38,7 +38,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "doesNotThrow", expectedLine: expectedLine)
+            .didPass(expectedName: "doesNotThrow", expectedLine: expectedLine)
             .isEqualTo("some value")
     }
 
@@ -52,7 +52,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "doesNotThrow", expectedLine: expectedLine)
+            .didFail(expectedName: "doesNotThrow", expectedLine: expectedLine)
             .isEqualTo(.thrownError(MockError.someError))
     }
 
@@ -66,7 +66,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "throwsError", expectedLine: expectedLine)
+            .didPass(expectedName: "throwsError", expectedLine: expectedLine)
             .isType(MockError.self)
             .isEqualTo(.someError)
     }
@@ -81,7 +81,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "throwsError", expectedLine: expectedLine)
+            .didFail(expectedName: "throwsError", expectedLine: expectedLine)
             .isEqualTo(.message(#"Expression did not throw. Returned "some value""#))
     }
 
@@ -98,7 +98,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "doesNotThrow", expectedLine: expectedLine)
+            .didPass(expectedName: "doesNotThrow", expectedLine: expectedLine)
             .isEqualTo("some value")
 
     }
@@ -114,7 +114,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "doesNotThrow", expectedLine: expectedLine)
+            .didFail(expectedName: "doesNotThrow", expectedLine: expectedLine)
             .isEqualTo(.thrownError(MockError.someError))
     }
 
@@ -129,7 +129,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "throwsError", expectedLine: expectedLine)
+            .didPass(expectedName: "throwsError", expectedLine: expectedLine)
             .isType(MockError.self)
             .isEqualTo(.someError)
     }
@@ -145,7 +145,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "throwsError", expectedLine: expectedLine)
+            .didFail(expectedName: "throwsError", expectedLine: expectedLine)
             .isEqualTo(.message(#"Expression did not throw. Returned "some value""#))
     }
 }

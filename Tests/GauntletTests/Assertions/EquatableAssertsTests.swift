@@ -82,7 +82,7 @@ class EquatableAssertsTestCase: XCTestCase {
         let assertion = TestAnAssertion(on: 57).isNotEqualTo(95, line: expectedLine)
 
         // Then
-        Assert(that: assertion).isSuccess(expectedName: "isNotEqualTo", expectedLine: expectedLine)
+        Assert(that: assertion).didPass(expectedName: "isNotEqualTo", expectedLine: expectedLine)
     }
 
     func testIsNotEqualFailure() {
@@ -94,7 +94,7 @@ class EquatableAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isNotEqualTo", expectedLine: expectedLine)
+            .didFail(expectedName: "isNotEqualTo", expectedLine: expectedLine)
             .isEqualTo(.message(#""57" is equal to the specified value"#))
     }
 

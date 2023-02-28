@@ -41,8 +41,8 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         let withAccuracyAssertion = TestAnAssertion(on: 5).isEqualTo(6, accuracy: 1, line: expectedLine)
 
         // Then
-        Assert(that: equalAssertion).isSuccess(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
-        Assert(that: withAccuracyAssertion).isSuccess(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
+        Assert(that: equalAssertion).didPass(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
+        Assert(that: withAccuracyAssertion).didPass(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
     }
 
     /// Tests the basic failure behavior using Assertion tests.
@@ -55,7 +55,7 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
+            .didFail(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
             .isEqualTo(.message("4 is not equal to the expected value 1. Accuracy: 2"))
     }
 
@@ -119,7 +119,7 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         let assertion = TestAnAssertion(on: 5).isNotEqualTo(7, accuracy: 1, line: expectedLine)
 
         // Then
-        Assert(that: assertion).isSuccess(expectedName: "isNotEqualTo(, accuracy)", expectedLine: expectedLine)
+        Assert(that: assertion).didPass(expectedName: "isNotEqualTo(, accuracy)", expectedLine: expectedLine)
     }
 
     /// Tests the basic failure behavior using Assertion tests.
@@ -132,7 +132,7 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isNotEqualTo(, accuracy)", expectedLine: expectedLine)
+            .didFail(expectedName: "isNotEqualTo(, accuracy)", expectedLine: expectedLine)
             .isEqualTo(.message("4 is equal to the expected value 3. Accuracy: 2"))
     }
 

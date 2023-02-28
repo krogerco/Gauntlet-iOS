@@ -28,18 +28,18 @@ import Foundation
 extension Assertion where Value: AssertionConvertible {
     public typealias AssertionValue = Value.Value
 
-    /// Asserts that the ``Assertion`` is successful and has the expected name and line number.
+    /// Asserts that the ``Assertion`` passed and has the expected name and line number.
     ///
-    /// The `Assertion` returned from this will be based on the receiver's `result`. This assertion may generate failures, if the line or name don't match,
-    /// but still return an assertion with a `success` result if the receiving assertion was a `success`.
+    /// The `Assertion` returned from this will be based on the receiver's `result`. This assertion may generate failures, like the line or name not matching,
+    /// but still return an assertion with a `pass` result if the receiving assertion was a `pass`.
     ///
     /// - Parameters:
-    ///   - expectedName: The expected name for the successful assertion.
-    ///   - expectedLine: The expected line for the successful assertion.
-    /// - Returns: A new ``Assertion`` containing the value of the successful assertion.
+    ///   - expectedName: The expected name for the passing assertion.
+    ///   - expectedLine: The expected line for the passing assertion.
+    /// - Returns: A new ``Assertion`` containing the value of the passing assertion.
     @discardableResult
-    public func isSuccess(expectedName: String, expectedLine: Int, line: Int = #line) -> Assertion<AssertionValue> {
-        let name = "isSuccess"
+    public func didPass(expectedName: String, expectedLine: Int, line: Int = #line) -> Assertion<AssertionValue> {
+        let name = "didPass"
         validate(name: name, line: line, expectedName: expectedName, expectedLine: expectedLine)
 
         return evaluate(name: name, lineNumber: line) { convertible in
@@ -47,17 +47,18 @@ extension Assertion where Value: AssertionConvertible {
         }
     }
 
-    /// Asserts that the ``Assertion`` fails with the expected file, and line number.
+    /// Asserts that the ``Assertion`` failed with the expected file, and line number.
     ///
-    /// The `Assertion` returned from this will be based on the receiver's `result`. This assertion may generate failures, if the line or name don't match,
-    /// but still return an assertion with a `success` result if the receiving assertion was a `failure`.
+    /// The `Assertion` returned from this will be based on the receiver's `result`. This assertion may generate failures, like the line or name not matching,
+    /// but still return an assertion with a `pass` result if the receiving assertion was a `fail`.
+    ///
     /// - Parameters:
-    ///   - expectedName: The expected name for the successful assertion.
-    ///   - expectedLine: The expected line for the successful assertion.
-    /// - Returns: A new ``Assertion`` containing the result of the message assertion.
+    ///   - expectedName: The expected name for the failing assertion.
+    ///   - expectedLine: The expected line for the failing assertion.
+    /// - Returns: A new ``Assertion`` containing the failure reason for the failing assertion.
     @discardableResult
-    public func isFailure(expectedName: String, expectedLine: Int, line: Int = #line) -> Assertion<FailureReason> {
-        let name = "isFailure"
+    public func didFail(expectedName: String, expectedLine: Int, line: Int = #line) -> Assertion<FailureReason> {
+        let name = "didFail"
         validate(name: name, line: line, expectedName: expectedName, expectedLine: expectedLine)
 
         return evaluate(name: name, lineNumber: line) { convertible in

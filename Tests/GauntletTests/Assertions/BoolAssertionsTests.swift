@@ -36,7 +36,7 @@ class BoolAssertionsTestCase: XCTestCase {
         let assertion = TestAnAssertion(on: true).isTrue(line: expectedLine)
 
         // Then
-        Assert(that: assertion).isSuccess(expectedName: "isTrue", expectedLine: expectedLine)
+        Assert(that: assertion).didPass(expectedName: "isTrue", expectedLine: expectedLine)
     }
 
     func testIsTrueFailure() {
@@ -48,7 +48,7 @@ class BoolAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isTrue", expectedLine: expectedLine)
+            .didFail(expectedName: "isTrue", expectedLine: expectedLine)
             .isEqualTo(.message("value is false"))
     }
 
@@ -60,7 +60,7 @@ class BoolAssertionsTestCase: XCTestCase {
         let assertion = TestAnAssertion(on: false).isFalse(line: expectedLine)
 
         // Then
-        Assert(that: assertion).isSuccess(expectedName: "isFalse", expectedLine: expectedLine)
+        Assert(that: assertion).didPass(expectedName: "isFalse", expectedLine: expectedLine)
     }
 
     func testIsFalseFailure() {
@@ -72,7 +72,7 @@ class BoolAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isFalse", expectedLine: expectedLine)
+            .didFail(expectedName: "isFalse", expectedLine: expectedLine)
             .isEqualTo(.message("value is true"))
     }
 }

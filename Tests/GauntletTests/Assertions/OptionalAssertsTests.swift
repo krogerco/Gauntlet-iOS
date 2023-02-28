@@ -41,7 +41,7 @@ class OptionalAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "isNotNil", expectedLine: line)
+            .didPass(expectedName: "isNotNil", expectedLine: line)
             .isEqualTo("some value")
     }
 
@@ -55,7 +55,7 @@ class OptionalAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isNotNil", expectedLine: line)
+            .didFail(expectedName: "isNotNil", expectedLine: line)
             .isEqualTo(.message("value is nil"))
     }
 
@@ -71,7 +71,7 @@ class OptionalAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "isNil", expectedLine: line)
+            .didPass(expectedName: "isNil", expectedLine: line)
     }
 
     func testIsNilFailure() {
@@ -84,7 +84,7 @@ class OptionalAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isNil", expectedLine: line)
+            .didFail(expectedName: "isNil", expectedLine: line)
             .isEqualTo(.message("value is not nil"))
     }
 }

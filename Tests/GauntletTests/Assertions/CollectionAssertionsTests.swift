@@ -40,7 +40,7 @@ class CollectionAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "isEmpty", expectedLine: expectedLine)
+            .didPass(expectedName: "isEmpty", expectedLine: expectedLine)
     }
 
     func testIsEmptyFailureOneItem() {
@@ -53,7 +53,7 @@ class CollectionAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isEmpty", expectedLine: expectedLine)
+            .didFail(expectedName: "isEmpty", expectedLine: expectedLine)
             .isEqualTo(.message("The collection has 1 item"))
     }
 
@@ -67,7 +67,7 @@ class CollectionAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isEmpty", expectedLine: expectedLine)
+            .didFail(expectedName: "isEmpty", expectedLine: expectedLine)
             .isEqualTo(.message("The collection has 3 items"))
     }
 
@@ -83,7 +83,7 @@ class CollectionAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "isNotEmpty", expectedLine: expectedLine)
+            .didPass(expectedName: "isNotEmpty", expectedLine: expectedLine)
             .isEqualTo(array)
     }
 
@@ -97,7 +97,7 @@ class CollectionAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isNotEmpty", expectedLine: expectedLine)
+            .didFail(expectedName: "isNotEmpty", expectedLine: expectedLine)
             .isEqualTo(.message("The collection is empty"))
     }
 
@@ -113,7 +113,7 @@ class CollectionAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "hasCount", expectedLine: expectedLine)
+            .didPass(expectedName: "hasCount", expectedLine: expectedLine)
             .isEqualTo(array)
     }
 
@@ -127,7 +127,7 @@ class CollectionAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "hasCount", expectedLine: expectedLine)
+            .didFail(expectedName: "hasCount", expectedLine: expectedLine)
             .isEqualTo(.message("Count of 2 is not equal to the expected count 5"))
     }
 }

@@ -44,11 +44,11 @@ class AssertionAssertionsTestCase: XCTestCase {
         // When
         let assertionLine = #line + 2
         let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
-            .isSuccess(expectedName: expectedName, expectedLine: expectedLine)
+            .didPass(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
         XCTAssert(recorder.recordedFailures.isEmpty)
-        XCTAssertEqual(assertion.name, "isSuccess")
+        XCTAssertEqual(assertion.name, "didPass")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
         if case let .pass(value) = assertion.result {
@@ -74,16 +74,16 @@ class AssertionAssertionsTestCase: XCTestCase {
         // When
         let assertionLine = #line + 2
         let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
-            .isSuccess(expectedName: expectedName, expectedLine: expectedLine)
+            .didPass(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
-        XCTAssertEqual(assertion.name, "isSuccess")
+        XCTAssertEqual(assertion.name, "didPass")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
         if case let .pass(value) = assertion.result {
             XCTAssertEqual(value, expectedValue)
         } else {
-            XCTFail("isSuccess result is not pass")
+            XCTFail("didPass result is not pass")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 2)
@@ -91,14 +91,14 @@ class AssertionAssertionsTestCase: XCTestCase {
         guard recorder.recordedFailures.count == 2 else { return }
 
         let expectedNameFailure = RecordedFailure(
-            name: "isSuccess",
+            name: "didPass",
             reason: .message(#"Name "\#(actualName)" is not equal to expected name "\#(expectedName)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
         )
 
         let expectedLineFailure = RecordedFailure(
-            name: "isSuccess",
+            name: "didPass",
             reason: .message(#"Line "\#(actualLine)" is not equal to expected line "\#(expectedLine)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
@@ -123,16 +123,16 @@ class AssertionAssertionsTestCase: XCTestCase {
         // When
         let assertionLine = #line + 2
         let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
-            .isSuccess(expectedName: expectedName, expectedLine: expectedLine)
+            .didPass(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
-        XCTAssertEqual(assertion.name, "isSuccess")
+        XCTAssertEqual(assertion.name, "didPass")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
         if case let .fail(reason) = assertion.result {
             XCTAssertEqual(reason, expectedReason)
         } else {
-            XCTFail("isSuccess result is not fail")
+            XCTFail("didPass result is not fail")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 3)
@@ -140,21 +140,21 @@ class AssertionAssertionsTestCase: XCTestCase {
         guard recorder.recordedFailures.count == 3 else { return }
 
         let expectedNameFailure = RecordedFailure(
-            name: "isSuccess",
+            name: "didPass",
             reason: .message(#"Name "\#(actualName)" is not equal to expected name "\#(expectedName)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
         )
 
         let expectedLineFailure = RecordedFailure(
-            name: "isSuccess",
+            name: "didPass",
             reason: .message(#"Line "\#(actualLine)" is not equal to expected line "\#(expectedLine)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
         )
 
         let expectedResultFailure = RecordedFailure(
-            name: "isSuccess",
+            name: "didPass",
             reason: expectedReason,
             filePath: assertion.filePath,
             lineNumber: assertionLine
@@ -171,7 +171,7 @@ class AssertionAssertionsTestCase: XCTestCase {
 
         // When, Then
         XCTExpectFailure("This assertion should generate failures")
-        Assert(that: assertion).isSuccess(expectedName: "wrong name", expectedLine: 54321)
+        Assert(that: assertion).didPass(expectedName: "wrong name", expectedLine: 54321)
     }
 
     // MARK: - Failure
@@ -190,17 +190,17 @@ class AssertionAssertionsTestCase: XCTestCase {
         // When
         let assertionLine = #line + 2
         let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
-            .isFailure(expectedName: expectedName, expectedLine: expectedLine)
+            .didFail(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
         XCTAssert(recorder.recordedFailures.isEmpty)
-        XCTAssertEqual(assertion.name, "isFailure")
+        XCTAssertEqual(assertion.name, "didFail")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
         if case let .pass(value) = assertion.result {
             XCTAssertEqual(value, expectedReason)
         } else {
-            XCTFail("isSuccess result is not pass")
+            XCTFail("didPass result is not pass")
         }
     }
 
@@ -220,16 +220,16 @@ class AssertionAssertionsTestCase: XCTestCase {
         // When
         let assertionLine = #line + 2
         let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
-            .isFailure(expectedName: expectedName, expectedLine: expectedLine)
+            .didFail(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
-        XCTAssertEqual(assertion.name, "isFailure")
+        XCTAssertEqual(assertion.name, "didFail")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
         if case let .pass(value) = assertion.result {
             XCTAssertEqual(value, expectedReason)
         } else {
-            XCTFail("isSuccess result is not pass")
+            XCTFail("didPass result is not pass")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 2)
@@ -237,14 +237,14 @@ class AssertionAssertionsTestCase: XCTestCase {
         guard recorder.recordedFailures.count == 2 else { return }
 
         let expectedNameFailure = RecordedFailure(
-            name: "isFailure",
+            name: "didFail",
             reason: .message(#"Name "\#(actualName)" is not equal to expected name "\#(expectedName)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
         )
 
         let expectedLineFailure = RecordedFailure(
-            name: "isFailure",
+            name: "didFail",
             reason: .message(#"Line "\#(actualLine)" is not equal to expected line "\#(expectedLine)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
@@ -269,16 +269,16 @@ class AssertionAssertionsTestCase: XCTestCase {
         // When
         let assertionLine = #line + 2
         let assertion = TestAnAssertion(on: passingAssertion, recorder: recorder)
-            .isFailure(expectedName: expectedName, expectedLine: expectedLine)
+            .didFail(expectedName: expectedName, expectedLine: expectedLine)
 
         // Then
-        XCTAssertEqual(assertion.name, "isFailure")
+        XCTAssertEqual(assertion.name, "didFail")
         XCTAssertEqual(assertion.lineNumber, assertionLine)
 
         if case let .fail(reason) = assertion.result {
             XCTAssertEqual(reason, expectedReason)
         } else {
-            XCTFail("isSuccess result is not fail")
+            XCTFail("didPass result is not fail")
         }
 
         XCTAssertEqual(recorder.recordedFailures.count, 3)
@@ -286,21 +286,21 @@ class AssertionAssertionsTestCase: XCTestCase {
         guard recorder.recordedFailures.count == 3 else { return }
 
         let expectedNameFailure = RecordedFailure(
-            name: "isFailure",
+            name: "didFail",
             reason: .message(#"Name "\#(actualName)" is not equal to expected name "\#(expectedName)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
         )
 
         let expectedLineFailure = RecordedFailure(
-            name: "isFailure",
+            name: "didFail",
             reason: .message(#"Line "\#(actualLine)" is not equal to expected line "\#(expectedLine)""#),
             filePath: assertion.filePath,
             lineNumber: assertionLine
         )
 
         let expectedResultFailure = RecordedFailure(
-            name: "isFailure",
+            name: "didFail",
             reason: expectedReason,
             filePath: assertion.filePath,
             lineNumber: assertionLine
@@ -315,6 +315,6 @@ class AssertionAssertionsTestCase: XCTestCase {
 
         // When, Then
         XCTExpectFailure("This assertion should generate failures")
-        Assert(that: assertion).isFailure(expectedName: "wrong name", expectedLine: 54321)
+        Assert(that: assertion).didFail(expectedName: "wrong name", expectedLine: 54321)
     }
 }

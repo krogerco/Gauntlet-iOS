@@ -39,7 +39,7 @@ class ResultAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "isSuccess", expectedLine: expectedLine)
+            .didPass(expectedName: "isSuccess", expectedLine: expectedLine)
             .isEqualTo(expectedValue)
     }
 
@@ -53,7 +53,7 @@ class ResultAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isSuccess", expectedLine: expectedLine)
+            .didFail(expectedName: "isSuccess", expectedLine: expectedLine)
             .isEqualTo(.message("Result is a failure: Some Error"))
     }
 
@@ -68,7 +68,7 @@ class ResultAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "isFailure", expectedLine: expectedLine)
+            .didPass(expectedName: "isFailure", expectedLine: expectedLine)
             .isEqualTo(expectedError)
     }
 
@@ -82,7 +82,7 @@ class ResultAssertsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isFailure(expectedName: "isFailure", expectedLine: expectedLine)
+            .didFail(expectedName: "isFailure", expectedLine: expectedLine)
             .isEqualTo(.message("Result is a success"))
     }
 }

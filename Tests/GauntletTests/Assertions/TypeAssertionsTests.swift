@@ -39,7 +39,7 @@ class TypeAssertionsTestCase: XCTestCase {
 
         // Then
         Assert(that: assertion)
-            .isSuccess(expectedName: "isType", expectedLine: line)
+            .didPass(expectedName: "isType", expectedLine: line)
             .isEqualTo(SomeConformingType(value: expectedValue))
     }
 
@@ -55,7 +55,7 @@ class TypeAssertionsTestCase: XCTestCase {
         let expectedMessage = #"Value of type SomeNonConformingType does not conform to expected type SomeProtocol"#
 
         Assert(that: assertion)
-            .isFailure(expectedName: "isType", expectedLine: line)
+            .didFail(expectedName: "isType", expectedLine: line)
             .isEqualTo(.message(expectedMessage))
     }
 }
