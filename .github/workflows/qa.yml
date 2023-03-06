@@ -12,6 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: sign off
-        uses: krogertechnology/sign-off@v1.0.1
+        uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/qa.yml@feature/initial
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
