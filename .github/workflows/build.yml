@@ -17,6 +17,3 @@ jobs:
     uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/build.yml@feature/initial
     with:
       FILENAME: Gauntlet.xcworkspace
-      SCHEME: DemoApp
-      CONFIGURATION: Debug
-      DESTINATION: 'platform=iOS Simulator,name=iPhone 13,OS=15.5'
