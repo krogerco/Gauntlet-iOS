@@ -24,6 +24,14 @@
 
 import Foundation
 
-struct MockError: Error, CustomDebugStringConvertible {
-    var debugDescription: String { "Mock Error" }
+enum MockError: Error, CustomDebugStringConvertible {
+    case someError
+    case someOtherError
+
+    var debugDescription: String {
+        switch self {
+        case .someError: return "Some Error"
+        case .someOtherError: return "Some Other Error"
+        }
+    }
 }
