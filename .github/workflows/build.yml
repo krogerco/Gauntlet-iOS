@@ -14,6 +14,6 @@ on:
 jobs:
   build-and-test-ios:
     name: Build Gauntlet iOS
-    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/build.yml@feature/initial
+    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/build.yml@v1.0.0
     with:
       FILENAME: Gauntlet.xcworkspace
