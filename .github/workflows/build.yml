@@ -15,9 +15,9 @@ env:
   FILENAME: Gauntlet.xcworkspace
   SCHEME: DemoApp
   CONFIGURATION: Debug
-  DESTINATION: 'platform=iOS Simulator,name=iPhone 13,OS=15.5'
-  XCODE: /Applications/Xcode_13.4.app
-    
+  DESTINATION: 'platform=iOS Simulator,name=iPhone 14,OS=16.2'
+  XCODE: /Applications/Xcode_14.2.app
+
 jobs:
   build-and-test:
     name: Build and Test
@@ -34,13 +34,13 @@ jobs:
       - name: Setup Xcode
         run: |
           sudo xcode-select -switch ${{ env.XCODE }} && /usr/bin/xcodebuild -version
-    
+
       - name: Build and Test
         run: |
             ONLY_FILE_NAME=$(basename -- "${{ env.FILENAME }}")
             EXTENSION="${ONLY_FILE_NAME##*.}"
 
-            set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -showdestinations
+            set -o pipefail && env NSUnbufferedIO=YES xcodebuild -workspace "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -destination  "${{ env.DESTINATION }}" GITHUB_CI=true
 
             case $EXTENSION in
 
@@ -52,7 +52,7 @@ jobs:
                 set -o pipefail && env NSUnbufferedIO=YES xcodebuild -project "${{ env.FILENAME }}" -scheme "${{ env.SCHEME }}" -configuration "${{ env.CONFIGURATION }}" -destination  "${{ env.DESTINATION }}" GITHUB_CI=true clean test | xcbeautify
                 ;;
             esac
-            
+
       - name: Swiftlint
         run: |
           swiftlint lint --strict

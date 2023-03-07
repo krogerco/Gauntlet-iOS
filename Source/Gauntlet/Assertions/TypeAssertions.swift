@@ -1,10 +1,9 @@
 //
-//  DemoAppTests.swift
-//  DemoAppTests
+//  TypeAssertions.swift
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +23,28 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
-@testable import DemoApp
-import XCTest
+import Foundation
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+extension Assertion {
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
+    /// Asserts that the value is of the specified type.
+    ///
+    /// - Parameters:
+    ///   - expectedType: The type the value is expected to conform to.
+    ///
+    /// - Returns: An ``Assertion`` containing the value cast to the specified type.
+    @discardableResult
+    public func isType<T>(_ expectedType: T.Type, line: Int = #line) -> Assertion<T> {
+        evaluate(name: "isType", lineNumber: line) { value in
+            if let castValue = value as? T {
+                return .pass(castValue)
+            }
 
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
+            let typeDescription = String(describing: type(of: value))
+            let expectedTypeDescription = String(describing: expectedType)
+            let message = "Value of type \(typeDescription) does not conform to expected type \(expectedTypeDescription)"
+
+            return .fail(message: message)
         }
     }
 }

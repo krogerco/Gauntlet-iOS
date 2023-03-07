@@ -1,6 +1,4 @@
-//
-//  DemoAppTests.swift
-//  DemoAppTests
+//  XCTFailureReporter.swift
 //
 //  MIT License
 //
@@ -24,21 +22,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
-@testable import DemoApp
+import Foundation
 import XCTest
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+/// A type that can report a test failure.
+public protocol FailureReporter {
+    /// Reports a test failure.
+    ///
+    /// - Parameters:
+    ///   - description: A description of the failure.
+    ///   - file:        The path of the file that generated the failure.
+    ///   - line:        The line that generated the failure.
+    func reportFailure(description: String, file: StaticString, line: UInt)
+}
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
+// MARK: -
 
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
-        }
+/// A `FailureReporter` that reports the error using `XCTFail`.
+public struct XCTestReporter: FailureReporter {
+
+    /// An instance of `XCTestReporter` used as the default parameter for all asserts.
+    public static let `default` = XCTestReporter()
+
+    public func reportFailure(description: String, file: StaticString, line: UInt) {
+        XCTFail(description, file: file, line: line)
     }
 }

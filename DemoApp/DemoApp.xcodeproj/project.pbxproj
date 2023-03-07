@@ -232,7 +232,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ -z ${GITHUB_CI} ]]; then\n    echo \"Running swiftlint\" \n    # Not running on GitHub (where lint is a separate step).\n    # Xcode path does not inherit the user shell path\n    PATH=${PATH}:/opt/homebrew/bin\n\n    # Lint the code\n    swiftlint lint\nelse\n    echo \"Skipping swiftlint in xcodebuild\" \nfi\n";
+			shellScript = "if [[ -z ${GITHUB_CI} ]]; then\n    echo \"Running swiftlint\" \n    # Not running on GitHub (where lint is a separate step).\n    # Xcode path does not inherit the user shell path\n    PATH=${PATH}:/opt/homebrew/bin\n    \n    # The demo app project is nested one level deep, so we need to move up a directory to hit the Gauntlet source.\n    cd ..\n\n    # Lint the code\n    swiftlint lint\nelse\n    echo \"Skipping swiftlint in xcodebuild\" \nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

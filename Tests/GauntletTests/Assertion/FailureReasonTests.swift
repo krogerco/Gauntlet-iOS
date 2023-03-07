@@ -1,6 +1,5 @@
 //
-//  DemoAppTests.swift
-//  DemoAppTests
+//  FailureReasonTests.swift
 //
 //  MIT License
 //
@@ -24,21 +23,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Foundation
 import Gauntlet
-@testable import DemoApp
 import XCTest
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+class FailureReasonsTestCase: XCTestCase {
+    func testFailureReasonEquality() {
+        // Given
+        let someMessage = FailureReason.message("some message")
+        let otherMessage = FailureReason.message("other message")
+        let someError = FailureReason.thrownError(MockError.someError)
+        let someOtherError = FailureReason.thrownError(MockError.someOtherError)
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
-
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
-        }
+        // When, Then
+        XCTAssertEqual(someMessage, someMessage)
+        XCTAssertNotEqual(someMessage, otherMessage)
+        XCTAssertEqual(someError, someError)
+        XCTAssertNotEqual(someError, someOtherError)
+        XCTAssertNotEqual(someMessage, someError)
     }
 }
