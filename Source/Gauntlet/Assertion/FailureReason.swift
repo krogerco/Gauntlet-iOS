@@ -1,10 +1,9 @@
 //
-//  DemoAppTests.swift
-//  DemoAppTests
+//  FailureReason.swift
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +23,30 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
-@testable import DemoApp
-import XCTest
+import Foundation
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+/// The reason an  ``Assertion`` failed.
+public enum FailureReason {
+    /// A message describing why the assertion failed.
+    case message(String)
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
+    /// The assertion failed because an error was thrown.
+    case thrownError(Error)
+}
 
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
+// MARK: -
+
+extension FailureReason: Equatable {
+    public static func == (lhs: FailureReason, rhs: FailureReason) -> Bool {
+        switch (lhs, rhs) {
+        case let (.message(lhs), .message(rhs)):
+            return lhs == rhs
+
+        case let (.thrownError(lhs as NSError), .thrownError(rhs as NSError)):
+            return lhs == rhs
+
+        default:
+            return false
         }
     }
 }

@@ -1,6 +1,5 @@
 //
-//  DemoAppTests.swift
-//  DemoAppTests
+//  AssertionResultTests.swift
 //
 //  MIT License
 //
@@ -24,21 +23,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
+import Foundation
 import Gauntlet
-@testable import DemoApp
 import XCTest
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+class AssertionResultTestCase: XCTestCase {
+    func testMessageFactoryFunction() {
+        // Given
+        let message = "some message"
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
+        // When
+        let result: AssertionResult<Void> = .fail(message: message)
 
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
+        // Then
+        if case let .fail(reason) = result {
+            XCTAssertEqual(reason, .message(message))
+        } else {
+            XCTFail("Result is a pass")
+        }
+    }
+
+    func testThrownErrorFactoryFunction() {
+        // Given
+        let thrownError = MockError.someError
+
+        // When
+        let result: AssertionResult<Void> = .fail(thrownError: thrownError)
+
+        // Then
+        if case let .fail(reason) = result {
+            XCTAssertEqual(reason, .thrownError(thrownError))
+        } else {
+            XCTFail("Result is a pass")
         }
     }
 }

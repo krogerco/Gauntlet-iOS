@@ -1,10 +1,9 @@
 //
-//  DemoAppTests.swift
-//  DemoAppTests
+//  BoolAssertions.swift
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +23,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
-@testable import DemoApp
-import XCTest
+import Foundation
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+extension Assertion where Value == Bool {
+    /// Asserts that the value is `true`.
+    @discardableResult
+    public func isTrue(line: Int = #line) -> Assertion<Void> {
+        evaluate(name: "isTrue", lineNumber: line) { boolValue in
+            boolValue ? .pass : .fail(message: "value is false")
+        }
+    }
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
-
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
+    /// Asserts that the value is `false`.
+    @discardableResult
+    public func isFalse(line: Int = #line) -> Assertion<Void> {
+        evaluate(name: "isFalse", lineNumber: line) { boolValue in
+            boolValue ? .fail(message: "value is true") : .pass
         }
     }
 }
