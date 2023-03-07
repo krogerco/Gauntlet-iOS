@@ -1,10 +1,9 @@
 //
-//  DemoAppTests.swift
-//  DemoAppTests
+//  ThenAssertion.swift
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +23,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
-@testable import DemoApp
-import XCTest
+import Foundation
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+extension Assertion {
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
-
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
+    /// Terminates an assertion by calling the provided closure if the ``Assertion`` is a success.
+    ///
+    /// Errors thrown by the closure will result in an assertion failure.
+    ///
+    /// - Parameter closure: A closure to ge called if the ``Assertion`` is a success.
+    public func then(line: Int = #line, _ closure: (Value) throws -> Void) {
+        let _: Assertion<Void> = evaluate(name: "then", lineNumber: line) { value in
+            do {
+                try closure(value)
+                return .pass
+            } catch {
+                return .fail(thrownError: error)
+            }
         }
     }
 }

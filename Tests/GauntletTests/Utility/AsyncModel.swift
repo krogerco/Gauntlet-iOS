@@ -1,10 +1,9 @@
 //
-//  DemoAppTests.swift
-//  DemoAppTests
+//  AsyncModel.swift
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +23,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
-@testable import DemoApp
-import XCTest
+import Foundation
 
-class DemoAppTests: XCTestCase {
-    func testExample() throws {
-        // Given, When
-        let result: Result<String, Error> = .success("Hello")
+struct AsyncModel {
+    func getValue() async -> String {
+        "async-value"
+    }
+}
 
-        // Functional API
-        Assert(that: result).isSuccess().isNotEmpty()
+// MARK: -
 
-        // Legacy API
-        XCTAssertSuccess(result, is: String.self) { value in
-            XCTAssertFalse(value.isEmpty)
+struct ThrowingAsyncModel {
+    let result: Result<String, MockError>
+
+    func getValue() async throws -> String {
+        switch result {
+        case .success(let value): return value
+        case .failure(let error): throw error
         }
     }
 }

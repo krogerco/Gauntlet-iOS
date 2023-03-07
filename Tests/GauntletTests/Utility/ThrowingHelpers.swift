@@ -29,9 +29,5 @@ import Foundation
 
 func throwingAutoclosure(_ expression: @autoclosure () throws -> Void) {}
 func functionThatCanThrow() throws {}
-
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 func asyncThrowingAutoclosure(_ expression: @autoclosure () async throws -> Void) async {}
-
-@available(iOS 13.0.0, tvOS 13.0.0, macOS 10.15.0, *)
 func asyncFunctionThatCanThrow() async throws {}
