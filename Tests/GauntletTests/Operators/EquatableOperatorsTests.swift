@@ -1,5 +1,5 @@
 //
-//  EquatableAssertsTests.swift
+//  EquatableOperatorsTests.swift
 //
 //  MIT License
 //
