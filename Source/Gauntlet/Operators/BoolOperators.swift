@@ -25,7 +25,7 @@
 
 import Foundation
 
-extension Assertion where Value == Bool {
+extension Assertion<Bool> {
     /// Asserts that the value is `true`.
     @discardableResult
     public func isTrue(line: Int = #line) -> Assertion<Void> {
