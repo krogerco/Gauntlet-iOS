@@ -53,7 +53,9 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "doesNotThrow", expectedLine: expectedLine)
-            .isEqualTo(.thrownError(MockError.someError))
+            .isThrownError()
+            .isType(MockError.self)
+            .isEqualTo(.someError)
     }
 
     func testThrowsError() {
@@ -82,7 +84,8 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "throwsError", expectedLine: expectedLine)
-            .isEqualTo(.message(#"Expression did not throw. Returned "some value""#))
+            .isMessage()
+            .isEqualTo(#"Expression did not throw. Returned "some value""#)
     }
 
     // MARK: - Async
@@ -115,7 +118,9 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "doesNotThrow", expectedLine: expectedLine)
-            .isEqualTo(.thrownError(MockError.someError))
+            .isThrownError()
+            .isType(MockError.self)
+            .isEqualTo(.someError)
     }
 
     func testAsyncThrowsError() async {
@@ -146,6 +151,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "throwsError", expectedLine: expectedLine)
-            .isEqualTo(.message(#"Expression did not throw. Returned "some value""#))
+            .isMessage()
+            .isEqualTo(#"Expression did not throw. Returned "some value""#)
     }
 }

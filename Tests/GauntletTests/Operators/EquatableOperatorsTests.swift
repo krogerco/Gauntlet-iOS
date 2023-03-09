@@ -95,7 +95,8 @@ class EquatableAssertsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isNotEqualTo", expectedLine: expectedLine)
-            .isEqualTo(.message(#""57" is equal to the specified value"#))
+            .isMessage()
+            .isEqualTo(#""57" is equal to the specified value"#)
     }
 
     func testLiveIsNotEqual() {

@@ -56,7 +56,8 @@ class OptionalAssertsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isNotNil", expectedLine: line)
-            .isEqualTo(.message("value is nil"))
+            .isMessage()
+            .isEqualTo("value is nil")
     }
 
     // MARK: - isNil
@@ -85,6 +86,7 @@ class OptionalAssertsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isNil", expectedLine: line)
-            .isEqualTo(.message("value is not nil"))
+            .isMessage()
+            .isEqualTo("value is not nil")
     }
 }
