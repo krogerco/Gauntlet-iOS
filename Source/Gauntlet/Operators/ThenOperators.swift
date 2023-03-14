@@ -1,5 +1,5 @@
 //
-//  TypeAssertions.swift
+//  ThenOperators.swift
 //
 //  MIT License
 //
@@ -27,24 +27,19 @@ import Foundation
 
 extension Assertion {
 
-    /// Asserts that the value is of the specified type.
+    /// Terminates an assertion by calling the provided closure if the ``Assertion`` is a success.
     ///
-    /// - Parameters:
-    ///   - expectedType: The type the value is expected to conform to.
+    /// Errors thrown by the closure will result in an assertion failure.
     ///
-    /// - Returns: An ``Assertion`` containing the value cast to the specified type.
-    @discardableResult
-    public func isType<T>(_ expectedType: T.Type, line: Int = #line) -> Assertion<T> {
-        evaluate(name: "isType", lineNumber: line) { value in
-            if let castValue = value as? T {
-                return .pass(castValue)
+    /// - Parameter closure: A closure to ge called if the ``Assertion`` is a success.
+    public func then(line: Int = #line, _ closure: (Value) throws -> Void) {
+        let _: Assertion<Void> = evaluate(name: "then", lineNumber: line) { value in
+            do {
+                try closure(value)
+                return .pass
+            } catch {
+                return .fail(thrownError: error)
             }
-
-            let typeDescription = String(describing: type(of: value))
-            let expectedTypeDescription = String(describing: expectedType)
-            let message = "Value of type \(typeDescription) does not conform to expected type \(expectedTypeDescription)"
-
-            return .fail(message: message)
         }
     }
 }
