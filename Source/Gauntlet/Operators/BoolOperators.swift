@@ -1,5 +1,5 @@
 //
-//  ThenAssertion.swift
+//  BoolOperators.swift
 //
 //  MIT License
 //
@@ -25,21 +25,20 @@
 
 import Foundation
 
-extension Assertion {
+extension Assertion where Value == Bool {
+    /// Asserts that the value is `true`.
+    @discardableResult
+    public func isTrue(line: Int = #line) -> Assertion<Void> {
+        evaluate(name: "isTrue", lineNumber: line) { boolValue in
+            boolValue ? .pass : .fail(message: "value is false")
+        }
+    }
 
-    /// Terminates an assertion by calling the provided closure if the ``Assertion`` is a success.
-    ///
-    /// Errors thrown by the closure will result in an assertion failure.
-    ///
-    /// - Parameter closure: A closure to ge called if the ``Assertion`` is a success.
-    public func then(line: Int = #line, _ closure: (Value) throws -> Void) {
-        let _: Assertion<Void> = evaluate(name: "then", lineNumber: line) { value in
-            do {
-                try closure(value)
-                return .pass
-            } catch {
-                return .fail(thrownError: error)
-            }
+    /// Asserts that the value is `false`.
+    @discardableResult
+    public func isFalse(line: Int = #line) -> Assertion<Void> {
+        evaluate(name: "isFalse", lineNumber: line) { boolValue in
+            boolValue ? .fail(message: "value is true") : .pass
         }
     }
 }

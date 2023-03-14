@@ -1,5 +1,5 @@
 //
-//  OptionalAssertsTests.swift
+//  BoolOperatorsTests.swift
 //
 //  MIT License
 //
@@ -27,64 +27,52 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class OptionalAssertsTestCase: XCTestCase {
-
-    // MARK: - isNotNil
-
-    func testIsNotNilSuccess() {
+class BoolAssertionsTestCase: XCTestCase {
+    func testIsTrueSuccess() {
         // Given
-        let line = 123
-        let value: String? = "some value"
+        let expectedLine = 456
 
         // When
-        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
+        let assertion = TestAnAssertion(on: true).isTrue(line: expectedLine)
 
         // Then
-        Assert(that: assertion)
-            .didPass(expectedName: "isNotNil", expectedLine: line)
-            .isEqualTo("some value")
+        Assert(that: assertion).didPass(expectedName: "isTrue", expectedLine: expectedLine)
     }
 
-    func testIsNotNilFailure() {
+    func testIsTrueFailure() {
         // Given
-        let line = 321
-        let value: String? = nil
+        let expectedLine = 654
 
         // When
-        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
+        let assertion = TestAnAssertion(on: false).isTrue(line: expectedLine)
 
         // Then
         Assert(that: assertion)
-            .didFail(expectedName: "isNotNil", expectedLine: line)
-            .isEqualTo(.message("value is nil"))
+            .didFail(expectedName: "isTrue", expectedLine: expectedLine)
+            .isEqualTo(.message("value is false"))
     }
 
-    // MARK: - isNil
-
-    func testIsNilSuccess() {
+    func testIsFalseSuccess() {
         // Given
-        let line = 123
-        let value: String? = nil
+        let expectedLine = 456
 
         // When
-        let assertion = TestAnAssertion(on: value).isNil(line: line)
+        let assertion = TestAnAssertion(on: false).isFalse(line: expectedLine)
 
         // Then
-        Assert(that: assertion)
-            .didPass(expectedName: "isNil", expectedLine: line)
+        Assert(that: assertion).didPass(expectedName: "isFalse", expectedLine: expectedLine)
     }
 
-    func testIsNilFailure() {
+    func testIsFalseFailure() {
         // Given
-        let line = 321
-        let value: String? = "some value"
+        let expectedLine = 654
 
         // When
-        let assertion = TestAnAssertion(on: value).isNil(line: line)
+        let assertion = TestAnAssertion(on: true).isFalse(line: expectedLine)
 
         // Then
         Assert(that: assertion)
-            .didFail(expectedName: "isNil", expectedLine: line)
-            .isEqualTo(.message("value is not nil"))
+            .didFail(expectedName: "isFalse", expectedLine: expectedLine)
+            .isEqualTo(.message("value is true"))
     }
 }

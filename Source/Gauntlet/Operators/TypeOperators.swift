@@ -1,5 +1,5 @@
 //
-//  BoolAssertions.swift
+//  TypeOperators.swift
 //
 //  MIT License
 //
@@ -25,20 +25,26 @@
 
 import Foundation
 
-extension Assertion where Value == Bool {
-    /// Asserts that the value is `true`.
-    @discardableResult
-    public func isTrue(line: Int = #line) -> Assertion<Void> {
-        evaluate(name: "isTrue", lineNumber: line) { boolValue in
-            boolValue ? .pass : .fail(message: "value is false")
-        }
-    }
+extension Assertion {
 
-    /// Asserts that the value is `false`.
+    /// Asserts that the value is of the specified type.
+    ///
+    /// - Parameters:
+    ///   - expectedType: The type the value is expected to conform to.
+    ///
+    /// - Returns: An ``Assertion`` containing the value cast to the specified type.
     @discardableResult
-    public func isFalse(line: Int = #line) -> Assertion<Void> {
-        evaluate(name: "isFalse", lineNumber: line) { boolValue in
-            boolValue ? .fail(message: "value is true") : .pass
+    public func isType<T>(_ expectedType: T.Type, line: Int = #line) -> Assertion<T> {
+        evaluate(name: "isType", lineNumber: line) { value in
+            if let castValue = value as? T {
+                return .pass(castValue)
+            }
+
+            let typeDescription = String(describing: type(of: value))
+            let expectedTypeDescription = String(describing: expectedType)
+            let message = "Value of type \(typeDescription) does not conform to expected type \(expectedTypeDescription)"
+
+            return .fail(message: message)
         }
     }
 }

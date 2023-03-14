@@ -1,5 +1,5 @@
 //
-//  ResultAssertions.swift
+//  ResultOperators.swift
 //
 //  MIT License
 //

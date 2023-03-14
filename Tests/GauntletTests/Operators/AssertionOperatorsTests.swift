@@ -1,5 +1,5 @@
 //
-//  AssertionAssertionsTests.swift
+//  AssertionOperatorsTests.swift
 //
 //  MIT License
 //
