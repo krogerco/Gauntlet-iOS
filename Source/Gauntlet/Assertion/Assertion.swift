@@ -30,7 +30,7 @@ import Foundation
 /// This is the main type in `Gauntlet`, and the type on which you will make assertions. An `Asertion` instance
 /// can be created by calling the `Assert(that: ...)` instance function on `XCTestCase`.
 ///
-/// `Assertion`s of a specific type are extended to provide assertion functions relevant to that type. These functions return
+/// `Assertion`s of a specific type are extended to provide operator functions relevant to that type. These functions return
 /// a new assertion allowing multiple assertions to be chained.
 ///
 /// ```
@@ -47,8 +47,8 @@ import Foundation
 /// Assert(that: failureResult)
 ///     .isFailure()
 /// ```
-/// 
-/// `Assertion` can be extended further to easily create new assertion functions that suit your needs or types.
+///
+/// To create an assertion on code that can throw call `Assert(throwingExpression: ...)` on `XCTestCase`.
 public final class Assertion<Value> {
 
     /// The result of the assertion.

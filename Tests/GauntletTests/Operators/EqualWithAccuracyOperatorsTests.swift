@@ -1,5 +1,5 @@
 //
-//  EqualWithAccuracyAssertsTests.swift
+//  EqualWithAccuracyOperatorsTests.swift
 //
 //  MIT License
 //
@@ -89,7 +89,7 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
     }
 
     /// Runs a number of live assertiosn to validate the failure behavior with a variety of values.
-    /// /// These test cases are taken from the Open Source XCTest codebase.
+    /// These test cases are taken from the Open Source XCTest codebase.
     func testIsEqualWithAccuracyFailureCases() {
         _ = XCTExpectFailure {
             Assert(that: 0).isEqualTo(0.2, accuracy: -0.1)

@@ -1,5 +1,5 @@
 //
-//  CollectionAsserts.swift
+//  CollectionOperators.swift
 //
 //  MIT License
 //
