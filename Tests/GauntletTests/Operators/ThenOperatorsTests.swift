@@ -1,5 +1,5 @@
 //
-//  BoolAssertionsTests.swift
+//  ThenOperatorsTests.swift
 //
 //  MIT License
 //
@@ -27,52 +27,53 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class BoolAssertionsTestCase: XCTestCase {
-    func testIsTrueSuccess() {
+class ThenAssertionsTestCase: XCTestCase {
+    func testThenOnPassingAssertion() {
         // Given
-        let expectedLine = 456
+        let recorder = MockFailureRecorder()
+        let expectedValue = 57
+        var valuePassedToClosure: Int?
 
         // When
-        let assertion = TestAnAssertion(on: true).isTrue(line: expectedLine)
+        TestAnAssertion(on: expectedValue, recorder: recorder).then { inValue in
+            valuePassedToClosure = inValue
+        }
 
         // Then
-        Assert(that: assertion).didPass(expectedName: "isTrue", expectedLine: expectedLine)
+        Assert(that: valuePassedToClosure).isEqualTo(expectedValue)
+        Assert(that: recorder.recordedFailures.count).isEqualTo(0)
     }
 
-    func testIsTrueFailure() {
+    func testThenOnPassingAssertionWithThrowingClosure() {
         // Given
-        let expectedLine = 654
-
+        let recorder = MockFailureRecorder()
+        let thrownError = MockError.someOtherError
+        let line = 432
         // When
-        let assertion = TestAnAssertion(on: false).isTrue(line: expectedLine)
+        TestAnAssertion(on: 57, recorder: recorder).then(line: line) { _ in
+            throw thrownError
+        }
 
         // Then
-        Assert(that: assertion)
-            .didFail(expectedName: "isTrue", expectedLine: expectedLine)
-            .isEqualTo(.message("value is false"))
+        Assert(that: recorder.recordedFailures.count).isEqualTo(1)
+
+        guard let failure = recorder.recordedFailures.first else { return }
+
+        Assert(that: failure.name).isEqualTo("then")
+        Assert(that: failure.lineNumber).isEqualTo(line)
+        Assert(that: failure.reason).isEqualTo(.thrownError(thrownError))
     }
 
-    func testIsFalseSuccess() {
+    func testThenOnFailingAssertion() {
         // Given
-        let expectedLine = 456
+        var closureCalled = false
 
         // When
-        let assertion = TestAnAssertion(on: false).isFalse(line: expectedLine)
+        TestFailedAssertion().then { _ in
+            closureCalled = true
+        }
 
         // Then
-        Assert(that: assertion).didPass(expectedName: "isFalse", expectedLine: expectedLine)
-    }
-
-    func testIsFalseFailure() {
-        // Given
-        let expectedLine = 654
-
-        // When
-        let assertion = TestAnAssertion(on: true).isFalse(line: expectedLine)
-
-        // Then
-        Assert(that: assertion)
-            .didFail(expectedName: "isFalse", expectedLine: expectedLine)
-            .isEqualTo(.message("value is true"))
+        Assert(that: closureCalled).isFalse()
     }
 }

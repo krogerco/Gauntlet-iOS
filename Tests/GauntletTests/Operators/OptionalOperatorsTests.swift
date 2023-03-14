@@ -1,5 +1,5 @@
 //
-//  TypeAssertionsTests.swift
+//  OptionalOperatorsTests.swift
 //
 //  MIT License
 //
@@ -27,43 +27,64 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class TypeAssertionsTestCase: XCTestCase {
-    func testIsTypeSuccess() {
+class OptionalAssertsTestCase: XCTestCase {
+
+    // MARK: - isNotNil
+
+    func testIsNotNilSuccess() {
         // Given
-        let expectedValue = "some value on the concrete type"
-        let protocolValue: SomeProtocol = SomeConformingType(value: expectedValue)
-        let line = 345
+        let line = 123
+        let value: String? = "some value"
 
         // When
-        let assertion = TestAnAssertion(on: protocolValue).isType(SomeConformingType.self, line: line)
+        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
 
         // Then
         Assert(that: assertion)
-            .didPass(expectedName: "isType", expectedLine: line)
-            .isEqualTo(SomeConformingType(value: expectedValue))
+            .didPass(expectedName: "isNotNil", expectedLine: line)
+            .isEqualTo("some value")
     }
 
-    func testIsTypeFailure() {
+    func testIsNotNilFailure() {
         // Given
-        let value = SomeNonConformingType()
-        let line = 543
+        let line = 321
+        let value: String? = nil
 
         // When
-        let assertion = TestAnAssertion(on: value).isType(SomeProtocol.self, line: line)
+        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
 
         // Then
-        let expectedMessage = #"Value of type SomeNonConformingType does not conform to expected type SomeProtocol"#
-
         Assert(that: assertion)
-            .didFail(expectedName: "isType", expectedLine: line)
-            .isEqualTo(.message(expectedMessage))
+            .didFail(expectedName: "isNotNil", expectedLine: line)
+            .isEqualTo(.message("value is nil"))
+    }
+
+    // MARK: - isNil
+
+    func testIsNilSuccess() {
+        // Given
+        let line = 123
+        let value: String? = nil
+
+        // When
+        let assertion = TestAnAssertion(on: value).isNil(line: line)
+
+        // Then
+        Assert(that: assertion)
+            .didPass(expectedName: "isNil", expectedLine: line)
+    }
+
+    func testIsNilFailure() {
+        // Given
+        let line = 321
+        let value: String? = "some value"
+
+        // When
+        let assertion = TestAnAssertion(on: value).isNil(line: line)
+
+        // Then
+        Assert(that: assertion)
+            .didFail(expectedName: "isNil", expectedLine: line)
+            .isEqualTo(.message("value is not nil"))
     }
 }
-
-// MARK: - Helper Types
-
-private protocol SomeProtocol {}
-private struct SomeConformingType: SomeProtocol, Equatable {
-    let value: String
-}
-private struct SomeNonConformingType {}

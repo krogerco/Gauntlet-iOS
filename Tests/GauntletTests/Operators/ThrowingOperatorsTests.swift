@@ -1,5 +1,5 @@
 //
-//  ThrowingAssertionsTests.swift
+//  ThrowingOperatorsTests.swift
 //
 //  MIT License
 //

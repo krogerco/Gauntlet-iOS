@@ -1,5 +1,5 @@
 //
-//  EqualWithAccuracyAsserts.swift
+//  EqualWithAccuracyOperators.swift
 //
 //  MIT License
 //
