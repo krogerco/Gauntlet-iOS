@@ -54,7 +54,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         Assert(that: assertion)
             .didFail(expectedName: "doesNotThrow", expectedLine: expectedLine)
             .isThrownError()
-            .isType(MockError.self)
+            .isOfType(MockError.self)
             .isEqualTo(.someError)
     }
 
@@ -69,7 +69,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didPass(expectedName: "throwsError", expectedLine: expectedLine)
-            .isType(MockError.self)
+            .isOfType(MockError.self)
             .isEqualTo(.someError)
     }
 
@@ -119,7 +119,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         Assert(that: assertion)
             .didFail(expectedName: "doesNotThrow", expectedLine: expectedLine)
             .isThrownError()
-            .isType(MockError.self)
+            .isOfType(MockError.self)
             .isEqualTo(.someError)
     }
 
@@ -135,7 +135,7 @@ class ThrowingAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didPass(expectedName: "throwsError", expectedLine: expectedLine)
-            .isType(MockError.self)
+            .isOfType(MockError.self)
             .isEqualTo(.someError)
     }
 

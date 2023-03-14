@@ -63,7 +63,7 @@ class ThenAssertionsTestCase: XCTestCase {
         Assert(that: failure.lineNumber).isEqualTo(line)
         Assert(that: failure.reason)
             .isThrownError()
-            .isType(MockError.self)
+            .isOfType(MockError.self)
             .isEqualTo(thrownError)
     }
 
