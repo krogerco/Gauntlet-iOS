@@ -8,8 +8,10 @@ All notable changes to this project will be documented in this file.
 Unreleased changes
 
 #### Breaking Changes
+- Removed deprecated async APIs.
 
 #### Added
+- Added new functional Assertion API.
 
 #### Updated
 
