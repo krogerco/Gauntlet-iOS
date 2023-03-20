@@ -54,7 +54,8 @@ class ResultAssertsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isSuccess", expectedLine: expectedLine)
-            .isEqualTo(.message("Result is a failure: Some Error"))
+            .isMessage()
+            .isEqualTo("Result is a failure: Some Error")
     }
 
     func testIsFailureWithFailure() {
@@ -83,6 +84,7 @@ class ResultAssertsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isFailure", expectedLine: expectedLine)
-            .isEqualTo(.message("Result is a success"))
+            .isMessage()
+            .isEqualTo("Result is a success")
     }
 }

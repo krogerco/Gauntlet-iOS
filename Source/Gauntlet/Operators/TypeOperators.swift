@@ -34,8 +34,8 @@ extension Assertion {
     ///
     /// - Returns: An ``Assertion`` containing the value cast to the specified type.
     @discardableResult
-    public func isType<T>(_ expectedType: T.Type, line: Int = #line) -> Assertion<T> {
-        evaluate(name: "isType", lineNumber: line) { value in
+    public func isOfType<T>(_ expectedType: T.Type, line: Int = #line) -> Assertion<T> {
+        evaluate(name: "isOfType", lineNumber: line) { value in
             if let castValue = value as? T {
                 return .pass(castValue)
             }

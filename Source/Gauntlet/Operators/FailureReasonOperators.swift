@@ -1,5 +1,5 @@
 //
-//  BoolOperators.swift
+//  FailureReasonOperators.swift
 //
 //  MIT License
 //
@@ -25,20 +25,37 @@
 
 import Foundation
 
-extension Assertion<Bool> {
-    /// Asserts that the value is `true`.
+extension Assertion<FailureReason> {
+
+    /// Asserts that the ``FailureReason`` is a `message`, providing the message string.
+    ///
+    /// - Returns: An ``Assertion`` containing the message string.
     @discardableResult
-    public func isTrue(line: Int = #line) -> Assertion<Void> {
-        evaluate(name: "isTrue", lineNumber: line) { boolValue in
-            boolValue ? .pass : .fail(message: "value is false")
+    public func isMessage(line: Int = #line) -> Assertion<String> {
+        evaluate(name: "isMessage", lineNumber: line) { reason in
+            switch reason {
+            case .message(let message):
+                return .pass(message)
+
+            case .thrownError(let error):
+                return .fail(message: "FailureReason is thrownError: \(error)")
+            }
         }
     }
 
-    /// Asserts that the value is `false`.
+    /// Asserts that the ``FailureReason`` is a `thrownError`, providing the error.
+    ///
+    /// - Returns: An ``Assertion`` containing the error.
     @discardableResult
-    public func isFalse(line: Int = #line) -> Assertion<Void> {
-        evaluate(name: "isFalse", lineNumber: line) { boolValue in
-            boolValue ? .fail(message: "value is true") : .pass
+    public func isThrownError(line: Int = #line) -> Assertion<Error> {
+        evaluate(name: "isThrownError", lineNumber: line) { reason in
+            switch reason {
+            case .message(let message):
+                return .fail(message: "FailureReason is message: \(message)")
+
+            case .thrownError(let error):
+                return .pass(error)
+            }
         }
     }
 }
