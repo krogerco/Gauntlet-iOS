@@ -69,7 +69,6 @@ class IdenticalOperatorsTestCase: XCTestCase {
         let object = SomeObject()
         let differentObject = SomeObject()
 
-
         // When
         let assertion = TestAnAssertion(on: object).isNotIdentical(to: differentObject, line: line)
 
