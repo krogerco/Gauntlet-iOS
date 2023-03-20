@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class CollectionAssertionsTestCase: XCTestCase {
+class CollectionOperatorsTestCase: XCTestCase {
 
     // MARK: - isEmpty
     func testIsEmptySuccess() {

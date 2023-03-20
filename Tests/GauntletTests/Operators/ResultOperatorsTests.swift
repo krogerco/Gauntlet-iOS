@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class ResultAssertsTestCase: XCTestCase {
+class ResultOperatorsTestCase: XCTestCase {
     func testIsSuccessWithSuccess() {
         // Given
         let expectedValue = "some successful value"

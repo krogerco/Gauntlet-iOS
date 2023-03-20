@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class BoolAssertionsTestCase: XCTestCase {
+class BoolOperatorsTestCase: XCTestCase {
     func testIsTrueSuccess() {
         // Given
         let expectedLine = 456

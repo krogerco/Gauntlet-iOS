@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class OptionalAssertsTestCase: XCTestCase {
+class OptionalOperatorsTestCase: XCTestCase {
 
     // MARK: - isNotNil
 
