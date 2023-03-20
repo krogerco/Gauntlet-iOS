@@ -55,7 +55,6 @@ extension Assertion<FailureReason> {
 
             case .thrownError(let error):
                 return .pass(error)
-
             }
         }
     }
