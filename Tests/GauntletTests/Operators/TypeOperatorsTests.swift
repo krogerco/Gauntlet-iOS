@@ -35,11 +35,11 @@ class TypeAssertionsTestCase: XCTestCase {
         let line = 345
 
         // When
-        let assertion = TestAnAssertion(on: protocolValue).isType(SomeConformingType.self, line: line)
+        let assertion = TestAnAssertion(on: protocolValue).isOfType(SomeConformingType.self, line: line)
 
         // Then
         Assert(that: assertion)
-            .didPass(expectedName: "isType", expectedLine: line)
+            .didPass(expectedName: "isOfType", expectedLine: line)
             .isEqualTo(SomeConformingType(value: expectedValue))
     }
 
@@ -49,13 +49,13 @@ class TypeAssertionsTestCase: XCTestCase {
         let line = 543
 
         // When
-        let assertion = TestAnAssertion(on: value).isType(SomeProtocol.self, line: line)
+        let assertion = TestAnAssertion(on: value).isOfType(SomeProtocol.self, line: line)
 
         // Then
         let expectedMessage = #"Value of type SomeNonConformingType does not conform to expected type SomeProtocol"#
 
         Assert(that: assertion)
-            .didFail(expectedName: "isType", expectedLine: line)
+            .didFail(expectedName: "isOfType", expectedLine: line)
             .isEqualTo(.message(expectedMessage))
     }
 }
