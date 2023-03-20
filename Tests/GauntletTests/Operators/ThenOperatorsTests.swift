@@ -61,7 +61,10 @@ class ThenAssertionsTestCase: XCTestCase {
 
         Assert(that: failure.name).isEqualTo("then")
         Assert(that: failure.lineNumber).isEqualTo(line)
-        Assert(that: failure.reason).isEqualTo(.thrownError(thrownError))
+        Assert(that: failure.reason)
+            .isThrownError()
+            .isOfType(MockError.self)
+            .isEqualTo(thrownError)
     }
 
     func testThenOnFailingAssertion() {

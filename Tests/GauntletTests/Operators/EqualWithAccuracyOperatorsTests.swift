@@ -56,7 +56,8 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isEqualTo(, accuracy)", expectedLine: expectedLine)
-            .isEqualTo(.message("4 is not equal to the expected value 1. Accuracy: 2"))
+            .isMessage()
+            .isEqualTo("4 is not equal to the expected value 1. Accuracy: 2")
     }
 
     /// Runs a number of live assertions to validate the success behavior with a variety of values.
@@ -133,7 +134,8 @@ class EqualWithAccuracyAssertsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isNotEqualTo(, accuracy)", expectedLine: expectedLine)
-            .isEqualTo(.message("4 is equal to the expected value 3. Accuracy: 2"))
+            .isMessage()
+            .isEqualTo("4 is equal to the expected value 3. Accuracy: 2")
     }
 
     /// Runs a number of live assertions to validate the success behavior with a variety of values.

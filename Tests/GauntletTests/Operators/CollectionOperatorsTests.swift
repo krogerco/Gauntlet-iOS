@@ -54,7 +54,8 @@ class CollectionAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isEmpty", expectedLine: expectedLine)
-            .isEqualTo(.message("The collection has 1 item"))
+            .isMessage()
+            .isEqualTo("The collection has 1 item")
     }
 
     func testIsEmptyFailureMultipleItems() {
@@ -68,7 +69,8 @@ class CollectionAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isEmpty", expectedLine: expectedLine)
-            .isEqualTo(.message("The collection has 3 items"))
+            .isMessage()
+            .isEqualTo("The collection has 3 items")
     }
 
     // MARK: - isNotEmpty
@@ -98,7 +100,8 @@ class CollectionAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "isNotEmpty", expectedLine: expectedLine)
-            .isEqualTo(.message("The collection is empty"))
+            .isMessage()
+            .isEqualTo("The collection is empty")
     }
 
     // MARK: - hasCount
@@ -128,6 +131,7 @@ class CollectionAssertionsTestCase: XCTestCase {
         // Then
         Assert(that: assertion)
             .didFail(expectedName: "hasCount", expectedLine: expectedLine)
-            .isEqualTo(.message("Count of 2 is not equal to the expected count 5"))
+            .isMessage()
+            .isEqualTo("Count of 2 is not equal to the expected count 5")
     }
 }
