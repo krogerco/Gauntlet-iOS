@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		252FFA6929CA649D0010C984 /* GauntletLegacy in Frameworks */ = {isa = PBXBuildFile; productRef = 252FFA6829CA649D0010C984 /* GauntletLegacy */; };
 		67F19643284970E500008D82 /* DemoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F19642284970E500008D82 /* DemoAppApp.swift */; };
 		67F19645284970E500008D82 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F19644284970E500008D82 /* ContentView.swift */; };
 		67F19654284970E500008D82 /* DemoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F19653284970E500008D82 /* DemoAppTests.swift */; };
@@ -48,6 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				67F196742849751500008D82 /* Gauntlet in Frameworks */,
+				252FFA6929CA649D0010C984 /* GauntletLegacy in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +154,7 @@
 			name = DemoAppTests;
 			packageProductDependencies = (
 				67F196732849751500008D82 /* Gauntlet */,
+				252FFA6829CA649D0010C984 /* GauntletLegacy */,
 			);
 			productName = DemoAppTests;
 			productReference = 67F1964F284970E500008D82 /* DemoAppTests.xctest */;
@@ -506,6 +509,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		252FFA6829CA649D0010C984 /* GauntletLegacy */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GauntletLegacy;
+		};
 		67F196732849751500008D82 /* Gauntlet */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Gauntlet;
