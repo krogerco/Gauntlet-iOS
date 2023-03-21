@@ -17,10 +17,3 @@ jobs:
     uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/build.yml@v1.0.0
     with:
       FILENAME: Gauntlet.xcworkspace
-
-  build-and-test-legacy-ios:
-    name: Build GauntletLegacy iOS
-    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/build.yml@v1.0.0
-    with:
-      FILENAME: Gauntlet.xcworkspace
-      SCHEME: GauntletLegacy

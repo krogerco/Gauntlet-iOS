@@ -48,6 +48,20 @@
                ReferencedContainer = "container:DemoApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "GauntletLegacyTests"
+               BuildableName = "GauntletLegacyTests"
+               BlueprintName = "GauntletLegacyTests"
+               ReferencedContainer = "container:..">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -73,6 +87,16 @@
                BlueprintIdentifier = "GauntletTests"
                BuildableName = "GauntletTests"
                BlueprintName = "GauntletTests"
+               ReferencedContainer = "container:..">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "GauntletLegacyTests"
+               BuildableName = "GauntletLegacyTests"
+               BlueprintName = "GauntletLegacyTests"
                ReferencedContainer = "container:..">
             </BuildableReference>
          </TestableReference>
