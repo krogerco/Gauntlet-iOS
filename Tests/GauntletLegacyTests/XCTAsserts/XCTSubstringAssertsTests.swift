@@ -1,4 +1,4 @@
-//  XCTQueueAssertTests.swift
+//  XCTSubstringAssertsTests.swift
 //
 //  MIT License
 //
@@ -22,124 +22,134 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
+import Foundation
+import GauntletLegacy
 import XCTest
 
-class XCTQueueAssertTestCase: XCTestCase {
-    func testAssertOnQueueSuccess() {
+class XCTSubstringAssertsTestCase: XCTestCase {
+
+    // MARK: - Assert(_, contains:)
+
+    func testSubstringAssert() {
         // Given
         let mock = FailMock()
-        let queue = DispatchQueue(label: "Test Queue")
         var completionCalled = false
 
         // When
-        queue.sync {
-            XCTAssertOnQueue(queue, reporter: mock) {
-                completionCalled = true
-            }
-        }
-
-        // Then
-        XCTAssertNil(mock.message)
-        XCTAssertNil(mock.file)
-        XCTAssertNil(mock.line)
-        XCTAssertTrue(completionCalled)
-    }
-
-    func testAssertOnQueueNoClosure() {
-        // Given
-        let mock = FailMock()
-        let queue = DispatchQueue(label: "Test Queue")
-
-        // When
-        queue.sync {
-            XCTAssertOnQueue(queue, reporter: mock)
-        }
-
-        // Then
-        XCTAssertNil(mock.message)
-        XCTAssertNil(mock.file)
-        XCTAssertNil(mock.line)
-    }
-
-    func testAssertOnQueueFail() {
-        // Given
-        let mock = FailMock()
-        let actualQueue = DispatchQueue(label: "Actual Queue")
-        let expectedQueue = DispatchQueue(label: "Expected Queue")
-        var completionCalled = false
-
-        // When
-        actualQueue.sync {
-            XCTAssertOnQueue(expectedQueue, "custom message", reporter: mock, file: "some file", line: 123) {
-                completionCalled = true
-            }
-        }
-
-        // Then
-        XCTAssertEqual(
-            mock.message,
-            #"XCTAssertOnQueue - label of current queue ("Actual Queue") is not equal to ("Expected Queue") - custom message"#
-        )
-        XCTAssertEqual(mock.file, "some file")
-        XCTAssertEqual(mock.line, 123)
-        XCTAssertFalse(completionCalled)
-    }
-
-    func testAssertOnQueueWithThrowingExpression() {
-        // Given
-        let mock = FailMock()
-        let expression: () throws -> DispatchQueue = { throw MockError.someError }
-        var completionCalled = false
-
-        // When
-        XCTAssertOnQueue(try expression(), "custom message", reporter: mock, file: "some file", line: 123) {
+        XCTAssert("some string", contains: "some", reporter: mock) {
             completionCalled = true
         }
 
         // Then
-        XCTAssertEqual(mock.message, #"XCTAssertOnQueue - threw error "Some Error" - custom message"#)
-        XCTAssertEqual(mock.file, "some file")
-        XCTAssertEqual(mock.line, 123)
-        XCTAssertFalse(completionCalled)
+        XCTAssertTrue(completionCalled)
+        XCTAssertNil(mock.message)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
     }
 
-    func testAssertOnQueueWithThrowingThen() {
+    func testSubstringAssertNoClosure() {
         // Given
         let mock = FailMock()
-        let queue = DispatchQueue(label: "Test Queue")
+
+        // When
+        XCTAssert("some string", contains: "some", reporter: mock)
+
+        // Then
+        XCTAssertNil(mock.message)
+        XCTAssertNil(mock.file)
+        XCTAssertNil(mock.line)
+    }
+
+    func testFailingSubstringAssertOnNil() {
+        // Given
+        let mock = FailMock()
         var completionCalled = false
 
         // When
-        queue.sync {
-            XCTAssertOnQueue(queue, "custom message", reporter: mock, file: "some file", line: 123) {
-                completionCalled = true
-                throw MockError.someError
-            }
+        XCTAssert(nil, contains: "something", "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
         }
 
         // Then
-        XCTAssertEqual(mock.message, #"XCTAssertOnQueue - then closure threw error "Some Error" - custom message"#)
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(
+            mock.message,
+            #"XCTAssert(_, contains:) - nil string does not contain "something" - custom message"#
+        )
+
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
-        XCTAssertTrue(completionCalled)
     }
 
-    func testAssertOnQueueWithThrowingCallInAutoclosureInThen() {
+    func testFailingSubstringAssert() {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        XCTAssert("some string", contains: "fail", "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(
+            mock.message,
+            #"XCTAssert(_, contains:) - "fail" not found in "some string" - custom message"#
+        )
+
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    func testThrowingSubstringAssert() {
+        // Given
+        let expression: () throws -> String = { throw MockError.someError }
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        XCTAssert(try expression(), contains: "fail", "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+        }
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAssert(_, contains:) - threw error "Some Error" - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    func testSubstringAssertWithThrowingThen() {
+        // Given
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        XCTAssert("some string", contains: "some", "custom message", reporter: mock, file: "some file", line: 123) {
+            completionCalled = true
+            throw MockError.someError
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAssert(_, contains:) - then closure threw error "Some Error" - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    func testSubstringAssertWithThrowingCallInAutoclosureInThen() {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
         // the closure.
 
         // Given
-        let queue = DispatchQueue(label: "Test Queue")
         var completionCalled = false
 
         // When
-        queue.sync {
-            XCTAssertOnQueue(queue) {
-                throwingAutoclosure(try functionThatCanThrow())
-                completionCalled = true
-            }
+        XCTAssert("some string", contains: "some") {
+            throwingAutoclosure(try functionThatCanThrow())
+            completionCalled = true
         }
 
         // Then

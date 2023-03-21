@@ -32,7 +32,7 @@ extension Assertion where Value: AnyObject {
     /// - Parameters:
     ///   - expectedObject: The object the receiver's value should be identical to.
     ///
-    /// - Returns: A `Void` ``Asertion`` describing the result.
+    /// - Returns: A `Void` ``Assertion`` describing the result.
     @discardableResult
     public func isIdentical(to expectedObject: Value, line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isIdentical", lineNumber: line) { object in
@@ -49,7 +49,7 @@ extension Assertion where Value: AnyObject {
     /// - Parameters:
     ///   - expectedObject: The object the receiver's value should be different than.
     ///
-    /// - Returns: A `Void` ``Asertion`` describing the result.
+    /// - Returns: A `Void` ``Assertion`` describing the result.
     @discardableResult
     public func isNotIdentical(to expectedObject: Value, line: Int = #line) -> Assertion<Void> {
         evaluate(name: "isNotIdentical", lineNumber: line) { object in

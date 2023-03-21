@@ -1,4 +1,4 @@
-//  XCTCollectionAssertsTests.swift
+//  XCTTypeAssertsTests.swift
 //
 //  MIT License
 //
@@ -22,40 +22,42 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
+import Foundation
+import GauntletLegacy
 import XCTest
 
-// swiftlint:disable discouraged_optional_collection
+class XCTTypeAssertsTestCase: XCTestCase {
 
-class XCTCollectionAssertsTestCase: XCTestCase {
+    // MARK: - Assert(_, is:)
 
-    // MARK: - XCTAssertIsEmpty
-
-    func testAssertIsEmpty() {
+    func testTypeAssert() {
         // Given
-        let array: [Int] = []
         let mock = FailMock()
+        let anyInt: Any = 5
         var completionCalled = false
+        var valuePassedToCompletion: Int?
 
         // When
-        XCTAssertIsEmpty(array, "custom message", reporter: mock, file: "some file", line: 123) {
+        XCTAssert(anyInt, is: Int.self, reporter: mock) { value in
             completionCalled = true
+            valuePassedToCompletion = value
         }
 
         // Then
         XCTAssertTrue(completionCalled)
+        XCTAssertEqual(valuePassedToCompletion, 5)
         XCTAssertNil(mock.message)
         XCTAssertNil(mock.file)
         XCTAssertNil(mock.line)
     }
 
-    func testAssertIsEmptyNoClosure() {
+    func testTypeAssertNoClosure() {
         // Given
-        let array: [Int] = []
         let mock = FailMock()
+        let anyInt: Any = 5
 
         // When
-        XCTAssertIsEmpty(array, "custom message", reporter: mock, file: "some file", line: 123)
+        XCTAssert(anyInt, is: Int.self, reporter: mock)
 
         // Then
         XCTAssertNil(mock.message)
@@ -63,70 +65,92 @@ class XCTCollectionAssertsTestCase: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    func testFailingAssertIsEmpty() {
+    func testFailingTypeAssert() {
         // Given
-        let array = [1, 2, 3]
         let mock = FailMock()
         var completionCalled = false
 
         // When
-        XCTAssertIsEmpty(array, "custom message", reporter: mock, file: "some file", line: 123) {
+        XCTAssert(5, is: String.self, "custom message", reporter: mock, file: "some file", line: 123) { _ in
             completionCalled = true
         }
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, "XCTAssertIsEmpty - custom message")
+        XCTAssertEqual(mock.message, "XCTAssert(_, is:) - value of type Int is not expected type String - custom message")
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
 
-    func testThrowingAssertIsEmpty() {
+    func testFailingTypeAssertOnNil() {
         // Given
         let mock = FailMock()
-        let expression: () throws -> [Int] = { throw MockError.someError }
         var completionCalled = false
 
         // When
-        XCTAssertIsEmpty(try expression(), "custom message", reporter: mock, file: "some file", line: 123) {
+        XCTAssert(nil, is: Int.self, "custom message", reporter: mock, file: "some file", line: 123) { _ in
             completionCalled = true
         }
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsEmpty - threw error "Some Error" - custom message"#)
+        XCTAssertEqual(
+            mock.message,
+            "XCTAssert(_, is:) - value is nil and cannot be checked for conformance to type Int - custom message"
+        )
+
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
 
-    func testAssertIsEmptyThrowingInThen() {
+    func testThrowingTypeAssert() {
         // Given
+        let function: () throws -> Any = { throw MockError.someError }
         let mock = FailMock()
-        let expression: () throws -> [Int] = { throw MockError.someError }
         var completionCalled = false
 
         // When
-        XCTAssertIsEmpty(try expression(), "custom message", reporter: mock, file: "some file", line: 123) {
+        XCTAssert(try function(), is: String.self, "custom message", reporter: mock, file: "some file", line: 123) { _ in
             completionCalled = true
         }
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsEmpty - threw error "Some Error" - custom message"#)
+        XCTAssertEqual(mock.message, #"XCTAssert(_, is:) - threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
 
-    func testAssertIsEmptyWithThrowingCallInAutoclosureInThen() {
+    func testTypeAssertWithThrowingThen() {
+        // Given
+        let anyString: Any = ""
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        XCTAssert(anyString, is: String.self, "custom message", reporter: mock, file: "some file", line: 123) { _ in
+            completionCalled = true
+            throw MockError.someError
+        }
+
+        // Then
+        XCTAssertTrue(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAssert(_, is:) - then closure threw error "Some Error" - custom message"#)
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    func testTypeAssertWithThrowingCallInAutoclosureInThen() {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
         // the closure.
 
         // Given
-        let emptyArray: [Int] = []
+        let anyInt: Any = 5
         var completionCalled = false
 
-        XCTAssertIsEmpty(emptyArray) {
+        // When
+        XCTAssert(anyInt, is: Int.self) { _ in
             throwingAutoclosure(try functionThatCanThrow())
             completionCalled = true
         }
@@ -135,36 +159,33 @@ class XCTCollectionAssertsTestCase: XCTestCase {
         XCTAssertTrue(completionCalled)
     }
 
-    // MARK: - XCTAssertIsNotEmpty
+    // MARK: - Assert(_, is:, equalTo:)
 
-    func testAssertIsNotEmpty() {
+    func testTypeEqualityAssert() {
         // Given
-        let array = [1, 2, 3]
         let mock = FailMock()
+        let any: Any = 5
         var completionCalled = false
-        var arrayPassedToClosure: [Int]?
 
         // When
-        XCTAssertIsNotEmpty(array, "custom message", reporter: mock, file: "some file", line: 123) { array in
-            arrayPassedToClosure = array
+        XCTAssert(any, is: Int.self, equalTo: 5, reporter: mock) {
             completionCalled = true
         }
 
         // Then
         XCTAssertTrue(completionCalled)
-        XCTAssertEqual(arrayPassedToClosure, array)
         XCTAssertNil(mock.message)
         XCTAssertNil(mock.file)
         XCTAssertNil(mock.line)
     }
 
-    func testAssertIsNotEmptyNoClosure() {
+    func testTypeEqualityAssertNoClosure() {
         // Given
-        let array = [1, 2, 3]
         let mock = FailMock()
+        let any: Any = EquatableClass(value: 5)
 
         // When
-        XCTAssertIsNotEmpty(array, "custom message", reporter: mock, file: "some file", line: 123)
+        XCTAssert(any, is: EquatableClass.self, equalTo: EquatableClass(value: 5), reporter: mock)
 
         // Then
         XCTAssertNil(mock.message)
@@ -172,87 +193,123 @@ class XCTCollectionAssertsTestCase: XCTestCase {
         XCTAssertNil(mock.line)
     }
 
-    func testFailingAssertIsNotEmpty() {
+    func testFailingTypeEqualityAssertOnUnequalValue() {
         // Given
-        let array: [Int] = []
+        let anyInt: Any = 5
         let mock = FailMock()
         var completionCalled = false
 
         // When
-        XCTAssertIsNotEmpty(array, "custom message", reporter: mock, file: "some file", line: 123) { _ in
+        XCTAssert(anyInt, is: Int.self, equalTo: 1, "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
         }
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, "XCTAssertIsNotEmpty - custom message")
+        XCTAssertEqual(mock.message, "XCTAssert(_, is:, equalTo:) - 5 is not equal to 1 - custom message")
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
 
-    func testFailingAssertIsNotEmptyWithNil() {
+    func testFailingTypeEqualityAssert() {
         // Given
-        let array: [Int]? = nil
         let mock = FailMock()
         var completionCalled = false
 
         // When
-        XCTAssertIsNotEmpty(array, "custom message", reporter: mock, file: "some file", line: 123) { _ in
+        XCTAssert(5, is: String.self, equalTo: "", "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
         }
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, "XCTAssertIsNotEmpty - custom message")
+        XCTAssertEqual(
+            mock.message,
+            "XCTAssert(_, is:, equalTo:) - value of type Int is not expected type String - custom message"
+        )
+
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
 
-    func testThrowingAssertIsNotEmpty() {
+    func testFailingTypeEqualityAssertOnNil() {
         // Given
-        let expression: () throws -> [Int] = { throw MockError.someError }
         let mock = FailMock()
         var completionCalled = false
 
         // When
-        XCTAssertIsNotEmpty(try expression(), "custom message", reporter: mock, file: "some file", line: 123) { _ in
+        XCTAssert(nil, is: Int.self, equalTo: 5, "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
         }
 
         // Then
         XCTAssertFalse(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsNotEmpty - threw error "Some Error" - custom message"#)
+        XCTAssertEqual(
+            mock.message,
+            "XCTAssert(_, is:, equalTo:) - value is nil and cannot be checked for conformance to type Int - custom message"
+        )
+
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
 
-    func testAssertIsNotEmptyWithThrowingThen() {
+    func testThrowingTypeEqualityAssert() {
         // Given
+        let function: () throws -> Any = { throw MockError.someError }
         let mock = FailMock()
         var completionCalled = false
 
         // When
-        XCTAssertIsNotEmpty([1, 2, 3], "custom message", reporter: mock, file: "some file", line: 123) { _ in
+        XCTAssert(
+            try function(),
+            is: String.self,
+            equalTo: "",
+            "custom message",
+            reporter: mock,
+            file: "some file",
+            line: 123,
+            then: {
+                completionCalled = true
+            }
+        )
+
+        // Then
+        XCTAssertFalse(completionCalled)
+        XCTAssertEqual(mock.message, "XCTAssert(_, is:, equalTo:) - threw error \"Some Error\" - custom message")
+        XCTAssertEqual(mock.file, "some file")
+        XCTAssertEqual(mock.line, 123)
+    }
+
+    func testTypeEqualityAssertWithThrowingThen() {
+        // Given
+        let anyInt: Any = 5
+        let mock = FailMock()
+        var completionCalled = false
+
+        // When
+        XCTAssert(anyInt, is: Int.self, equalTo: 5, "custom message", reporter: mock, file: "some file", line: 123) {
             completionCalled = true
             throw MockError.someError
         }
 
         // Then
-        XCTAssert(completionCalled)
-        XCTAssertEqual(mock.message, #"XCTAssertIsNotEmpty - then closure threw error "Some Error" - custom message"#)
+        XCTAssertTrue(completionCalled)
+        XCTAssertEqual(mock.message, #"XCTAssert(_, is:, equalTo:) - then closure threw error "Some Error" - custom message"#)
         XCTAssertEqual(mock.file, "some file")
         XCTAssertEqual(mock.line, 123)
     }
 
-    func testAssertIsNotEmptyWithThrowingCallInAutoclosureInThen() {
+    func testTypeEqualtyAssertWithThrowingCallInAutoclosureInThen() {
         // This is a compile time test that ensures that a throwing function can be called within an autoclosure
         // in the then closure of this assert. This simulates calling throwing code inside another assert within
         // the closure.
 
         // Given
+        let anyInt: Any = 5
         var completionCalled = false
 
-        XCTAssertIsNotEmpty([1, 2, 3]) { _ in
+        // When
+        XCTAssert(anyInt, is: Int.self, equalTo: 5) {
             throwingAutoclosure(try functionThatCanThrow())
             completionCalled = true
         }

@@ -9,6 +9,7 @@ Unreleased changes
 
 #### Breaking Changes
 - Removed deprecated async APIs.
+- Existing Gauntlet API has been moved to a new GauntletLegacy target.
 
 #### Added
 - Added new functional Assertion API.

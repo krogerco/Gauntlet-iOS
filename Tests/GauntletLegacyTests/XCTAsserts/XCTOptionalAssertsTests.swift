@@ -22,8 +22,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Gauntlet
 import Foundation
+import GauntletLegacy
 import XCTest
 
 class XCTOptionalAssertsTestCase: XCTestCase {
