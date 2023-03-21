@@ -1,0 +1,20 @@
+name: Placeholder
+
+on:
+  # Run any time code is pushed to main.
+  push:
+    branches:
+      - main
+
+  # Run on all pull requests
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Placeholder
+        run: |
+          echo "Hello World"
