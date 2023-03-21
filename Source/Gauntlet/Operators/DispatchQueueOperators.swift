@@ -56,7 +56,7 @@ extension Assertion<DispatchQueue> {
     @discardableResult
     public func isTheCurrentQueue(line: Int = #line) -> Assertion<DispatchQueue> {
         evaluate(name: "isTheCurrentQueue", lineNumber: line) { queue in
-            let currentQueueLabel = DispatchQueue.currentQueueLabel
+            let currentQueueLabel = String(cString: __dispatch_queue_get_label(nil), encoding: .utf8)
 
             if currentQueueLabel == queue.label {
                 return .pass(queue)

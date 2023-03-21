@@ -47,7 +47,7 @@ Operators on expressions that can `throw`. There are variants of each function t
 
 ### Type Operators
 Operators that validate the type conformance of a value.
-- ``Assertion/isType(_:line:)``
+- ``Assertion/isOfType(_:line:)``
 
 ### General Operators
 Operators that work on any type.
