@@ -1,4 +1,4 @@
-//  FailMock.swift
+//  MockError.swift
 //
 //  MIT License
 //
@@ -23,16 +23,15 @@
 //  SOFTWARE.
 
 import Foundation
-import Gauntlet
 
-class FailMock: FailureReporter {
-    private(set) var message: String?
-    private(set) var file: String?
-    private(set) var line: UInt?
+enum MockError: Error, CustomDebugStringConvertible {
+    case someError
+    case someOtherError
 
-    func reportFailure(description: String, file: StaticString, line: UInt) {
-        self.message = description
-        self.file = "\(file)"
-        self.line = line
+    var debugDescription: String {
+        switch self {
+        case .someError: return "Some Error"
+        case .someOtherError: return "Some Other Error"
+        }
     }
 }
