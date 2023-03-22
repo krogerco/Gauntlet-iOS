@@ -162,13 +162,13 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         XCTAssertTrue(assertion.isRoot)
     }
 
-    /// Ensure async assertions created via `Assert(that: )` are correctly configured.
-    func testAssertAsyncInitializer() async {
+    /// Ensure assertions created via `Assert(that: )` can accept async values as the parameter and are correctly configured.
+    func testAssertInitializerAcceptsAsyncParameterCall() async {
         // Given
         let model = AsyncModel()
 
         // When
-        let assertion = await Assert(that: await model.getValue(), filePath: "some/file", lineNumber: 123)
+        let assertion = Assert(that: await model.getValue(), filePath: "some/file", lineNumber: 123)
 
         // Evaluate the assertion before leaving to prevent failures for not evaluating.
         defer { assertion.evaluate() }

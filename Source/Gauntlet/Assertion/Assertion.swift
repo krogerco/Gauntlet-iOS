@@ -236,16 +236,4 @@ extension Assertion {
     {
         self.init(result: .pass(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
     }
-
-    convenience init(
-        expression: () async -> Value,
-        name: String,
-        filePath: String,
-        lineNumber: Int,
-        recorder: FailureRecorder,
-        isRoot: Bool) async
-    {
-        let value = await expression()
-        self.init(result: .pass(value), name: name, filePath: filePath, lineNumber: lineNumber, recorder: recorder, isRoot: isRoot)
-    }
 }

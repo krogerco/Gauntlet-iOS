@@ -57,31 +57,6 @@ extension XCTestCase {
         )
     }
 
-    /// Creates an ``Assertion`` on the specified `async` expression.
-    ///
-    /// - Parameters:
-    ///   - expression: The expression to assert on.
-    ///   - filePath: The path to the source file in which the assertion exists. This should not be provided manually.
-    ///   - lineNumber: The line number of the asertion. This should not be provided manually.
-    public func Assert<T: Sendable>(
-        async expression: @autoclosure () async -> T,
-        filePath: String = #filePath,
-        lineNumber: Int = #line)
-        async -> Assertion<T>
-    {
-        let typeName = String(describing: T.self)
-        let name = "Assert(that: \(typeName))"
-
-        return await Assertion(
-            expression: expression,
-            name: name,
-            filePath: filePath,
-            lineNumber: lineNumber,
-            recorder: self,
-            isRoot: true
-        )
-    }
-
     // MARK: - Throwing
 
     /// Creates an ``Assertion`` on the specified throwing expression.
