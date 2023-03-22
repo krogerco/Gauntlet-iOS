@@ -48,8 +48,8 @@ extension Assertion {
     /// Errors thrown by the closure will result in an assertion failure.
     ///
     /// - Parameter closure: A closure to ge called if the ``Assertion`` is a success.
-    public func then(line: Int = #line, _ closure: (Value) async throws -> Void) async {
-        let _: Assertion<Void> = await asyncEvaluate(name: "then", lineNumber: line) { value in
+    public func asyncThen(line: Int = #line, _ closure: (Value) async throws -> Void) async {
+        let _: Assertion<Void> = await asyncEvaluate(name: "asyncThen", lineNumber: line) { value in
             do {
                 try await closure(value)
                 return .pass

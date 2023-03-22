@@ -64,7 +64,7 @@ extension XCTestCase {
     ///   - filePath: The path to the source file in which the assertion exists. This should not be provided manually.
     ///   - lineNumber: The line number of the asertion. This should not be provided manually.
     public func Assert<T: Sendable>(
-        that expression: @autoclosure () async -> T,
+        async expression: @autoclosure () async -> T,
         filePath: String = #filePath,
         lineNumber: Int = #line)
         async -> Assertion<T>
@@ -116,7 +116,7 @@ extension XCTestCase {
     ///   - filePath: The path to the source file in which the assertion exists. This should not be provided manually.
     ///   - lineNumber: The line number of the asertion. This should not be provided manually.
     public func Assert<T>(
-        throwingExpression expression: @escaping @autoclosure () async throws -> T,
+        asyncThrowingExpression expression: @escaping @autoclosure () async throws -> T,
         filePath: String = #filePath,
         lineNumber: Int = #line)
         async -> Assertion<AsyncThrowableExpression<T>>

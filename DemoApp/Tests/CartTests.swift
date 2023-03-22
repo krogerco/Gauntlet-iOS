@@ -41,18 +41,18 @@ class CartTestCase: XCTestCase {
         await cart.add(secondProduct, quantity: 2)
 
         // Then
-        await Assert(that: await cart.count).isEqualTo(3)
-        await Assert(that: await cart.items)
+        Assert(that: await cart.count).isEqualTo(3)
+        await Assert(async: await cart.items)
             .hasCount(2)
-            .then { items in
+            .asyncThen { items in
                 let firstItem = items[0]
                 let secondItem = items[1]
 
-                await Assert(that: await firstItem.product).isEqualTo(firstProduct)
-                await Assert(that: await firstItem.quantity).isEqualTo(1)
+                await Assert(async: await firstItem.product).isEqualTo(firstProduct)
+                await Assert(async: await firstItem.quantity).isEqualTo(1)
 
-                await Assert(that: await secondItem.product).isEqualTo(secondProduct)
-                await Assert(that: await secondItem.quantity).isEqualTo(2)
+                await Assert(async: await secondItem.product).isEqualTo(secondProduct)
+                await Assert(async: await secondItem.quantity).isEqualTo(2)
             }
     }
 
@@ -66,8 +66,8 @@ class CartTestCase: XCTestCase {
         await cart.add(product, quantity: 4)
 
         // Then
-        await Assert(that: await cart.count).isEqualTo(5)
-        await Assert(that: await cart.items).hasCount(1)
+        await Assert(async: await cart.count).isEqualTo(5)
+        await Assert(async: await cart.items).hasCount(1)
     }
 
     func testRemoveProduct() async {
@@ -84,7 +84,7 @@ class CartTestCase: XCTestCase {
         await cart.remove(product: productToRemove)
 
         // Then
-        await Assert(that: await cart.count).isEqualTo(1)
-        await Assert(that: await cart.items).hasCount(1)
+        await Assert(async: await cart.count).isEqualTo(1)
+        await Assert(async: await cart.items).hasCount(1)
     }
 }

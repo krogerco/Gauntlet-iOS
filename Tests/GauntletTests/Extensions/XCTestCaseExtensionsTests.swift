@@ -216,13 +216,13 @@ class XCTestCaseExtensionsTestCase: XCTestCase {
         XCTAssert(assertion.recorder as? Self === self)
     }
 
-    /// Ensure async throwing assertions created via `Assert(throwingExpression: )` are correctly configured.
+    /// Ensure async throwing assertions created via `Assert(asyncThrowingExpression: )` are correctly configured.
     func testAssertAsyncThrowingInitializer() async {
         // Given
         let model = ThrowingAsyncModel(result: .success("awaited-no-throw") )
 
         // When
-        let assertion = await Assert(throwingExpression: try await model.getValue(), filePath: "some/file", lineNumber: 123)
+        let assertion = await Assert(asyncThrowingExpression: try await model.getValue(), filePath: "some/file", lineNumber: 123)
 
         // Evaluate the assertion before leaving to prevent failures for not evaluating.
         defer { assertion.evaluate() }
