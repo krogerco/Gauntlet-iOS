@@ -27,7 +27,7 @@ import Foundation
 @testable import Gauntlet
 import XCTest
 
-class EquatableAssertsTestCase: XCTestCase {
+class EquatableOperatorsTestCase: XCTestCase {
 
     // MARK: - isEqualTo
 

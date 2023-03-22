@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class TypeAssertionsTestCase: XCTestCase {
+class TypeOperatorsTestCase: XCTestCase {
     func testIsTypeSuccess() {
         // Given
         let expectedValue = "some value on the concrete type"

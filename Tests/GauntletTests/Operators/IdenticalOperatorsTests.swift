@@ -1,9 +1,9 @@
 //
-//  OptionalOperatorsTests.swift
+//  IdenticalOperatorsTests.swift
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,66 +27,75 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class OptionalOperatorsTestCase: XCTestCase {
+class IdenticalOperatorsTestCase: XCTestCase {
 
-    // MARK: - isNotNil
+    // MARK: - isIdentical
 
-    func testIsNotNilSuccess() {
+    func testIsIdenticalSuccess() {
         // Given
         let line = 123
-        let value: String? = "some value"
+        let object = SomeObject()
+        let sameObject = object
 
         // When
-        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
+        let assertion = TestAnAssertion(on: object).isIdentical(to: sameObject, line: line)
 
         // Then
         Assert(that: assertion)
-            .didPass(expectedName: "isNotNil", expectedLine: line)
-            .isEqualTo("some value")
+            .didPass(expectedName: "isIdentical", expectedLine: line)
     }
 
-    func testIsNotNilFailure() {
-        // Given
-        let line = 321
-        let value: String? = nil
-
-        // When
-        let assertion = TestAnAssertion(on: value).isNotNil(line: line)
-
-        // Then
-        Assert(that: assertion)
-            .didFail(expectedName: "isNotNil", expectedLine: line)
-            .isMessage()
-            .isEqualTo("value is nil")
-    }
-
-    // MARK: - isNil
-
-    func testIsNilSuccess() {
+    func testIsIdenticalFailure() {
         // Given
         let line = 123
-        let value: String? = nil
+        let object = SomeObject()
+        let differentObject = SomeObject()
 
         // When
-        let assertion = TestAnAssertion(on: value).isNil(line: line)
+        let assertion = TestAnAssertion(on: object).isIdentical(to: differentObject, line: line)
 
         // Then
         Assert(that: assertion)
-            .didPass(expectedName: "isNil", expectedLine: line)
-    }
-
-    func testIsNilFailure() {
-        // Given
-        let line = 321
-        let value: String? = "some value"
-
-        // When
-        let assertion = TestAnAssertion(on: value).isNil(line: line)
-
-        // Then
-        Assert(that: assertion)
-            .didFail(expectedName: "isNil", expectedLine: line)
+            .didFail(expectedName: "isIdentical", expectedLine: line)
             .isMessage()
-            .isEqualTo("value is not nil")
+            .isEqualTo("The objects are not identical")
     }
+
+    // MARK: - isNotIdentical
+
+    func testIsNotIdenticalSuccess() {
+        // Given
+        let line = 123
+        let object = SomeObject()
+        let differentObject = SomeObject()
+
+        // When
+        let assertion = TestAnAssertion(on: object).isNotIdentical(to: differentObject, line: line)
+
+        // Then
+        Assert(that: assertion)
+            .didPass(expectedName: "isNotIdentical", expectedLine: line)
+    }
+
+    func testIsNotIdenticalFailure() {
+        // Given
+        let line = 123
+        let object = SomeObject()
+        let sameObject = object
+
+        // When
+        let assertion = TestAnAssertion(on: object).isNotIdentical(to: sameObject, line: line)
+
+        // Then
+        Assert(that: assertion)
+            .didFail(expectedName: "isNotIdentical", expectedLine: line)
+            .isMessage()
+            .isEqualTo("The objects are identical")
+    }
+}
+
+// MARK: -
+
+private class SomeObject {
+    init() {}
 }

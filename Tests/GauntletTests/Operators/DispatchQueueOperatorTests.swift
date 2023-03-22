@@ -1,9 +1,9 @@
 //
-//  BoolOperatorsTests.swift
+//  DispatchQueueOperatorTests.swift
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,54 +27,44 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class BoolOperatorsTestCase: XCTestCase {
-    func testIsTrueSuccess() {
+class DispatchQueueOperatorsTestCase: XCTestCase {
+    func testPassingIsTheCurrentQueue() {
         // Given
-        let expectedLine = 456
+        let line = 123
+        let queue = DispatchQueue(label: "com.krogerco.gauntlet.unitTestQueue")
+        var assertion: Assertion<DispatchQueue>!
 
         // When
-        let assertion = TestAnAssertion(on: true).isTrue(line: expectedLine)
-
-        // Then
-        Assert(that: assertion).didPass(expectedName: "isTrue", expectedLine: expectedLine)
-    }
-
-    func testIsTrueFailure() {
-        // Given
-        let expectedLine = 654
-
-        // When
-        let assertion = TestAnAssertion(on: false).isTrue(line: expectedLine)
+        queue.sync {
+            assertion = TestAnAssertion(on: queue).isTheCurrentQueue(line: line)
+        }
 
         // Then
         Assert(that: assertion)
-            .didFail(expectedName: "isTrue", expectedLine: expectedLine)
-            .isMessage()
-            .isEqualTo("value is false")
+            .didPass(expectedName: "isTheCurrentQueue", expectedLine: line)
+            .isIdentical(to: queue)
+
     }
 
-    func testIsFalseSuccess() {
+    func testFailingIsTheCurrentQueue() {
         // Given
-        let expectedLine = 456
+        let line = 123
+        let queue = DispatchQueue(label: "com.krogerco.gauntlet.unitTestQueue")
+        let wrongQueue = DispatchQueue(label: "com.actual.queue")
+        var assertion: Assertion<DispatchQueue>!
 
         // When
-        let assertion = TestAnAssertion(on: false).isFalse(line: expectedLine)
+        wrongQueue.sync {
+            assertion = TestAnAssertion(on: queue).isTheCurrentQueue(line: line)
+        }
 
         // Then
-        Assert(that: assertion).didPass(expectedName: "isFalse", expectedLine: expectedLine)
-    }
+        let expectedFailureMessage = "The label of the current queue (com.actual.queue) does not match " +
+            "the expected queue label (com.krogerco.gauntlet.unitTestQueue)"
 
-    func testIsFalseFailure() {
-        // Given
-        let expectedLine = 654
-
-        // When
-        let assertion = TestAnAssertion(on: true).isFalse(line: expectedLine)
-
-        // Then
         Assert(that: assertion)
-            .didFail(expectedName: "isFalse", expectedLine: expectedLine)
+            .didFail(expectedName: "isTheCurrentQueue", expectedLine: line)
             .isMessage()
-            .isEqualTo("value is true")
+            .isEqualTo(expectedFailureMessage)
     }
 }
