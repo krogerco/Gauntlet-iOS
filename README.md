@@ -33,7 +33,7 @@ The easiest way to install Gauntlet is by adding a dependency via SPM.
 
 ## How to Use Gauntlet
 
-Gauntlet augments the standard XCTest unit testing methods to make unit tests more expressive and easier to read. Many of the methods in Gauntlet mirror those present in XCTest (e.g. `XCTAsserEqual`) but additionally include a closure that will be called if the assert passes.
+Gauntlet augments the standard XCTest unit testing methods to make unit tests more expressive and easier to read. Many of the methods in Gauntlet mirror those present in XCTest (e.g. `XCTAssertEqual`) but additionally include a closure that will be called if the assert passes.
 
 For example, a typical unit test might look like:
 
@@ -152,7 +152,7 @@ We debated this very point quite a bit when writing Gauntlet. By sticking with t
 - The discoverability of the enhanced methods is greatly increased. As you type the normal `XCT` prefix, auto-complete will list all possible variations that are available, including the new methods.
 - Readability at the call site is greatly increased. They look and read like the XCTest methods a developer is already familiar with.
 
-In the unlikely event of a name collision in the future , the namespace of the module (either `XCTest` or `Gaunlet`) can be prepended at the callsite to disambiguate. If this were to happen, we would obviously strive to resolve this in a subsequent version of Gauntlet.
+In the unlikely event of a name collision in the future , the namespace of the module (either `XCTest` or `Gauntlet`) can be prepended at the callsite to disambiguate. If this were to happen, we would obviously strive to resolve this in a subsequent version of Gauntlet.
 
 ## Extensions
 
@@ -163,6 +163,10 @@ A static property `currentQueueLabel` has been added to `DispatchQueue`. This is
 ## Documentation
 
 Gauntlet has full DocC documentation. After adding to your project, `Build Documentation` to add to your documentation viewer.
+
+### Online Documentation
+
+[Full Documentation](https://krogerco.github.io/Gauntlet-iOS/documentation/gauntlet)
 
 ## Communication
 
