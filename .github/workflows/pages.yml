@@ -1,4 +1,4 @@
-name: Placeholder
+name: Deploy Documentation
 
 on:
   # Run any time code is pushed to main.
@@ -6,15 +6,18 @@ on:
     branches:
       - main
 
-  # Run on all pull requests
-  pull_request:
-
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
-  label:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Placeholder
-        run: |
-          echo "Hello World"
+  deploy-docs:
+    name: Publish Documentation
+    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/pages.yml@v1.1.0
+    with:
+      FILENAME: Gauntlet.xcworkspace
