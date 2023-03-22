@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class ThrowingAssertionsTestCase: XCTestCase {
+class ThrowingOperatorsTestCase: XCTestCase {
     func testDoesNotThrow() {
         // Given
         let expression = ThrowableExpression(expression: { "some value" })

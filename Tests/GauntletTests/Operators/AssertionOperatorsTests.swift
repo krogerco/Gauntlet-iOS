@@ -27,7 +27,7 @@ import Foundation
 @testable import Gauntlet
 import XCTest
 
-class AssertionAssertionsTestCase: XCTestCase {
+class AssertionOperatorsTestCase: XCTestCase {
     // MARK: - Success
 
     func testIsSuccessSuccess() {

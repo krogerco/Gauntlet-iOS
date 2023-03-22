@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class ThenAssertionsTestCase: XCTestCase {
+class ThenOperatorsTestCase: XCTestCase {
     func testThenOnPassingAssertion() {
         // Given
         let recorder = MockFailureRecorder()
