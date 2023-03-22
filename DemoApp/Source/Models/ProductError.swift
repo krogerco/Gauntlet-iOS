@@ -1,10 +1,10 @@
 //
-//  DemoAppApp.swift
+//  ProductError.swift
 //  DemoApp
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-@main
-struct DemoAppApp: App {
-    var body: some Scene {
-        WindowGroup {
-            Text("Check the unit tests to see Gauntlet in action")
-        }
-    }
+enum ProductError: Error, Equatable {
+    case unableToLoadProducts
+    case noProductForID(String)
 }
