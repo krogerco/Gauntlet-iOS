@@ -18,8 +18,6 @@ permissions:
 jobs:
   deploy-docs:
     name: Publish Documentation
-    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/pages.yml@feature/pages
+    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/pages.yml@v1.1.0
     with:
       FILENAME: Gauntlet.xcworkspace
-#     secrets:
-#       REPO_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
