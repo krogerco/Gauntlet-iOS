@@ -27,7 +27,7 @@ import Foundation
 import Gauntlet
 import XCTest
 
-class EqualWithAccuracyAssertsTestCase: XCTestCase {
+class EqualWithAccuracyOperatorsTestCase: XCTestCase {
 
     // MARK: - Equal
 
