@@ -52,7 +52,7 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         let model = AsyncModel()
 
         // When, Then
-        await Assert(that: await model.getValue()).pass()
+        Assert(that: await model.getValue()).pass()
     }
 
     func testFailingLiveAsyncValueAssert() async {
@@ -61,7 +61,7 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         XCTExpectFailure("This assertion should generate a failure")
 
         // When, Then
-        await Assert(that: await model.getValue()).fail()
+        Assert(that: await model.getValue()).fail()
     }
 
     // MARK: - Throwable Assert
@@ -90,7 +90,7 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         let model = ThrowingAsyncModel(result: .success(""))
 
         // When, Then
-        await Assert(throwingExpression: try await model.getValue()).pass()
+        await Assert(asyncThrowingExpression: try await model.getValue()).pass()
     }
 
     func testFailingLiveAsyncThrowableAssert() async {
@@ -99,6 +99,6 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         XCTExpectFailure("This assertion should generate a failure")
 
         // When, Then
-        await Assert(throwingExpression: try await model.getValue()).fail()
+        await Assert(asyncThrowingExpression: try await model.getValue()).fail()
     }
 }

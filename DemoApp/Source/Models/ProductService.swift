@@ -1,10 +1,10 @@
 //
-//  ContentView.swift
+//  ProductService.swift
 //  DemoApp
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,17 +24,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-struct ContentView: View {
-    var body: some View {
-        Text("Hello, world!")
-            .padding()
+struct ProductService {
+    private let allProducts = Product.all
+
+    func getAllProducts(queue: DispatchQueue, completion: @escaping (Result<[Product], Error>) -> Void) {
+        queue.async {
+            completion(.success(allProducts))
+        }
     }
-}
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    func getProduct(id: String, queue: DispatchQueue, completion: @escaping (Result<Product, Error>) -> Void) {
+        let result = Result {
+            guard let product = allProducts.first(where: { $0.id == id }) else { throw ProductError.noProductForID(id) }
+
+            return product
+        }
+
+        queue.async {
+            completion(result)
+        }
     }
 }

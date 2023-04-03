@@ -28,6 +28,9 @@ import Gauntlet
 import XCTest
 
 class ThenOperatorsTestCase: XCTestCase {
+
+    // MARK: - Then
+
     func testThenOnPassingAssertion() {
         // Given
         let recorder = MockFailureRecorder()
@@ -41,21 +44,21 @@ class ThenOperatorsTestCase: XCTestCase {
 
         // Then
         Assert(that: valuePassedToClosure).isEqualTo(expectedValue)
-        Assert(that: recorder.recordedFailures.count).isEqualTo(0)
+        Assert(that: recorder.recordedFailures).hasCount(0)
     }
 
     func testThenOnPassingAssertionWithThrowingClosure() {
         // Given
         let recorder = MockFailureRecorder()
-        let thrownError = MockError.someOtherError
         let line = 432
+
         // When
         TestAnAssertion(on: 57, recorder: recorder).then(line: line) { _ in
-            throw thrownError
+            throw MockError.someOtherError
         }
 
         // Then
-        Assert(that: recorder.recordedFailures.count).isEqualTo(1)
+        Assert(that: recorder.recordedFailures).hasCount(1)
 
         guard let failure = recorder.recordedFailures.first else { return }
 
@@ -64,7 +67,7 @@ class ThenOperatorsTestCase: XCTestCase {
         Assert(that: failure.reason)
             .isThrownError()
             .isOfType(MockError.self)
-            .isEqualTo(thrownError)
+            .isEqualTo(.someOtherError)
     }
 
     func testThenOnFailingAssertion() {
@@ -73,6 +76,63 @@ class ThenOperatorsTestCase: XCTestCase {
 
         // When
         TestFailedAssertion().then { _ in
+            closureCalled = true
+        }
+
+        // Then
+        Assert(that: closureCalled).isFalse()
+    }
+
+    // MARK: - Async Then
+
+    func testAsyncThenOnPassingAssertion() async {
+        // Given
+        let asyncModel = AsyncModel()
+        let recorder = MockFailureRecorder()
+        let expectedValue = 57
+        var valuePassedToClosure: Int?
+
+        // When
+        await TestAnAssertion(on: expectedValue, recorder: recorder).asyncThen { inValue in
+            valuePassedToClosure = inValue
+            // Vaidate that we can call async code from this closure
+            _ = await asyncModel.getValue()
+        }
+
+        // Then
+        Assert(that: valuePassedToClosure).isEqualTo(expectedValue)
+        Assert(that: recorder.recordedFailures).hasCount(0)
+    }
+
+    func testAsyncThenOnPassingAssertionWithThrowingClosure() async {
+        // Given
+        let recorder = MockFailureRecorder()
+        let line = 123
+
+        // When
+        await TestAnAssertion(on: 57, recorder: recorder).asyncThen(line: line) { _ in
+            throw MockError.someError
+        }
+
+        // Then
+        Assert(that: recorder.recordedFailures).hasCount(1)
+
+        guard let failure = recorder.recordedFailures.first else { return }
+
+        Assert(that: failure.name).isEqualTo("asyncThen")
+        Assert(that: failure.lineNumber).isEqualTo(line)
+        Assert(that: failure.reason)
+            .isThrownError()
+            .isOfType(MockError.self)
+            .isEqualTo(.someError)
+    }
+
+    func testAsyncThenOnFailingAssertion() async {
+        // Given
+        var closureCalled = false
+
+        // When
+        await TestFailedAssertion().asyncThen { _ in
             closureCalled = true
         }
 

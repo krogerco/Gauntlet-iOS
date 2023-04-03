@@ -1,10 +1,10 @@
 //
-//  DemoAppApp.swift
+//  Product.swift
 //  DemoApp
 //
 //  MIT License
 //
-//  Copyright (c) [2020] The Kroger Co. All rights reserved.
+//  Copyright (c) [2023] The Kroger Co. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-@main
-struct DemoAppApp: App {
-    var body: some Scene {
-        WindowGroup {
-            Text("Check the unit tests to see Gauntlet in action")
-        }
-    }
+struct Product: Equatable, Identifiable {
+    let name: String
+    let id: String
+}
+
+extension Product {
+    static let all = [
+        Product(name: "Allspice", id: "1234"),
+        Product(name: "Bread", id: "2345"),
+        Product(name: "Carrot", id: "3456"),
+        Product(name: "Date", id: "4567"),
+        Product(name: "Eggs", id: "5678"),
+        Product(name: "Flour", id: "6789"),
+        Product(name: "Grapes", id: "7890")
+    ]
 }
