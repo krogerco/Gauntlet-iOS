@@ -30,6 +30,8 @@ import GauntletLegacy
 import XCTest
 
 class DemoAppTests: XCTestCase {
+
+    // This test validates that the DemoApp is correctly importing both the Gauntlet and GauntletLegacy modules.
     func testExample() throws {
         // Given, When
         let result: Result<String, Error> = .success("Hello")

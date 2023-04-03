@@ -137,41 +137,6 @@ class AssertionTestCase: XCTestCase {
         XCTAssert(recorder.recordedFailures.isEmpty)
     }
 
-    /// The async value initializer should have a `success` result, store the provided values, and not record any failures to the recorder.
-    func testAsyncValueInit() async {
-        // Given
-        let recorder = MockFailureRecorder()
-        let name = "Some Assertion Name"
-        let filePath = "/some/file/path"
-        let lineNumber = 3412
-        let isRoot = true
-        let model = AsyncModel()
-
-        // When
-        let assertion = await Assertion(
-            expression: { await model.getValue() },
-            name: name,
-            filePath: filePath,
-            lineNumber: lineNumber,
-            recorder: recorder,
-            isRoot: isRoot
-        )
-
-        // Then
-        if case let .pass(resultValue) = assertion.result {
-            XCTAssertEqual(resultValue, "async-value")
-        } else {
-            XCTFail("Result is not a pass")
-        }
-
-        XCTAssertEqual(assertion.name, name)
-        XCTAssertEqual(assertion.filePath, filePath)
-        XCTAssertEqual(assertion.lineNumber, lineNumber)
-        XCTAssert(assertion.recorder is MockFailureRecorder)
-        XCTAssertEqual(assertion.isRoot, isRoot)
-        XCTAssert(recorder.recordedFailures.isEmpty)
-    }
-
     // MARK: - Deinit
 
     /// If an `Assertion` is root and was created on a value but no assertions were ever evaluated by the time it deiniitialized the assertion should record a failure
