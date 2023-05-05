@@ -82,6 +82,10 @@ Gauntlet has full DocC documentation. After adding to your project, `Build Docum
 
 [Full Documentation](https://krogerco.github.io/Gauntlet-iOS/documentation/gauntlet)
 
+## Migration
+
+If you're migrating from Gauntlet 1.x check out the [migration guide](migration-guide.md) for details on how to upgrade to the new APIs.
+
 ## Communication
 
 If you have issues or suggestions, please open an issue on GitHub.
