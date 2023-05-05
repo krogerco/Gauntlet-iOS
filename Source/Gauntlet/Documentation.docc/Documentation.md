@@ -29,6 +29,20 @@ Assert(that: result).isSuccess().isEqualTo("expected content")
 
 An operator is a function defined on an `Assertion` which performs validation on a value and then returns a new Assertion. If an operator's validation fails a test failure will be generated and no subsequent operators on that assertion will be evaluated. In the above example the `isSuccess()` operator validates that the result is a success and provides the associated success value in the returned Assertion.
 
+Gauntlet includes a `then` operator which can be used to break an Assertion out into more assertions that are only run when the original Assertion passes.
+
+```swift
+let model = Model()
+
+// When
+let result: Result<Content, Error> = model.loadContent()
+
+Assert(that: result).isSuccess().then { content in
+    Assert(that: content.id).isEqualTo("expected id")
+    ...
+}
+```
+
 Gauntlet includes a number of operators in the box, see ``Assertion`` for a listing of all the included operators. The API is also designed to be easily extensible, see <doc:creating-custom-operators> for details.
 
 ## Topics
