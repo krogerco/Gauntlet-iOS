@@ -28,15 +28,28 @@ Operators for equality comparisons.
 - ``Assertion/isNotEqualTo(_:line:)``
 - ``Assertion/isNotEqualTo(_:accuracy:line:)``
 
+### Object Operators
+Operators used for comparing objects.
+- ``Assertion/isIdentical(to:line:)``
+- ``Assertion/isNotIdentical(to:line:)``
+
 ### Optional Operators
 Operators for optional values.
 - ``Assertion/isNotNil(line:)``
 - ``Assertion/isNil(line:)``
 
+### Queue Operators
+Operators for `DisptchQueue`s.
+- ``Assertion/isTheCurrentQueue(line:)``
+
 ### Result Operators
 Operators on `Result` values.
 - ``Assertion/isSuccess(line:)``
 - ``Assertion/isFailure(line:)``
+
+### String Operators
+Operators on `String` values.
+- ``Assertion/contains(_:ignoringCase:line:)``
 
 ### Throwing Operators
 Operators on expressions that can `throw`. There are variants of each function that handle `async` expressions.
@@ -53,12 +66,15 @@ Operators that validate the type conformance of a value.
 Operators that work on any type.
 
 - ``Assertion/then(line:_:)``
+- ``Assertion/asyncThen(line:_:)``
 
-### Assertion Operators
-Operators on Assertions. These are used when writing tests for a custom Assertion operator.
+### Operator Testing Operators
+These operators are used when writing unit tests against custom operators you implement.
 
 - ``Assertion/didPass(expectedName:expectedLine:line:)``
 - ``Assertion/didFail(expectedName:expectedLine:line:)``
+- ``Assertion/isMessage(line:)``
+- ``Assertion/isThrownError(line:)``
 
 ### Evaluate
 The evaluate functions are called by operators to run validation logic and create a new Assertion. See <doc:creating-custom-operators> for more detail.
