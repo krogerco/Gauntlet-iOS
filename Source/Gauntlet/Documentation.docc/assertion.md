@@ -20,6 +20,7 @@ Operators for collections.
 - ``Assertion/isEmpty(line:)``
 - ``Assertion/isNotEmpty(line:)``
 - ``Assertion/hasCount(_:line:)``
+- ``Assertion/contains(_:line:)``
 
 ### Equality Operators
 Operators for equality comparisons.
