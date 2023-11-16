@@ -145,7 +145,7 @@ extension XCTestCase {
     /// will fail silently allowing  testing failure results of custom assertions without failing tests.
     ///
     /// The Assertion will have a result of `.success` with the provide value. It will have a name of `"TestAssertion"` and a line number of `0`
-    /// so that you can test you've provided the right values to ``Assertion/evaluate(name:lineNumber:_:)``.
+    /// so that you can test you've provided the right values to ``Assertion/evaluate(name:lineNumber:evaluator:)``.
     ///
     /// - Parameters:
     ///   - value: The initial value
@@ -169,7 +169,7 @@ extension XCTestCase {
     /// assertion is a success.
     ///
     /// The Assertion will have a result of `.failure` with a message. It will have a name of `"TestFailedAssertion"` and a line number of `0`
-    /// so that you can test you've provided the right values to ``Assertion/evaluate(name:lineNumber:_:)``.
+    /// so that you can test you've provided the right values to ``Assertion/evaluate(name:lineNumber:evaluator:)``.
     ///
     /// - Returns: An ``Assertion`` configured for testing with the specified value.
     public func TestFailedAssertion() -> Assertion<Void> {
