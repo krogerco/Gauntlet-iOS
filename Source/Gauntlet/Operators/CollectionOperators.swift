@@ -25,6 +25,8 @@
 
 import Foundation
 
+// MARK: - Empty
+
 extension Assertion where Value: Collection {
 
     /// Asserts that the collection has no items in it.
@@ -52,7 +54,11 @@ extension Assertion where Value: Collection {
             return .fail(message: "The collection is empty")
         }
     }
+}
 
+// MARK: - Count
+
+extension Assertion where Value: Collection {
     /// Asserts tha the collection has the expected number of items, providing the colelction.
     ///
     /// - Parameters:
@@ -65,6 +71,26 @@ extension Assertion where Value: Collection {
             if collection.count == expectedCount { return .pass(collection) }
 
             return .fail(message: "Count of \(collection.count) is not equal to the expected count \(expectedCount)")
+        }
+    }
+}
+
+// MARK: - Contains
+
+extension Assertion where Value: Collection, Value.Element: Equatable {
+
+    /// Asserts that the collection contains the expected item, providing the collection.
+    ///
+    /// - Parameters:
+    ///   - expectedValue: The value that's expected to be in the collection.
+    ///
+    /// - Returns: An ``Assertion`` containing the collection.
+    @discardableResult
+    public func contains<T>(_ expectedValue: T, line: Int = #line) -> Assertion<Value> where T == Value.Element {
+        evaluate(name: "contains", lineNumber: line) { collection in
+            if collection.contains(expectedValue) { return .pass(collection) }
+
+            return .fail(message: #"The collection does not contain "\#(expectedValue)""#)
         }
     }
 }

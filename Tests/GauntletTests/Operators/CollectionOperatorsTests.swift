@@ -134,4 +134,35 @@ class CollectionOperatorsTestCase: XCTestCase {
             .isMessage()
             .isEqualTo("Count of 2 is not equal to the expected count 5")
     }
+
+    // MARK: - Contains
+
+    func testContainsSuccess() {
+        // Given
+        let array = ["alpha", "bravo", "charlie"]
+        let expectedLine = 645
+
+        // When
+        let assertion = TestAnAssertion(on: array).contains("bravo", line: expectedLine)
+
+        // Then
+        Assert(that: assertion)
+            .didPass(expectedName: "contains", expectedLine: expectedLine)
+            .isEqualTo(array)
+    }
+
+    func testContainsFailure() {
+        // Given
+        let array = ["alpha", "bravo", "charlie"]
+        let expectedLine = 465
+
+        // When
+        let assertion = TestAnAssertion(on: array).contains("delta", line: expectedLine)
+
+        // Then
+        Assert(that: assertion)
+            .didFail(expectedName: "contains", expectedLine: expectedLine)
+            .isMessage()
+            .isEqualTo(#"The collection does not contain "delta""#)
+    }
 }
