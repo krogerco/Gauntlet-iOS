@@ -137,7 +137,7 @@ class CollectionOperatorsTestCase: XCTestCase {
 
     // MARK: - Contains
 
-    func testContainsSuccess() {
+    func testContainsArraySuccess() {
         // Given
         let array = ["alpha", "bravo", "charlie"]
         let expectedLine = 645
@@ -151,9 +151,38 @@ class CollectionOperatorsTestCase: XCTestCase {
             .isEqualTo(array)
     }
 
-    func testContainsFailure() {
+    func testContainsArrayFailure() {
         // Given
         let array = ["alpha", "bravo", "charlie"]
+        let expectedLine = 465
+
+        // When
+        let assertion = TestAnAssertion(on: array).contains("delta", line: expectedLine)
+
+        // Then
+        Assert(that: assertion)
+            .didFail(expectedName: "contains", expectedLine: expectedLine)
+            .isMessage()
+            .isEqualTo(#"The collection does not contain "delta""#)
+    }
+
+    func testContainsSetSuccess() {
+        // Given
+        let array = Set(["alpha", "bravo", "charlie"])
+        let expectedLine = 645
+
+        // When
+        let assertion = TestAnAssertion(on: array).contains("bravo", line: expectedLine)
+
+        // Then
+        Assert(that: assertion)
+            .didPass(expectedName: "contains", expectedLine: expectedLine)
+            .isEqualTo(array)
+    }
+
+    func testContainsSetFailure() {
+        // Given
+        let array = Set(["alpha", "bravo", "charlie"])
         let expectedLine = 465
 
         // When
