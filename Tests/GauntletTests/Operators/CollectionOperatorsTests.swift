@@ -151,6 +151,23 @@ class CollectionOperatorsTestCase: XCTestCase {
             .isEqualTo(array)
     }
 
+    func testContainsArrayChainedSuccess() {
+        // Given
+        let array = ["alpha", "bravo", "charlie"]
+        let expectedLine = 645
+
+        // When
+        let assertion = TestAnAssertion(on: array)
+            .contains("alpha", line: 1)
+            .contains("bravo", line: 2)
+            .contains("charlie", line: expectedLine)
+
+        // Then
+        Assert(that: assertion)
+            .didPass(expectedName: "contains", expectedLine: expectedLine)
+            .isEqualTo(array)
+    }
+
     func testContainsArrayFailure() {
         // Given
         let array = ["alpha", "bravo", "charlie"]
