@@ -8,15 +8,26 @@ All notable changes to this project will be documented in this file.
 Unreleased changes
 
 #### Breaking Changes
+
+#### Added
+
+#### Updated
+
+#### Fixed
+
+## 2.1.0
+
+#### Added
+- Added a `contains` operator for Collections.
+
+## 2.0.0
+
+#### Breaking Changes
 - Removed deprecated async APIs.
 - Existing Gauntlet API has been moved to a new GauntletLegacy target.
 
 #### Added
 - Added new functional Assertion API.
-
-#### Updated
-
-#### Fixed
 
 ## 1.1.0
 
