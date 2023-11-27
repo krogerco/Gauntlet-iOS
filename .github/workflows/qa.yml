@@ -9,6 +9,9 @@ on:
 jobs:
   sign-off-check:
     name: Check sign-off
-    uses: krogerco/Shared-CI-Workflow-iOS/.github/workflows/qa.yml@v1.0.0
-    with:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: sign off
+        uses: krogerco/Sign-Off@v1.1.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
