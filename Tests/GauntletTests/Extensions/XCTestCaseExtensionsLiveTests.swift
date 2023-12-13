@@ -101,4 +101,14 @@ class XCTestCaseExtensionsLiveTestCase: XCTestCase {
         // When, Then
         await Assert(asyncThrowingExpression: try await model.getValue()).fail()
     }
+
+    // MARK: - Failure Assert
+
+    func testFailureAssertion() {
+        // Given
+        XCTExpectFailure("Assert(failure:) should cause a failure")
+
+        // When, Then
+        Assert(failure: "This should fail and not generate a warning for unused result")
+    }
 }

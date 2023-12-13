@@ -117,6 +117,7 @@ extension XCTestCase {
     ///   - message: A description of the failure.
     ///   - filePath: The path to the source file in which the assertion exists. This should not be provided manually.
     ///   - lineNumber: The line number of the asertion. This should not be provided manually.
+    @discardableResult
     public func Assert(
         failure message: String,
         filePath: String = #filePath,
