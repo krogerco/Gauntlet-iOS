@@ -15,6 +15,11 @@ Unreleased changes
 
 #### Fixed
 
+## 2.2.0
+
+#### Updated
+- Updated for Sendable conformance.
+
 ## 2.1.0
 
 #### Added
