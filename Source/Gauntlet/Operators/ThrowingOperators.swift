@@ -134,7 +134,7 @@ public struct ThrowableExpression<Output>: ThrowableExpressionProtocol {
 /// Encapsulates an async expression that can throw when being evaluated.
 ///
 /// This is is used to create `Assertion`s on async expressions that can throw errors.
-public struct AsyncThrowableExpression<Output>: AsyncThrowableExpressionProtocol {
+public struct AsyncThrowableExpression<Output: Sendable>: AsyncThrowableExpressionProtocol {
     let expression: () async throws -> Output
 
     /// Creates an `AsyncThrowableExpression` instance with the specified expression.

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "517C06DF-291E-4F8A-BA59-4AC77F8D07AA",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "GauntletLegacyTests",
+        "name" : "GauntletLegacyTests"
+      }
+    }
+  ],
+  "version" : 1
+}

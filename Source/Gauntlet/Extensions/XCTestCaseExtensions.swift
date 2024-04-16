@@ -90,7 +90,7 @@ extension XCTestCase {
     ///   - expression: The async expression, which can throw an error, to assert on.
     ///   - filePath: The path to the source file in which the assertion exists. This should not be provided manually.
     ///   - lineNumber: The line number of the asertion. This should not be provided manually.
-    public func Assert<T>(
+    public func Assert<T: Sendable>(
         asyncThrowingExpression expression: @escaping @autoclosure () async throws -> T,
         filePath: String = #filePath,
         lineNumber: Int = #line)
